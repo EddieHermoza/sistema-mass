@@ -11,7 +11,7 @@ import { BsBoxSeam } from "react-icons/bs";
 import { AiOutlineLineChart } from "react-icons/ai";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import { CiLogout } from "react-icons/ci";
-
+import Image from "next/image";
 import {
     Sheet,
     SheetClose,
@@ -47,7 +47,10 @@ export default function NavBarMobile() {
             </SheetTrigger>
             <SheetContent side={"left"} className="flex flex-col gap-5 items-center w-[300px]">
                 <SheetHeader>
-                    <SheetTitle className="text-2xl w-full ">MASS</SheetTitle>
+                    <SheetTitle className="text-2xl w-full flex justify-center items-start gap-1">
+                        MASS
+                        <Image src={"/mass_icon_dark.webp"} width={30} height={20} alt="icon" className="dark:invert duration-200"/>    
+                    </SheetTitle>
                 </SheetHeader>
                 <div className="h-full flex flex-col justify-between pb-10 items-center w-full">
                     <ul className="w-full flex flex-col gap-2">
