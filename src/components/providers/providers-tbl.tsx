@@ -116,7 +116,9 @@ export default function ProvidersTbl() {
                                 <Popover>
                                     <PopoverTrigger className="p-2 rounded bg-transparent hover:shadow-lg hover:shadow-secondary/50 hover:bg-background block duration-300"><MdOutlineUnfoldMore size={20} /></PopoverTrigger>
                                     <PopoverContent align="end" className="flex flex-col gap-2 items-start text-sm">
-                                        <button className="flex items-center gap-2 hover:bg-secondary p-2 rounded-sm w-full"><AiOutlineInfoCircle size={18} /> Información</button>
+                                        {/* <Link href={`/admin/providers/${provider.id}`} className="flex items-center gap-2 hover:bg-secondary p-2 w-full rounded-sm ">
+											<AiOutlineInfoCircle size={18} /> Información
+										</Link> */}
 										<Link href={`/admin/providers/edit/${provider.id}`} className="flex items-center gap-2 hover:bg-secondary p-2 w-full rounded-sm ">
 											<FiEdit size={18} /> Editar
 										</Link>

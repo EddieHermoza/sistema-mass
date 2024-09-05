@@ -19,6 +19,9 @@ const config: Config = {
       },
     },
     extend: {
+      screens: {
+        'xs': '480px'
+      },
       backgroundImage: {
         'custom-conic-gradient-light': 'conic-gradient(from 120deg at 50% 64%, transparent, #FFF 1deg 120deg, transparent 121deg)',
         'custom-conic-gradient-dark': 'conic-gradient(from 120deg at 50% 64%, transparent, #000 1deg 120deg, transparent 121deg)',

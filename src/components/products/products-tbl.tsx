@@ -113,9 +113,9 @@ export default function ProductsTbl() {
 										<MdOutlineUnfoldMore size={20} />
 									</PopoverTrigger>
 									<PopoverContent align="end" className="flex flex-col gap-2 items-start text-sm w-auto ">
-										<button className="flex items-center gap-2 hover:bg-secondary p-2 w-full rounded-sm">
+										{/* <Link href={`/admin/products/${product.id}`} className="flex items-center gap-2 hover:bg-secondary p-2 w-full rounded-sm ">
 											<AiOutlineInfoCircle size={18} /> Información
-										</button>
+										</Link> */}
 										<Link href={`/admin/products/edit/${product.id}`} className="flex items-center gap-2 hover:bg-secondary p-2 w-full rounded-sm ">
 											<FiEdit size={18} /> Editar
 										</Link>
