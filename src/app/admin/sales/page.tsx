@@ -12,7 +12,7 @@ import {
 import { IoAddCircleOutline } from "react-icons/io5";
 import SearchByName from "@/components/filters/search-name";
 import ToogleLimit from "@/components/filters/toogle-limit";
-
+import ToogleStatus from "@/components/filters/toogle-status";
 export default function Page({searchParams}:any) {
     const query = searchParams?.query || ''
     const limit = Number(searchParams?.limit) || 5
@@ -34,7 +34,7 @@ export default function Page({searchParams}:any) {
                     <CardTitle>Ventas</CardTitle>
                     <CardDescription>Visualiza las ventas de la plataforma</CardDescription>
                 </CardHeader>
-                
+
                 <InventoryTbl page={currentPage} limit={limit} query={query} status={status} />
 
             </Card>
