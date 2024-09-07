@@ -38,3 +38,7 @@ export type Product= {
     status: number;
   }
 
+  export type Sale={
+    
+  }
+
