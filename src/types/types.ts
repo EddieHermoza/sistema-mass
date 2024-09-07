@@ -39,6 +39,6 @@ export type Product= {
   }
 
   export type Sale={
-    
+    id:number
   }
 

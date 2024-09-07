@@ -16,7 +16,12 @@ import { Input } from "@/components/ui/input";
 import { IoSearchOutline } from "react-icons/io5";
 
 
-export default function Page() {
+export default function Page({searchParams}:any) {
+    const query = searchParams?.query || ''
+    const limit = Number(searchParams?.limit) || 5
+    const currentPage = Number(searchParams?.page) || 1
+    const status = searchParams?.status || 'all'
+
     return (
         <>
             <div className="w-full flex items-end justify-between max-sm:flex-col-reverse gap-3">
@@ -38,7 +43,7 @@ export default function Page() {
                     <CardDescription>Visualiza las ventas de la plataforma</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <InventoryTbl />
+                    <InventoryTbl page={currentPage} limit={limit} query={query} status={status} />
                 </CardContent>
                 <CardFooter className="flex-center">
                     <Suspense>
