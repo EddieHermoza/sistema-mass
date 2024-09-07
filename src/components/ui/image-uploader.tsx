@@ -1,7 +1,7 @@
 "use client";
 import { useState, ChangeEvent, DragEvent, useRef } from "react";
 import { PiUploadSimpleThin } from "react-icons/pi";
-
+import Image from "next/image";
 export default function ImageUploader() {
     const [image, setImage] = useState<File>()
     const [error, setError] = useState<string | null>(null)
@@ -72,7 +72,7 @@ export default function ImageUploader() {
 
             {image ? (
                 <div className=" group relative w-[300px] h-[300px] flex-center cursor-pointer rounded group border-dashed border border-foreground m-auto duration-200 dark:hover:bg-black hover:shadow-xl dark:hover:shadow-white/30" onClick={handleClick}>
-                    <img
+                    <Image
                     src={URL.createObjectURL(image)}
                     alt={`${image.name}`}
                     className="object-cover w-60 h-60 rounded"
