@@ -8,6 +8,11 @@ import "./globals.css";
 export const metadata: Metadata = {
 	title: "Sistema MASS",
 	description: "Sistema creado para el curso de Calidad de Software",
+	manifest:"/manifest.json",
+	icons:{
+		apple:"/icon.png"
+	},
+	
 };
 
 export default function RootLayout({
