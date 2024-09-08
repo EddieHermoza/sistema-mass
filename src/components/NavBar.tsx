@@ -17,6 +17,7 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { ToogleTheme } from "@/components/ui/toggle-theme";
 
 
 export default function NavAdmin() {
@@ -38,7 +39,7 @@ export default function NavAdmin() {
 	];
 
 	return (
-		<nav className="h-full flex flex-col justify-between pb-16 px-2 max-xl:hidden">
+		<nav className="h-full flex flex-col justify-between items-center pb-16 px-2 max-xl:hidden">
 			<ul className="w-full flex flex-col gap-3 items-center text-sm overflow-y-auto py-2">
 				<TooltipProvider delayDuration={0}>
 					{dashboardLinks.map((link, index) => {
@@ -51,7 +52,7 @@ export default function NavAdmin() {
 											href={link.href}
 											onClick={() => handleSetActiveLink(link.href)}
 											className={`w-full rounded h-full flex-center duration-200 tracking-wide p-4 ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${activeLink.startsWith(link.href)
-												? "bg-primary shadow-md shadow-primary/50"
+												? "bg-primary shadow-md shadow-primary/50 text-primary-foreground"
 												: "active:bg-pressed hover:bg-secondary"
 												}`}
 										>
@@ -67,9 +68,8 @@ export default function NavAdmin() {
 					})}
 				</TooltipProvider>
 			</ul>
-			<Link href={"/"} className="flex-center duration-200 border border-border p-3 rounded hover:bg-secondary active:bg-pressed">
-				<CiLogout size={22}/>
-			</Link>
+			<ToogleTheme/>
+
 		</nav>
 	);
 }

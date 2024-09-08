@@ -20,7 +20,7 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet"
-
+import { ToogleTheme } from "@/components/ui/toggle-theme";
 
 export default function NavBarMobile() {
     const pathname = usePathname()
@@ -75,10 +75,7 @@ export default function NavBarMobile() {
                             );
                         })}
                     </ul>
-                    <Link href={"/"} className="flex-center gap-2 duration-200 border border-border p-3 rounded hover:bg-secondary active:bg-pressed">
-                        <CiLogout size={22}/>
-                        Cerrar Sesión
-                    </Link>
+                    <ToogleTheme/>
                 </div>
             </SheetContent>
         </Sheet>

@@ -1,11 +1,17 @@
+"use client"
 import Link from "next/link";
-import { Textarea } from "@/components/ui/textarea";
 import { MdOutlineChevronLeft } from "react-icons/md";
 import { Input } from "@/components/ui/input";
+import { useRouter } from 'next/navigation'
+import { toast } from "sonner"
+import { ProviderSchema } from "@/Schemas";
+import { useForm, Controller, SubmitHandler } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+
 import {
-	Card, 
-	CardHeader, 
-	CardTitle, 
+	Card,
+	CardHeader,
+	CardTitle,
 	CardContent,
 	CardDescription
 } from "@/components/ui/card"
@@ -19,20 +25,45 @@ import {
 } from "@/components/ui/select"
 
 
+type Input = {
+	name: string,
+	legal: string,
+	status: string,
+	ruc: string,
+	number: string,
+	email: string,
+	web: string,
+}
 
+export default function Page({ params }: { params: { id: string } }) {
+	const { register, reset, control, watch, handleSubmit, formState: { errors } } = useForm<Input>({
+		resolver: zodResolver(ProviderSchema)
+	})
 
-export default function Page({params} : {params : { id : string } } ) {
+	const router = useRouter()
 
+	const onSubmit: SubmitHandler<Input> = (data) => {
+		toast("Proveedor Editado Correctamente", {
+			description: "Sunday, December 03, 2023 at 9:00 AM",
+			duration: 5000,
+			action: {
+				label: "Entendido",
+				onClick: () => console.log("Entendido"),
+			},
+		});
+		router.push('/admin/providers');
+		reset();
+	}
 	return (
 		<>
 			<section className="max-w-screen-xl w-full mx-auto flex items-center justify-start gap-5">
 
-				<Link href={"/admin/providers"} className="bg-background hover:bg-accent border p-1 focus:border-none rounded flex-center duration-200 focus:ring ring-ring ring-offset-2"><MdOutlineChevronLeft size={25}/></Link>
+				<Link href={"/admin/providers"} className="bg-background hover:bg-accent border p-1 focus:border-none rounded flex-center duration-200 focus:ring ring-ring ring-offset-2"><MdOutlineChevronLeft size={25} /></Link>
 
 				<h1 className="text-3xl">Editar Proveedor {params.id}</h1>
 			</section>
 
-			<form className="flex max-w-screen-xl w-full max-lg:flex-col mx-auto gap-5">
+			<form onSubmit={handleSubmit(onSubmit)} className="flex max-w-screen-xl w-full max-lg:flex-col mx-auto gap-5">
 
 				<div className="flex flex-col gap-5 w-full lg:w-[60%]">
 					<Card className="max-w-72">
@@ -42,15 +73,25 @@ export default function Page({params} : {params : { id : string } } ) {
 							</CardTitle>
 						</CardHeader>
 						<CardContent>
-							<Select defaultValue="en">
-								<SelectTrigger className="hover:bg-secondary">
-									<SelectValue />
-								</SelectTrigger>
-								<SelectContent position="popper" sideOffset={5} hideWhenDetached>
-									<SelectItem value="en">Activo</SelectItem>
-									<SelectItem value="dis">Inactivo</SelectItem>
-								</SelectContent>
-							</Select>
+							<Controller
+								name="status"
+								control={control}
+								defaultValue="1"
+								render={({ field }) => (
+									<Select onValueChange={field.onChange} value={field.value}>
+										<SelectTrigger className="hover:bg-secondary">
+											<SelectValue placeholder="Seleccionar" />
+										</SelectTrigger>
+										<SelectContent position="popper" sideOffset={5} hideWhenDetached>
+											<SelectItem value="1">Activo</SelectItem>
+											<SelectItem value="0">Inactivo</SelectItem>
+										</SelectContent>
+									</Select>
+								)}
+							/>
+							{
+								errors.status && <p className="text-red-600 text-xs">{errors.status.message}</p>
+							}
 						</CardContent>
 					</Card>
 
@@ -59,18 +100,27 @@ export default function Page({params} : {params : { id : string } } ) {
 							<CardTitle className="text-xl font-normal">Detalles</CardTitle>
 						</CardHeader>
 						<CardContent className="space-y-3">
-                            <label className="flex flex-col gap-2">
+							<label className="flex flex-col gap-2">
 								<span className="text-sm">RUC</span>
-								<Input id="name" />
+								<Input id="ruc" {...register("ruc")} />
+								{
+									errors.ruc && <p className="text-red-600 text-xs">{errors.ruc.message}</p>
+								}
 							</label>
 							<label className="flex flex-col gap-2">
 								<span className="text-sm">Nombre</span>
-								<Input id="name" />
+								<Input id="name" {...register("name")} />
+								{
+									errors.name && <p className="text-red-600 text-xs">{errors.name.message}</p>
+								}
 							</label>
 
-							<label  className="flex flex-col gap-2">
+							<label className="flex flex-col gap-2">
 								<span className="text-sm">Razón Social</span>
-                                <Input id="name" />
+								<Input id="legal" {...register("legal")} />
+								{
+									errors.legal && <p className="text-red-600 text-xs">{errors.legal.message}</p>
+								}
 							</label>
 						</CardContent>
 					</Card>
@@ -82,26 +132,33 @@ export default function Page({params} : {params : { id : string } } ) {
 						<CardContent className="flex gap-5 max-md:flex-col">
 							<label className="flex flex-col gap-2 w-full">
 								<span className="text-sm">Correo Electrónico</span>
-								<Input id="name" />
+								<Input id="email" {...register("email")} />
+								{
+									errors.email && <p className="text-red-600 text-xs">{errors.email.message}</p>
+								}
 							</label>
 
 							<label className="flex flex-col gap-2 w-full">
 								<span className="text-sm">Número</span>
-                                <Input id="name" />
+								<Input id="number" {...register("number")} />
+								{
+									errors.number && <p className="text-red-600 text-xs">{errors.number.message}</p>
+								}
 							</label>
 						</CardContent>
 					</Card>
 
 				</div>
 				<div className="w-full lg:w-[40%] relative flex flex-col gap-5">
-                    <Card className="w-full">
+					<Card className="w-full">
 						<CardHeader>
 							<CardTitle className="text-xl font-normal">Página web</CardTitle>
 						</CardHeader>
 						<CardContent>
-							<label className="flex flex-col gap-2">
-								<Input />
-							</label>
+							<Input id="web" {...register("web")} />
+							{
+								errors.web && <p className="text-red-600 text-xs">{errors.web.message}</p>
+							}
 						</CardContent>
 					</Card>
 					<button className="bg-black dark:bg-primary dark:hover:bg-primary/80 hover:bg-black/80 p-3 rounded text-white dark:text-primary-foreground flex-center duration-200 focus:ring ring-ring ring-offset-2 px-4 py-2">Guardar Proveedor</button>

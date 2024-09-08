@@ -5,6 +5,10 @@ import { MdOutlineChevronLeft } from "react-icons/md";
 import { Input } from "@/components/ui/input";
 import { useRouter } from 'next/navigation'
 import { toast } from "sonner"
+import { ProductSchema } from "@/Schemas";
+import {useForm,Controller,SubmitHandler} from "react-hook-form"
+import {zodResolver} from "@hookform/resolvers/zod"
+
 import {
 	Card,
 	CardHeader,
@@ -22,24 +26,34 @@ import {
 } from "@/components/ui/select"
 import ImageUploader from "@/components/ui/image-uploader";
 
-
+type Input={
+	name:string,
+	description:string,
+	status:string,
+	category:string,
+	provider:string,
+	price:string,
+	initStock:string
+}
 
 export default function Page() {
+	const {register,reset, control,watch,handleSubmit, formState:{errors} } = useForm<Input>({
+		resolver:zodResolver(ProductSchema)
+	})
 
 	const router = useRouter()
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
+	const onSubmit: SubmitHandler<Input> = (data) => {
 		toast("Producto Creado Correctamente", {
 			description: "Sunday, December 03, 2023 at 9:00 AM",
-			duration:5000,
+			duration: 5000,
 			action: {
 				label: "Entendido",
 				onClick: () => console.log("Entendido"),
 			},
-		})
-		router.push('/admin/products')
-
+		});
+		router.push('/admin/products');
+		reset();
 	}
 
 	return (
@@ -52,7 +66,7 @@ export default function Page() {
 
 			</section>
 
-			<form onSubmit={handleSubmit} className="flex max-w-screen-xl max-lg:flex-col w-full mx-auto gap-5">
+			<form onSubmit={handleSubmit(onSubmit)} className="flex max-w-screen-xl max-lg:flex-col w-full mx-auto gap-5">
 
 				<div className="flex flex-col gap-5 w-full lg:w-[60%]">
 					<Card className="max-w-72">
@@ -62,15 +76,25 @@ export default function Page() {
 							</CardTitle>
 						</CardHeader>
 						<CardContent>
-							<Select defaultValue="en">
-								<SelectTrigger className="hover:bg-secondary">
-									<SelectValue />
-								</SelectTrigger>
-								<SelectContent position="popper" sideOffset={5} hideWhenDetached>
-									<SelectItem value="en">Activo</SelectItem>
-									<SelectItem value="dis">Inactivo</SelectItem>
-								</SelectContent>
-							</Select>
+							<Controller
+                                name="status"
+                                control={control}
+                                defaultValue="1"
+                                render={({ field }) => (
+                                    <Select onValueChange={field.onChange} value={field.value}>
+                                        <SelectTrigger className="hover:bg-secondary">
+                                            <SelectValue placeholder="Seleccionar" />
+                                        </SelectTrigger>
+                                        <SelectContent position="popper" sideOffset={5} hideWhenDetached>
+                                            <SelectItem value="1">Activo</SelectItem>
+                                            <SelectItem value="0">Inactivo</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                )}
+                            />
+							{
+								errors.status && <p className="text-red-600 text-xs">{errors.status.message}</p>
+							}
 						</CardContent>
 					</Card>
 
@@ -81,12 +105,18 @@ export default function Page() {
 						<CardContent className="space-y-2">
 							<label className="flex flex-col gap-2">
 								<span>Nombre</span>
-								<Input id="name" />
+								<Input id="name" {...register("name")}/>
+								{
+									errors.name && <p className="text-red-600 text-xs">{errors.name.message}</p>
+								}
 							</label>
 
 							<label className="flex flex-col gap-2">
 								<span>Descripción</span>
-								<Textarea />
+								<Textarea id="description" {...register("description")}/>
+								{
+									errors.description && <p className="text-red-600 text-xs ">{errors.description.message}</p>
+								}
 							</label>
 						</CardContent>
 					</Card>
@@ -96,18 +126,27 @@ export default function Page() {
 								<CardTitle className="text-xl font-normal">Proveedor</CardTitle>
 							</CardHeader>
 							<CardContent>
-								<Select >
-									<SelectTrigger className="hover:bg-secondary">
-										<SelectValue placeholder="Seleccionar" />
-									</SelectTrigger>
-									<SelectContent position="popper" sideOffset={5} hideWhenDetached>
-										<SelectItem value="1">Proveedor 1</SelectItem>
-										<SelectItem value="2">Proveedor 2</SelectItem>
-										<SelectItem value="3">Proveedor 3</SelectItem>
-										<SelectItem value="4">Proveedor 4</SelectItem>
-										<SelectItem value="5">Proveedor 5</SelectItem>
-									</SelectContent>
-								</Select>
+								<Controller
+									name="provider"
+									control={control}
+									defaultValue="0"
+									render={({ field }) => (
+										<Select onValueChange={field.onChange} value={field.value}>
+											<SelectTrigger className="hover:bg-secondary">
+												<SelectValue placeholder="Seleccionar" />
+											</SelectTrigger>
+											<SelectContent position="popper" sideOffset={5} hideWhenDetached>
+												<SelectItem value="0">Proveedor 1</SelectItem>
+												<SelectItem value="1">Proveedor 2</SelectItem>
+												<SelectItem value="2">Proveedor 3</SelectItem>
+												<SelectItem value="3">Proveedor 4</SelectItem>
+											</SelectContent>
+										</Select>
+									)}
+								/>
+								{
+									errors.provider && <p className="text-red-600 text-xs">{errors.provider.message}</p>
+								}
 							</CardContent>
 						</Card>
 						<Card className="w-full">
@@ -115,18 +154,27 @@ export default function Page() {
 								<CardTitle className="text-xl font-normal">Categoria</CardTitle>
 							</CardHeader>
 							<CardContent>
-								<Select >
-									<SelectTrigger className="hover:bg-secondary">
-										<SelectValue placeholder="Seleccionar" />
-									</SelectTrigger>
-									<SelectContent position="popper" sideOffset={5} hideWhenDetached>
-										<SelectItem value="1">Categoria 1</SelectItem>
-										<SelectItem value="2">Categoria 2</SelectItem>
-										<SelectItem value="3">Categoria 3</SelectItem>
-										<SelectItem value="4">Categoria 4</SelectItem>
-										<SelectItem value="5">Categoria 5</SelectItem>
-									</SelectContent>
-								</Select>
+								<Controller
+									name="category"
+									control={control}
+									defaultValue="0"
+									render={({ field }) => (
+										<Select onValueChange={field.onChange} value={field.value}>
+											<SelectTrigger className="hover:bg-secondary">
+												<SelectValue placeholder="Seleccionar" />
+											</SelectTrigger>
+											<SelectContent position="popper" sideOffset={5} hideWhenDetached>
+												<SelectItem value="0">Categoria 1</SelectItem>
+												<SelectItem value="1">Categoria 2</SelectItem>
+												<SelectItem value="2">Categoria 3</SelectItem>
+												<SelectItem value="3">Categoria 4</SelectItem>
+											</SelectContent>
+										</Select>
+									)}
+								/>
+								{
+									errors.category && <p className="text-red-600 text-xs">{errors.category.message}</p>
+								}
 							</CardContent>
 						</Card>
 					</div>
@@ -137,8 +185,11 @@ export default function Page() {
 							</CardHeader>
 							<CardContent>
 								<label className="flex flex-col gap-2">
-									<Input type="number" id="name" />
+									<Input type="number" id="price" {...register("price")}/>
 								</label>
+								{
+									errors.price && <p className="text-red-600 text-xs">{errors.price.message}</p>
+								}
 							</CardContent>
 						</Card>
 
@@ -148,8 +199,11 @@ export default function Page() {
 							</CardHeader>
 							<CardContent>
 								<label className="flex flex-col gap-2">
-									<Input type="number" id="name" />
+									<Input type="number" id="initStock" {...register("initStock")} />
 								</label>
+								{
+									errors.initStock && <p className="text-red-600 text-xs">{errors.initStock.message}</p>
+								}
 							</CardContent>
 						</Card>
 					</div>

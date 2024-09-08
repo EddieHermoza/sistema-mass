@@ -1,7 +1,7 @@
 import NavAdmin from "@/components/NavBar";
 import NavBarMobile from "@/components/NavBarMobile";
-import { ToogleTheme } from "@/components/ui/toggle-theme";
 import Image from "next/image";
+import UserPopover from "@/components/session/user-popover";
 export default function AdminLayout({
 	children
 }: {
@@ -15,7 +15,7 @@ export default function AdminLayout({
 					<Image src={"/mass_icon_dark.webp"} width={30} height={20} alt="icon" className="dark:invert duration-200"/>
 				</div>
 				<NavBarMobile />
-				<ToogleTheme />
+				<UserPopover/>
 			</header>
 			<div className="flex h-[calc(100vh-60px)] relative w-screen ">
 				<NavAdmin />
