@@ -1,11 +1,14 @@
+"use client"
 import Link from "next/link";
 import { Textarea } from "@/components/ui/textarea";
 import { MdOutlineChevronLeft } from "react-icons/md";
 import { Input } from "@/components/ui/input";
+import { useRouter } from 'next/navigation'
+import { toast } from "sonner"
 import {
-	Card, 
-	CardHeader, 
-	CardTitle, 
+	Card,
+	CardHeader,
+	CardTitle,
 	CardContent,
 	CardDescription
 } from "@/components/ui/card"
@@ -23,17 +26,33 @@ import ImageUploader from "@/components/ui/image-uploader";
 
 export default function Page() {
 
+	const router = useRouter()
+
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		toast("Producto Creado Correctamente", {
+			description: "Sunday, December 03, 2023 at 9:00 AM",
+			duration:5000,
+			action: {
+				label: "Entendido",
+				onClick: () => console.log("Entendido"),
+			},
+		})
+		router.push('/admin/products')
+
+	}
+
 	return (
 		<>
 			<section className="max-w-screen-xl w-full mx-auto flex items-center justify-start  gap-5">
 
-				<Link href={"/admin/products"} className="bg-background hover:bg-accent border p-1 focus:border-none rounded flex-center duration-200 focus:ring ring-ring ring-offset-2"><MdOutlineChevronLeft size={25}/></Link>
+				<Link href={"/admin/products"} className="bg-background hover:bg-accent border p-1 focus:border-none rounded flex-center duration-200 focus:ring ring-ring ring-offset-2"><MdOutlineChevronLeft size={25} /></Link>
 
 				<h1 className="text-3xl">Nuevo Producto</h1>
 
 			</section>
 
-			<form className="flex max-w-screen-xl max-lg:flex-col w-full mx-auto gap-5">
+			<form onSubmit={handleSubmit} className="flex max-w-screen-xl max-lg:flex-col w-full mx-auto gap-5">
 
 				<div className="flex flex-col gap-5 w-full lg:w-[60%]">
 					<Card className="max-w-72">
@@ -65,7 +84,7 @@ export default function Page() {
 								<Input id="name" />
 							</label>
 
-							<label  className="flex flex-col gap-2">
+							<label className="flex flex-col gap-2">
 								<span>Descripción</span>
 								<Textarea />
 							</label>
@@ -79,7 +98,7 @@ export default function Page() {
 							<CardContent>
 								<Select >
 									<SelectTrigger className="hover:bg-secondary">
-										<SelectValue placeholder="Seleccionar"/>
+										<SelectValue placeholder="Seleccionar" />
 									</SelectTrigger>
 									<SelectContent position="popper" sideOffset={5} hideWhenDetached>
 										<SelectItem value="1">Proveedor 1</SelectItem>
@@ -98,7 +117,7 @@ export default function Page() {
 							<CardContent>
 								<Select >
 									<SelectTrigger className="hover:bg-secondary">
-										<SelectValue placeholder="Seleccionar"/>
+										<SelectValue placeholder="Seleccionar" />
 									</SelectTrigger>
 									<SelectContent position="popper" sideOffset={5} hideWhenDetached>
 										<SelectItem value="1">Categoria 1</SelectItem>
@@ -123,7 +142,7 @@ export default function Page() {
 							</CardContent>
 						</Card>
 
-						<Card  className="w-full">
+						<Card className="w-full">
 							<CardHeader>
 								<CardTitle className="text-xl font-normal">Stock Inicial</CardTitle>
 							</CardHeader>
@@ -138,7 +157,7 @@ export default function Page() {
 				</div>
 				<div className="w-full lg:w-[40%] relative flex flex-col gap-5">
 
-					<Card  className="w-full h-auto relative">
+					<Card className="w-full h-auto relative">
 						<CardHeader>
 							<CardTitle className="text-xl font-normal">Imagen</CardTitle>
 							<CardDescription>
@@ -146,12 +165,12 @@ export default function Page() {
 							</CardDescription>
 						</CardHeader>
 						<CardContent >
-							<ImageUploader/>
+							<ImageUploader />
 						</CardContent>
 					</Card>
 
-					<button className=" bg-black dark:bg-primary w-full  dark:hover:bg-primary/80 hover:bg-black/80 p-3 rounded text-white dark:text-primary-foreground flex-center duration-200 focus:ring ring-ring ring-offset-2 px-4 py-2">Guardar Producto</button>
-					
+					<button type="submit" className=" bg-black dark:bg-primary w-full  dark:hover:bg-primary/80 hover:bg-black/80 p-3 rounded text-white dark:text-primary-foreground flex-center duration-200 focus:ring ring-ring ring-offset-2 px-4 py-2">Guardar Producto</button>
+
 				</div>
 
 			</form>

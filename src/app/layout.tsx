@@ -33,8 +33,8 @@ export default function RootLayout({
 						<div vaul-drawer-wrapper="" className="bg-background ">
 							{children}
 						</div>
+						<Toaster  />
 						
-						<Toaster />
 					</ThemeProvider>
 				</body>
 			</html>
