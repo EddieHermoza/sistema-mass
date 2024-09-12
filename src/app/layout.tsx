@@ -10,7 +10,7 @@ export const metadata:Metadata = {
 	manifest:"/manifest.json",
 	appleWebApp: {
 	  title: 'MASS Web App',
-	  statusBarStyle: 'black-translucent',
+	  statusBarStyle: 'default',
 	  startupImage: [
 		{
 		  url: '/splash-screens/iPhone_16_Pro_Max_landscape.png',
