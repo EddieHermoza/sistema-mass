@@ -8,7 +8,7 @@ import { MdOutlineUnfoldMore } from "react-icons/md";
 import { HiOutlineArrowsUpDown } from "react-icons/hi2";
 import Link from "next/link";
 import TableSkeleton from "../skeletons/table-skeleton";
-import { CardContent, CardFooter } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 
 import {
     Popover,
@@ -78,7 +78,11 @@ export default function UserTbl({ page, limit, status, query }: Props) {
     }, [page, limit, query, status])
 
     return (
-        <>
+        <Card x-chunk="users-table">
+            <CardHeader>
+                <CardTitle>Usuarios</CardTitle>
+                <CardDescription>Administra los permisos de tus usuarios</CardDescription>
+            </CardHeader>
             <CardContent>
                 <table className="table-auto text-center w-full relative">
                     <thead className=" border-b relative text-sm lg:text-base">
@@ -172,7 +176,7 @@ export default function UserTbl({ page, limit, status, query }: Props) {
             <CardFooter>
                 <Pagination totalPages={totalPages} />
             </CardFooter>
-        </>
+        </Card>
     );
 
 

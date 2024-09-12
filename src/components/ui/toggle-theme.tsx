@@ -22,7 +22,7 @@ export function ToogleTheme() {
                     <span className="sr-only">Toggle theme</span>
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-auto">
+            <DropdownMenuContent align="start" className="w-auto">
                 <DropdownMenuItem onClick={() => setTheme("light")} className="flex items-center gap-2">
                     <PiSunLight />
                     Claro

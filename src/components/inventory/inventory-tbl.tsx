@@ -11,8 +11,12 @@ import {
 } from "@/components/ui/popover"
 
 import { 
+    Card,
     CardContent, 
-    CardFooter 
+    CardDescription, 
+    CardFooter,
+    CardHeader,
+    CardTitle
 } from "@/components/ui/card";
 
 import { Pagination } from "@/components/ui";
@@ -82,7 +86,11 @@ export default function InventoryTbl({query,status,page,limit} : Props ) {
     }, [page, limit, query, status])
 
     return (
-    <>
+    <Card x-chunk="products-table">
+        <CardHeader>
+            <CardTitle>Inventario</CardTitle>
+            <CardDescription>Administra las entradas y salidas de tus productos.</CardDescription>
+        </CardHeader>
         <CardContent>
             <table className="table-auto text-center w-full">
                 <thead className=" border-b  relative text-sm lg:text-base ">
@@ -169,6 +177,6 @@ export default function InventoryTbl({query,status,page,limit} : Props ) {
         <CardFooter>
             <Pagination totalPages={totalPages}/>
         </CardFooter>
-    </>
+    </Card>
     );
 }

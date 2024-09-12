@@ -4,12 +4,6 @@ import ToogleStatus from "@/components/filters/toogle-status";
 import SearchByName from "@/components/filters/search-name";
 import UserTbl from "@/components/users/users-tbl";
 import ToogleLimit from "@/components/filters/toogle-limit";
-import {
-    Card,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card"
 
 
 export default function Page({searchParams}:any) {
@@ -32,13 +26,9 @@ export default function Page({searchParams}:any) {
                 </Link>
             </section>
 
-            <Card x-chunk="users-table">
-                <CardHeader>
-                    <CardTitle>Usuarios</CardTitle>
-                    <CardDescription>Administra los permisos de tus usuarios</CardDescription>
-                </CardHeader>
-                <UserTbl page={currentPage} limit={limit} query={query} status={status}/>
-            </Card>
+
+            <UserTbl page={currentPage} limit={limit} query={query} status={status}/>
+
         </>
     );
 }

@@ -9,7 +9,7 @@ import { useState,useEffect } from "react";
 import { HiOutlineArrowsUpDown } from "react-icons/hi2";
 import Link from "next/link";
 import { Pagination } from "../ui";
-import { CardContent, CardFooter } from "../ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card";
 
 import {
 	Popover,
@@ -82,7 +82,11 @@ export default function ProductsTbl({query,status,page,limit} : Props ) {
 	
 
 	return (
-	<>
+	<Card>
+	    <CardHeader>
+            <CardTitle>Productos</CardTitle>
+            <CardDescription>Administra tus productos y visualiza su rendimiento de ventas.</CardDescription>
+        </CardHeader>
 		<CardContent>
 			<table className="table-auto text-center w-full ">
 				<thead className=" border-b relative text-sm lg:text-base ">
@@ -177,6 +181,6 @@ export default function ProductsTbl({query,status,page,limit} : Props ) {
 		<CardFooter>
             <Pagination totalPages={totalPages} />
         </CardFooter>
-	</>
+	</Card>
 	);
 }

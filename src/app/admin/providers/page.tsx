@@ -4,14 +4,6 @@ import ToogleStatus from "@/components/filters/toogle-status";
 import ProvidersTbl from "@/components/providers/providers-tbl";
 import ToogleLimit from "@/components/filters/toogle-limit";
 import SearchByName from "@/components/filters/search-name";
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card"
 
 
 export default function Page({searchParams}:any) {
@@ -33,14 +25,9 @@ export default function Page({searchParams}:any) {
                     <IoAddCircleOutline size={22}/> Agregar Proveedor 
                 </Link>
             </section>
-            
-            <Card x-chunk="providers-table">
-                <CardHeader>
-                    <CardTitle>Proveedores</CardTitle>
-                    <CardDescription>Administra la información de tus proveedores</CardDescription>
-                </CardHeader>
-                <ProvidersTbl query={query} limit={limit} page={currentPage} status={status}/>
-            </Card>
+
+            <ProvidersTbl query={query} limit={limit} page={currentPage} status={status}/>
+
         </>
     );
 }

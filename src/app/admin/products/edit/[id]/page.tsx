@@ -185,7 +185,7 @@ export default function Page({params} : {params : { id : string } }) {
 							</CardHeader>
 							<CardContent>
 								<label className="flex flex-col gap-2">
-									<Input type="number" id="price" {...register("price")}/>
+									<Input type="number" defaultValue={0} min={0} id="price" {...register("price")}/>
 								</label>
 								{
 									errors.price && <p className="text-red-600 text-xs">{errors.price.message}</p>
@@ -199,7 +199,7 @@ export default function Page({params} : {params : { id : string } }) {
 							</CardHeader>
 							<CardContent>
 								<label className="flex flex-col gap-2">
-									<Input type="number" id="initStock" {...register("initStock")} />
+									<Input type="number" defaultValue={0} min={0} id="initStock" {...register("initStock")} />
 								</label>
 								{
 									errors.initStock && <p className="text-red-600 text-xs">{errors.initStock.message}</p>

@@ -14,7 +14,7 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover"
 
-import {CardContent,CardFooter} from "@/components/ui/card"
+import {Card, CardContent,CardDescription,CardFooter, CardHeader, CardTitle} from "@/components/ui/card"
 import TableSkeleton from "../skeletons/table-skeleton";
 
 type SortConfig = {
@@ -83,7 +83,11 @@ export default function ProvidersTbl({ page, limit, status, query }: Props) {
     }, [page, limit, query, status])
 
     return (
-        <>
+        <Card x-chunk="providers-table">
+            <CardHeader>
+                <CardTitle>Proveedores</CardTitle>
+                <CardDescription>Administra la información de tus proveedores</CardDescription>
+            </CardHeader>
             <CardContent>
                 <table className="table-auto text-center w-full">
                     <thead className=" border-b-aorus border-b  relative text-sm lg:text-base ">
@@ -177,9 +181,9 @@ export default function ProvidersTbl({ page, limit, status, query }: Props) {
 
             </CardContent>
             <CardFooter>
-            <Pagination totalPages={totalPages}/>
+                <Pagination totalPages={totalPages}/>
             </CardFooter>
 
-        </>
-    );
+        </Card>
+    )
 }

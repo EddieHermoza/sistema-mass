@@ -11,7 +11,7 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
-import { CardContent, CardFooter } from "../ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card";
 import { Pagination } from "../ui";
 import TableSkeleton from "../skeletons/table-skeleton";
 
@@ -82,7 +82,11 @@ export default function CustomersTbl({ page, limit, status, query }: Props) {
     }, [page, limit, query, status])
 
     return (
-        <>
+        <Card x-chunk="products-table">
+            <CardHeader>
+                <CardTitle>Clientes</CardTitle>
+                <CardDescription>Administra a información de tus clientes y visualiza sus compras.</CardDescription>
+            </CardHeader>
             <CardContent>
                 <table className="table-auto text-center w-full">
                     <thead className=" border-b-aorus border-b  relative text-sm lg:text-base">
@@ -180,6 +184,6 @@ export default function CustomersTbl({ page, limit, status, query }: Props) {
             <CardFooter>
                 <Pagination totalPages={totalPages}/>
             </CardFooter>     
-        </>
+        </Card>
     );
 }

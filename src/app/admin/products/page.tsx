@@ -1,14 +1,5 @@
 import Link from "next/link";
 import ProductsTbl from "@/components/products/products-tbl";
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card"
-
 import { IoAddCircleOutline } from "react-icons/io5";
 import ToogleStatus from "@/components/filters/toogle-status";
 import SearchByName from "@/components/filters/search-name";
@@ -34,14 +25,8 @@ export default function Page({searchParams}:any) {
                 </Link>
             </section>
             
-            <Card x-chunk="products-table">
-                <CardHeader>
-                    <CardTitle>Productos</CardTitle>
-                    <CardDescription>Administra tus productos y visualiza su rendimiento de ventas.</CardDescription>
-                </CardHeader>
-                <ProductsTbl page={currentPage} limit={limit} query={query} status={status} />
+            <ProductsTbl page={currentPage} limit={limit} query={query} status={status} />
 
-            </Card>
         </>
     );
 }

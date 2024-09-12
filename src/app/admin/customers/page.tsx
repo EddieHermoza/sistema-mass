@@ -5,14 +5,7 @@ import CustomersTbl from "@/components/customers/customers-tbl";
 import ToogleLimit from "@/components/filters/toogle-limit";
 import SearchByName from "@/components/filters/search-name";
 
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card"
+
 
 
 export default function Page({searchParams}:any) {
@@ -31,14 +24,8 @@ export default function Page({searchParams}:any) {
                 </div>
             </section>
 
-            <Card x-chunk="products-table">
-                <CardHeader>
-                    <CardTitle>Clientes</CardTitle>
-                    <CardDescription>Administra a información de tus clientes y visualiza sus compras.</CardDescription>
-                </CardHeader>
-                <CustomersTbl page={currentPage} query={query} status={status} limit={limit}/>
+            <CustomersTbl page={currentPage} query={query} status={status} limit={limit}/>
 
-            </Card>
         </>
     );
 }
