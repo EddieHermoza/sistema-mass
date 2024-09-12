@@ -30,7 +30,7 @@ export default function RootLayout({
 						defaultTheme="light"
 						enableSystem
 					>
-						<div vaul-drawer-wrapper="" className="bg-background ">
+						<div vaul-drawer-wrapper="" className="">
 							{children}
 						</div>
 						<Toaster  />
