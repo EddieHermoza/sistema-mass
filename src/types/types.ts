@@ -39,6 +39,7 @@ export type Product= {
   }
 
   export type Sale={
-    id:number
+    id:number,
+    transaction:string,
   }
 
