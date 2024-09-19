@@ -22,49 +22,53 @@ import { Button } from "../ui/button";
 import { useCartStore } from "@/store/cart-store";
 import RemoveProductButton from "./remove-product-button";
 
-const CartIcon =() => {
-    const totalQuantity = useCartStore(state => state.getTotalProductsQuantity())
+const CartIcon = () => {
+    const totalQuantity = useCartStore((state) => state.getTotalProductsQuantity());
 
-    return(
-        <Button variant={"outline"} className="duration-200 w-14 flex-center gap-2" size={"icon"} >
+    return (
+        <Button variant={"outline"} className="duration-200 w-14 flex-center gap-2" size={"icon"}>
             {totalQuantity}
             <MdOutlineShoppingCart size={22} />
         </Button>
-    
-        
-    )
-}
+    );
+};
 
-
-
- const Content = ({ click }: { click: () => void }) => {
-    const cartProducts = useCartStore(state => state.cart)
-    const cartTotalPrice = useCartStore(state => state.getFinalPrice())
+const Content = ({ click }: { click: () => void }) => {
+    const cartProducts = useCartStore((state) => state.cart);
+    const cartTotalPrice = useCartStore((state) => state.getFinalPrice());
     return (
         <>
             <div className="relative w-full overflow-y-auto h-96 scrollbar-thin scrollbar-track-background scrollbar-thumb-primary">
-                {
-                cartProducts.length > 0 ? (
-                    cartProducts.map((product,index)=>(
-                        <div key={index} className="duration-200 hover:bg-muted/40 relative flex justify-between items-center w-full px-5 h-32 rounded">
+                {cartProducts.length > 0 ? (
+                    cartProducts.map((product, index) => (
+                        <div
+                            key={index}
+                            className="duration-200 hover:bg-muted/40 relative flex justify-between items-center w-full px-5 h-32 rounded"
+                        >
                             <div className="flex gap-3">
                                 <Image src={"/CocaColaCombo.webp"} height={90} width={90} alt="" />
                                 <div className="flex flex-col justify-center gap-1">
-                                    <span className="leading-none tracking-tight font-semibold sm:text-lg max-w-[200px] sm:max-w-[400px] truncate">{product.name}</span>
-                                    <span className="max-sm:text-xs text-sm text-muted-foreground"> {product.quantity} <span> x </span> S/ {product.price} </span>
-                                    <span className=" leading-none tracking-tight font-semibold text-primary-foreground dark:text-white"> S/ {product.quantity * product.price}</span>
+                                    <span className="leading-none tracking-tight font-semibold sm:text-lg max-w-[200px] sm:max-w-[400px] truncate">
+                                        {product.name}
+                                    </span>
+                                    <span className="max-sm:text-xs text-sm text-muted-foreground">
+                                        {product.quantity} <span> x </span> S/ {product.price}
+                                    </span>
+                                    <span className=" leading-none tracking-tight font-semibold text-primary-foreground dark:text-white">
+                                        S/ {product.quantity * product.price}
+                                    </span>
                                 </div>
                             </div>
-                            <RemoveProductButton product={product}/>
+                            <RemoveProductButton product={product} />
                         </div>
                     ))
-
                 ) : (
                     <div className="h-32 flex-center">
-                        <span className="font-semibold leading-none tracking-tight">No tiene productos en su carrito</span>
+                        <span className="font-semibold leading-none tracking-tight">
+                            No tiene productos en su carrito
+                        </span>
                     </div>
-                )
-                }
+                )}
             </div>
 
             <div className="flex flex-col items-center justify-between gap-3 px-5 mt-4 text-xl">
@@ -113,7 +117,7 @@ export function CartButton() {
         return (
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
-                    <CartIcon/>
+                    <CartIcon />
                 </DialogTrigger>
                 <DialogCartContent click={toggleDialog} />
             </Dialog>
@@ -123,7 +127,7 @@ export function CartButton() {
     return (
         <Drawer open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
-                <CartIcon/>
+                <CartIcon />
             </DrawerTrigger>
             <DrawerCartContent click={toggleDialog} />
         </Drawer>
