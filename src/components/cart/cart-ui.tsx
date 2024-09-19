@@ -77,7 +77,7 @@ const CartIcon =() => {
     );
 };
 
-const DialogCartContent = (click: () => void) => {
+const DialogCartContent = ({ click }: { click: () => void }) => {
     return (
         <DialogContent className="sm:max-w-[768px]">
             <DialogHeader>
@@ -90,7 +90,7 @@ const DialogCartContent = (click: () => void) => {
     );
 };
 
-const DrawerCartContent = (click: () => void) => {
+const DrawerCartContent = ({ click }: { click: () => void }) => {
     return (
         <DrawerContent className="border rounded-t-xl dark:border-t-primary">
             <DrawerHeader className="text-center">
@@ -115,7 +115,7 @@ export function CartButton() {
                 <DialogTrigger asChild>
                     <CartIcon/>
                 </DialogTrigger>
-                {DialogCartContent(toggleDialog)}
+                <DialogCartContent click={toggleDialog} />
             </Dialog>
         );
     }
@@ -125,7 +125,7 @@ export function CartButton() {
             <DrawerTrigger asChild>
                 <CartIcon/>
             </DrawerTrigger>
-            {DrawerCartContent(toggleDialog)}
+            <DrawerCartContent click={toggleDialog} />
         </Drawer>
     );
 }
