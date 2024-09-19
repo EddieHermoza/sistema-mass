@@ -22,11 +22,11 @@ import { Button } from "../ui/button";
 import { useCartStore } from "@/store/cart-store";
 import RemoveProductButton from "./remove-product-button";
 
-const CartIcon = () => {
+const CartIcon = ({ click }: { click: () => void }) => {
     const totalQuantity = useCartStore((state) => state.getTotalProductsQuantity());
 
     return (
-        <Button variant={"outline"} className="duration-200 w-14 flex-center gap-2" size={"icon"}>
+        <Button variant={"outline"} onClick={click} className="duration-200 w-14 flex-center gap-2" size={"icon"}>
             {totalQuantity}
             <MdOutlineShoppingCart size={22} />
         </Button>
@@ -81,55 +81,39 @@ const Content = ({ click }: { click: () => void }) => {
     );
 };
 
-const DialogCartContent = ({ click }: { click: () => void }) => {
-    return (
-        <DialogContent className="sm:max-w-[768px]">
-            <DialogHeader>
-                <DialogTitle>Tu Carrito</DialogTitle>
-            </DialogHeader>
-            <div className="w-full h-[550px] relative flex flex-col justify-between">
-                <Content click={click} />
-            </div>
-        </DialogContent>
-    );
-};
-
-const DrawerCartContent = ({ click }: { click: () => void }) => {
-    return (
-        <DrawerContent className="border rounded-t-xl dark:border-t-primary">
-            <DrawerHeader className="text-center">
-                <DrawerTitle>Tu Carrito</DrawerTitle>
-            </DrawerHeader>
-            <div className="w-full h-[550px] relative flex flex-col justify-start">
-                <Content click={click} />
-            </div>
-        </DrawerContent>
-    );
-};
-
 export function CartButton() {
     const [open, setOpen] = useState(false);
     const isDesktop = useMediaQuery("(min-width: 768px)");
 
-    const toggleDialog = () => setOpen(!open);
+    const toggleOpen = () => setOpen(!open);
 
     if (isDesktop) {
         return (
             <Dialog open={open} onOpenChange={setOpen}>
-                <DialogTrigger asChild>
-                    <CartIcon />
-                </DialogTrigger>
-                <DialogCartContent click={toggleDialog} />
+                <CartIcon  click={toggleOpen}/>
+                <DialogContent className="sm:max-w-[768px]">
+                    <DialogHeader>
+                        <DialogTitle>Tu Carrito</DialogTitle>
+                    </DialogHeader>
+                    <div className="w-full h-[550px] relative flex flex-col justify-between">
+                        <Content click={toggleOpen} />
+                    </div>
+                </DialogContent>
             </Dialog>
         );
     }
 
     return (
         <Drawer open={open} onOpenChange={setOpen}>
-            <DrawerTrigger asChild>
-                <CartIcon />
-            </DrawerTrigger>
-            <DrawerCartContent click={toggleDialog} />
+            <CartIcon  click={toggleOpen}/>
+            <DrawerContent className="border rounded-t-xl dark:border-t-primary">
+                <DrawerHeader className="text-center">
+                    <DrawerTitle>Tu Carrito</DrawerTitle>
+                </DrawerHeader>
+                <div className="w-full h-[550px] relative flex flex-col justify-start">
+                    <Content click={toggleOpen} />
+                </div>
+            </DrawerContent>
         </Drawer>
     );
 }
