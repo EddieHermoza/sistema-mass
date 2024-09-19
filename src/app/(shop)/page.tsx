@@ -3,10 +3,10 @@ import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { IoSearchOutline } from "react-icons/io5";
 import { ProductsCarousel } from "@/components/shop/products-carousel";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import GridCategories from "@/components/shop/categories-grid";
 import { CATEGORIES } from "@/data/categories";
+import {LinkTransition} from "@/components/ui";
 
 export default function Page() {
 	return (
@@ -29,7 +29,7 @@ export default function Page() {
 						<Input
 							placeholder="Buscar Productos"
 							className="rounded-lg bg-background pl-8 w-full focus-visible:h-14 "
-					/>
+						/>
 					</label>
 				</section>
 				{
@@ -44,7 +44,9 @@ export default function Page() {
 									<p className="text-muted-foreground">Lo más vendido</p>
 								</div>
 								<Button asChild variant={"link"} className="text-lg">
-									<Link href={"/"} className=""> Ver Más</Link>
+									<LinkTransition href={`/category/${category.slug}`} >
+										Ver Más
+									</LinkTransition>
 								</Button>
 							</div>
 							<ProductsCarousel/>

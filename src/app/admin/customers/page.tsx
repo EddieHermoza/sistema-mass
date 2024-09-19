@@ -1,11 +1,9 @@
-import Link from "next/link";
-import { IoAddCircleOutline } from "react-icons/io5";
-import ToogleStatus from "@/components/filters/toogle-status";
+
 import CustomersTbl from "@/components/customers/customers-tbl";
-import ToogleLimit from "@/components/filters/toogle-limit";
-import SearchByName from "@/components/filters/search-name";
 
-
+import {ToogleStatus} from "@/components/filters";
+import {SearchByName} from "@/components/filters";
+import {ToogleLimit} from "@/components/filters";
 
 
 export default function Page({searchParams}:any) {
@@ -18,7 +16,7 @@ export default function Page({searchParams}:any) {
         <>
             <section className="w-full flex items-end justify-between max-sm:flex-col-reverse gap-3">
                 <div className="space-y-2 max-sm:w-full">
-                    <SearchByName/>
+                    <SearchByName className="sm:w-96 "/>
                     <ToogleLimit/>
                     <ToogleStatus/>
                 </div>

@@ -1,8 +1,8 @@
 
-import { MdOutlineShoppingCart } from "react-icons/md";
 import { products } from "@/data/data";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import {AddCartProductButton} from "../cart/add-product-button";
+
 import {
     Carousel,
     CarouselContent,
@@ -11,7 +11,7 @@ import {
     CarouselPrevious,
 } from "@/components/ui/carousel";
 import Image from "next/image";
-import { Button } from "../ui/button";
+
 
 export function ProductsCarousel() {
     return (
@@ -25,7 +25,7 @@ export function ProductsCarousel() {
                 {products.map((product, index) => (
                     <CarouselItem key={index} className={`pl-2 md:pl-5 basis-[65%] xs:basis-1/2 sm:basis-1/3 lg:basis-1/4 xl:basis-1/5 2xl:basis-1/6 `}>
 
-                        <Card className="p-3 h-80 relative flex flex-col justify-between">
+                        <Card className="p-3 h-80 relative flex flex-col justify-between hover:bg-muted/40 duration-200">
                             <CardHeader className="p-0">
                                 <CardTitle className="text-base">{product.name}</CardTitle>
                                 <CardDescription className="text-lg">2x1</CardDescription>

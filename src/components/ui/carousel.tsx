@@ -5,7 +5,7 @@ import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from "embla-carousel-react"
 import { RxCaretLeft,RxCaretRight } from "react-icons/rx";
-import { FiChevronsLeft,FiChevronsRight } from "react-icons/fi";
+
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 

@@ -8,7 +8,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 
-export default function ToggleLimit() {
+export function ToogleLimit() {
     const searchParams = useSearchParams()
     const pathname = usePathname()
     const { replace } = useRouter()

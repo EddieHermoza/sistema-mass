@@ -8,7 +8,7 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 
-export default function ToogleStatusSale() {
+export function ToogleStatusSale() {
     const searchParams = useSearchParams();
     const pathname = usePathname();
     const { replace } = useRouter();

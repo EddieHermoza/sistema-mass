@@ -4,8 +4,11 @@ import { useDebouncedCallback } from 'use-debounce';
 import { IoSearchOutline } from 'react-icons/io5';
 import { Input } from '@/components/ui/input';
 
+type Props = {
+    className?:string,
+}
 
-export default function SearchByName() {
+export function SearchByName({className}:Props) {
 
     const searchParams = useSearchParams();
     const pathname = usePathname();
@@ -29,7 +32,7 @@ export default function SearchByName() {
             <IoSearchOutline className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
                 placeholder="Busqueda"
-                className="rounded-lg bg-background pl-8 w-full sm:w-96 duration-200"
+                className={`${className} rounded-lg bg-background pl-8 w-full duration-200`}
                 onChange={(e) => { debouncedHandleSearch(e.target.value) }}
                 defaultValue={searchParams.get('query')?.toString()}
             />

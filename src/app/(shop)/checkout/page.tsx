@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Page() {
     return (
         <main className="bg-background flex-center flex-col gap-10 h-[calc(100vh-120px)]">
-            <h1 className="text-white text-2xl">En progreso</h1>
+            <h1 className=" text-2xl">En progreso</h1>
             <div className="loader"></div>
 
             <Button asChild >

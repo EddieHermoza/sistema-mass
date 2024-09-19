@@ -9,7 +9,7 @@ import { MdOutlinePayment } from "react-icons/md";
 import { IoShieldHalfSharp } from "react-icons/io5";
 import { BsBoxSeam } from "react-icons/bs";
 import { AiOutlineLineChart } from "react-icons/ai";
-import { CiLogout } from "react-icons/ci";
+
 
 import {
 	Tooltip,
