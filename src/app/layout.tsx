@@ -14,15 +14,15 @@ export default function RootLayout({
 }>) {
 	return (
 		<>
-			<html lang="en" suppressHydrationWarning>
+			<html lang="es" suppressHydrationWarning className="scrollbar-thin scrollbar-track-background scrollbar-thumb-primary">
 
-				<body className={`${aldrich.className}`}>
+				<body className={`${aldrich.className} `} >
 					<ThemeProvider
 						attribute="class"
 						defaultTheme="light"
 						enableSystem
 					>
-						<div vaul-drawer-wrapper="" className="bg-background">
+						<div vaul-drawer-wrapper="" className="bg-background ">
 							{children}
 						</div>
 						<Toaster  />

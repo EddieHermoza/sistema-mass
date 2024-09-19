@@ -11,17 +11,6 @@ import LinearChart from "@/components/charts/LinearChart";
 import { companies } from "@/lib/stock-data";
 import { getStockData } from "@/lib/get-stock-data";
 import { StockSelector } from "@/components/experimental/stock-selector";
-import {
-	Activity,
-	ArrowUpRight,
-	CircleUser,
-	CreditCard,
-	DollarSign,
-	Menu,
-	Package2,
-	Search,
-	Users,
-} from "lucide-react"
 import HalfYearSalesChart from "@/components/charts/HalfYearSalesChart";
 import CustomerGrowthChart from "@/components/charts/CustomersGrowthChart";
 import LastSales from "@/components/dashboard/LastSales";

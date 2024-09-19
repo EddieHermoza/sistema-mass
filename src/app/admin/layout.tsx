@@ -1,8 +1,11 @@
 import NavAdmin from "@/components/NavBar";
 import NavBarMobile from "@/components/NavBarMobile";
-import Image from "next/image";
+
 import UserPopover from "@/components/session/user-popover";
 import InstallButton from "@/components/install-button";
+import { CartButton } from "@/components/cart/cart-ui";
+import Mass from "@/components/ui/mass";
+
 export default function AdminLayout({
 	children
 }: {
@@ -11,11 +14,10 @@ export default function AdminLayout({
 	return (
 		<>
 			<header className="w-screen h-[60px] flex items-center justify-between px-5">
-				<div className="flex gap-1 justify-center items-start max-xl:hidden">
-					<span className="text-2xl font-semibold">MASS </span>
-					<Image src={"/mass_icon_dark.webp"} width={30} height={20} alt="icon" className="dark:invert duration-200"/>
+				<Mass className="max-xl:hidden"/>
+				<div className="xl:hidden">
+					<NavBarMobile variant="admin"/>
 				</div>
-				<NavBarMobile />
 				<div className="flex-center gap-2 ">
 					<InstallButton/>
 					<UserPopover/>

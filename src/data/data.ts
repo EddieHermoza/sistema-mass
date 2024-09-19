@@ -403,3 +403,368 @@ export const users = [
 		status: 1,
 	},
 ];
+
+export const sales = [
+	{
+	  id: 1,
+	  date: "2024-09-13",
+	  transaction: "TRX100001",
+	  customerId: 123,
+	  totalAmount: 350.00,
+	  discount: 20.00,
+	  paymentMethod: "Credit Card",
+	  status: 1 // Venta completada
+	},
+	{
+	  id: 2,
+	  date: "2024-09-12",
+	  transaction: "TRX100002",
+	  customerId: 124,
+	  totalAmount: 250.00,
+	  discount: 10.00,
+	  paymentMethod: "Cash",
+	  status: 1 // Venta completada
+	},
+	{
+	  id: 3,
+	  date: "2024-09-11",
+	  transaction: "TRX100003",
+	  customerId: 125,
+	  totalAmount: 550.00,
+	  discount: 30.00,
+	  paymentMethod: "PayPal",
+	  status: 1 // Venta completada
+	},
+	{
+	  id: 4,
+	  date: "2024-09-10",
+	  transaction: "TRX100004",
+	  customerId: 126,
+	  totalAmount: 400.00,
+	  discount: 25.00,
+	  paymentMethod: "Debit Card",
+	  status: 0// Venta pendiente
+	},
+	{
+	  id: 5,
+	  date: "2024-09-09",
+	  transaction: "TRX100005",
+	  customerId: 127,
+	  totalAmount: 300.00,
+	  discount: 5.00,
+	  paymentMethod: "Credit Card",
+	  status: 1 // Venta completada
+	},
+	{
+	  id: 6,
+	  date: "2024-09-08",
+	  transaction: "TRX100006",
+	  customerId: 128,
+	  totalAmount: 700.00,
+	  discount: 50.00,
+	  paymentMethod: "Credit Card",
+	  status: 0 // Venta pendiente
+	},
+	{
+	  id: 7,
+	  date: "2024-09-07",
+	  transaction: "TRX100007",
+	  customerId: 129,
+	  totalAmount: 320.00,
+	  discount: 0.00,
+	  paymentMethod: "Cash",
+	  status: 1 // Venta completada
+	},
+	{
+	  id: 8,
+	  date: "2024-09-06",
+	  transaction: "TRX100008",
+	  customerId: 130,
+	  totalAmount: 450.00,
+	  discount: 20.00,
+	  paymentMethod: "PayPal",
+	  status: 1 // Venta completada
+	},
+	{
+	  id: 9,
+	  date: "2024-09-05",
+	  transaction: "TRX100009",
+	  customerId: 131,
+	  totalAmount: 600.00,
+	  discount: 50.00,
+	  paymentMethod: "Credit Card",
+	  status: 1 // Venta completada
+	},
+	{
+	  id: 10,
+	  date: "2024-09-04",
+	  transaction: "TRX100010",
+	  customerId: 132,
+	  totalAmount: 375.00,
+	  discount: 25.00,
+	  paymentMethod: "Debit Card",
+	  status: 0 // Venta pendiente
+	}
+  ];
+
+  export const saleItems = [
+	// Items para la venta con id 1
+	{
+	  id: 1,
+	  saleId: 1,
+	  productId: 101,
+	  quantity: 2,
+	  unitPrice: 100.00,
+	  totalPrice: 200.00
+	},
+	{
+	  id: 2,
+	  saleId: 1,
+	  productId: 102,
+	  quantity: 1,
+	  unitPrice: 50.00,
+	  totalPrice: 50.00
+	},
+	{
+	  id: 3,
+	  saleId: 1,
+	  productId: 103,
+	  quantity: 1,
+	  unitPrice: 100.00,
+	  totalPrice: 100.00
+	},
+  
+	// Items para la venta con id 2
+	{
+	  id: 4,
+	  saleId: 2,
+	  productId: 104,
+	  quantity: 2,
+	  unitPrice: 80.00,
+	  totalPrice: 160.00
+	},
+	{
+	  id: 5,
+	  saleId: 2,
+	  productId: 105,
+	  quantity: 1,
+	  unitPrice: 90.00,
+	  totalPrice: 90.00
+	},
+	{
+	  id: 6,
+	  saleId: 2,
+	  productId: 106,
+	  quantity: 1,
+	  unitPrice: 50.00,
+	  totalPrice: 50.00
+	},
+  
+	// Items para la venta con id 3
+	{
+	  id: 7,
+	  saleId: 3,
+	  productId: 107,
+	  quantity: 1,
+	  unitPrice: 200.00,
+	  totalPrice: 200.00
+	},
+	{
+	  id: 8,
+	  saleId: 3,
+	  productId: 108,
+	  quantity: 2,
+	  unitPrice: 100.00,
+	  totalPrice: 200.00
+	},
+	{
+	  id: 9,
+	  saleId: 3,
+	  productId: 109,
+	  quantity: 1,
+	  unitPrice: 150.00,
+	  totalPrice: 150.00
+	},
+  
+	// Items para la venta con id 4
+	{
+	  id: 10,
+	  saleId: 4,
+	  productId: 110,
+	  quantity: 1,
+	  unitPrice: 150.00,
+	  totalPrice: 150.00
+	},
+	{
+	  id: 11,
+	  saleId: 4,
+	  productId: 111,
+	  quantity: 2,
+	  unitPrice: 100.00,
+	  totalPrice: 200.00
+	},
+	{
+	  id: 12,
+	  saleId: 4,
+	  productId: 112,
+	  quantity: 1,
+	  unitPrice: 50.00,
+	  totalPrice: 50.00
+	},
+  
+	// Items para la venta con id 5
+	{
+	  id: 13,
+	  saleId: 5,
+	  productId: 113,
+	  quantity: 3,
+	  unitPrice: 70.00,
+	  totalPrice: 210.00
+	},
+	{
+	  id: 14,
+	  saleId: 5,
+	  productId: 114,
+	  quantity: 1,
+	  unitPrice: 50.00,
+	  totalPrice: 50.00
+	},
+	{
+	  id: 15,
+	  saleId: 5,
+	  productId: 115,
+	  quantity: 2,
+	  unitPrice: 20.00,
+	  totalPrice: 40.00
+	},
+  
+	// Items para la venta con id 6
+	{
+	  id: 16,
+	  saleId: 6,
+	  productId: 116,
+	  quantity: 4,
+	  unitPrice: 100.00,
+	  totalPrice: 400.00
+	},
+	{
+	  id: 17,
+	  saleId: 6,
+	  productId: 117,
+	  quantity: 2,
+	  unitPrice: 150.00,
+	  totalPrice: 300.00
+	},
+	{
+	  id: 18,
+	  saleId: 6,
+	  productId: 118,
+	  quantity: 1,
+	  unitPrice: 100.00,
+	  totalPrice: 100.00
+	},
+  
+	// Items para la venta con id 7
+	{
+	  id: 19,
+	  saleId: 7,
+	  productId: 119,
+	  quantity: 1,
+	  unitPrice: 150.00,
+	  totalPrice: 150.00
+	},
+	{
+	  id: 20,
+	  saleId: 7,
+	  productId: 120,
+	  quantity: 2,
+	  unitPrice: 85.00,
+	  totalPrice: 170.00
+	},
+	{
+	  id: 21,
+	  saleId: 7,
+	  productId: 121,
+	  quantity: 1,
+	  unitPrice: 50.00,
+	  totalPrice: 50.00
+	},
+  
+	// Items para la venta con id 8
+	{
+	  id: 22,
+	  saleId: 8,
+	  productId: 122,
+	  quantity: 2,
+	  unitPrice: 100.00,
+	  totalPrice: 200.00
+	},
+	{
+	  id: 23,
+	  saleId: 8,
+	  productId: 123,
+	  quantity: 1,
+	  unitPrice: 150.00,
+	  totalPrice: 150.00
+	},
+	{
+	  id: 24,
+	  saleId: 8,
+	  productId: 124,
+	  quantity: 1,
+	  unitPrice: 100.00,
+	  totalPrice: 100.00
+	},
+  
+	// Items para la venta con id 9
+	{
+	  id: 25,
+	  saleId: 9,
+	  productId: 125,
+	  quantity: 2,
+	  unitPrice: 200.00,
+	  totalPrice: 400.00
+	},
+	{
+	  id: 26,
+	  saleId: 9,
+	  productId: 126,
+	  quantity: 1,
+	  unitPrice: 100.00,
+	  totalPrice: 100.00
+	},
+	{
+	  id: 27,
+	  saleId: 9,
+	  productId: 127,
+	  quantity: 1,
+	  unitPrice: 100.00,
+	  totalPrice: 100.00
+	},
+  
+	// Items para la venta con id 10
+	{
+	  id: 28,
+	  saleId: 10,
+	  productId: 128,
+	  quantity: 3,
+	  unitPrice: 80.00,
+	  totalPrice: 240.00
+	},
+	{
+	  id: 29,
+	  saleId: 10,
+	  productId: 129,
+	  quantity: 2,
+	  unitPrice: 65.00,
+	  totalPrice: 130.00
+	},
+	{
+	  id: 30,
+	  saleId: 10,
+	  productId: 130,
+	  quantity: 1,
+	  unitPrice: 75.00,
+	  totalPrice: 75.00
+	}
+  ];

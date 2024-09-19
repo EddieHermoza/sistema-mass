@@ -133,7 +133,7 @@ export default function UserTbl({ page, limit, status, query }: Props) {
                          ) : (
                             users.length > 0 ? (
                                 users.map((user, index) => (
-                                    <tr key={index} className="hover:bg-muted/50 duration-300 relative h-24">
+                                    <tr key={index} className="hover:bg-muted/50 duration-200 relative h-24">
                                         <td className="rounded-l-lg max-lg:hidden">{user.id}</td>
                                         <td className="rounded-l-lg">{user.dni}</td>
                                         <td>{`${user.name} ${user.lastName}`}</td>

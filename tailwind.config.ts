@@ -19,6 +19,9 @@ const config: Config = {
       },
     },
     extend: {
+      transitionDuration: {
+        "3000": "3000ms",
+      },
       screens: {
         'xs': '480px'
       },

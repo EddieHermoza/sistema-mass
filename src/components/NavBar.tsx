@@ -68,7 +68,7 @@ export default function NavAdmin() {
 					})}
 				</TooltipProvider>
 			</ul>
-			<ToogleTheme/>
+			<ToogleTheme align="start"/>
 
 		</nav>
 	);

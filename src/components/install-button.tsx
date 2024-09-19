@@ -2,23 +2,21 @@
 import { useEffect, useState } from "react";
 import { BsDownload } from "react-icons/bs";
 import { Button } from "./ui/button";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 const InstallButton = () => {
     const [installPrompt, setInstallPrompt] = useState<any>(null)
     const [isStandalone, setIsStandalone] = useState(false)
     const [isCompatible, setIsCompatible] = useState(false)
-
+    const isInStandalone = useMediaQuery("(display-mode: standalone)")
+    
     useEffect(() => {
 
-        const isInStandaloneMode =
-            window.matchMedia("(display-mode: standalone)").matches ||
-            (window.navigator as any).standalone === true
+        const isInStandaloneMode = isInStandalone  || (window.navigator as any).standalone === true
+
         setIsStandalone(isInStandaloneMode)
 
-
-        const isMobile = window.matchMedia("(max-width: 768px)").matches
-
-        if (isMobile && "serviceWorker" in navigator) {
+        if ("serviceWorker" in navigator) {
             setIsCompatible(true)
         }
 
@@ -34,7 +32,7 @@ const InstallButton = () => {
                 "beforeinstallprompt",
                 handleBeforeInstallPrompt
             )
-    }, [])
+    }, [isInStandalone])
 
     const handleInstallClick = () => {
         if (installPrompt) {

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+
 export const META_DATA:Metadata = {
 	title: "Sistema MASS",
 	description: "Sistema creado para el curso de Calidad de Software",

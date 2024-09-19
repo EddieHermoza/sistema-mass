@@ -25,6 +25,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select"
 import ImageUploader from "@/components/ui/image-uploader";
+import { Button } from "@/components/ui/button";
 
 type Input={
 	name:string,
@@ -60,7 +61,9 @@ export default function Page({params} : {params : { id : string } }) {
 		<>
 			<section className="max-w-screen-xl w-full mx-auto flex items-center justify-start  gap-5">
 
-				<Link href={"/admin/products"} className="bg-background hover:bg-accent border p-1 focus:border-none rounded flex-center duration-200 focus:ring ring-ring ring-offset-2"><MdOutlineChevronLeft size={25} /></Link>
+				<Button asChild variant={"outline"} size={"icon"}>
+					<Link href={"/admin/products"}><MdOutlineChevronLeft size={25} /></Link>
+				</Button>
 
 				<h1 className="text-3xl">Editar Producto  {params.id}</h1>
 
@@ -222,8 +225,10 @@ export default function Page({params} : {params : { id : string } }) {
 							<ImageUploader />
 						</CardContent>
 					</Card>
-
-					<button type="submit" className=" bg-black dark:bg-primary w-full  dark:hover:bg-primary/80 hover:bg-black/80 p-3 rounded text-white dark:text-primary-foreground flex-center duration-200 focus:ring ring-ring ring-offset-2 px-4 py-2">Guardar Producto</button>
+					
+					<Button variant={"secondary"}>
+						Guardar Producto
+					</Button>
 
 				</div>
 

@@ -23,6 +23,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select"
+import { Button } from "@/components/ui/button";
 
 
 type Input={
@@ -59,7 +60,9 @@ export default function Page() {
 	return (
 		<>
 			<section className="max-w-screen-xl w-full mx-auto flex items-center justify-start gap-5">
-				<Link href={"/admin/users"} className="bg-background hover:bg-accent border p-1 focus:border-none rounded flex-center duration-200 focus:ring ring-ring ring-offset-2"><MdOutlineChevronLeft size={25}/></Link>
+				<Button asChild variant={"outline"} size={"icon"}>
+					<Link href={"/admin/users"}><MdOutlineChevronLeft size={25}/></Link>
+				</Button>
 
 				<h1 className="text-3xl">Nuevo Usuario</h1>
 			</section>
@@ -202,9 +205,11 @@ export default function Page() {
 							</label>
 						</CardContent>
 					</Card>
-					<button className="bg-black dark:bg-primary dark:hover:bg-primary/80 hover:bg-black/80 p-3 rounded text-white dark:text-primary-foreground flex-center duration-200 focus:ring ring-ring ring-offset-2 px-4 py-2">Guardar Usuario</button>
-				</div>
 
+					<Button variant={"secondary"}>
+						Guardar Usuario
+					</Button>
+				</div>
 			</form>
 		</>
 	);

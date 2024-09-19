@@ -4,6 +4,8 @@ import { IoAddCircleOutline } from "react-icons/io5";
 import ToogleStatus from "@/components/filters/toogle-status";
 import SearchByName from "@/components/filters/search-name";
 import ToogleLimit from "@/components/filters/toogle-limit";
+import { Button } from "@/components/ui/button";
+
 
 export default function Page({searchParams}:any) {
     const query = searchParams?.query || ''
@@ -20,9 +22,11 @@ export default function Page({searchParams}:any) {
                     <ToogleStatus/>
                 </div>
 
-                <Link href={"/admin/products/create"} className="max-sm:w-full bg-black dark:bg-primary dark:hover:bg-primary/80 hover:bg-black/80 py-2 px-4 rounded text-white dark:text-primary-foreground flex-center gap-2 duration-200 focus:ring ring-ring ring-offset-2">
-                    <IoAddCircleOutline size={22}/> Agregar Producto 
-                </Link>
+                <Button variant={"secondary"} asChild>
+                    <Link href={"/admin/products/create"} className="max-sm:w-full flex gap-2 ">
+                        <IoAddCircleOutline size={22}/> Agregar Producto 
+                    </Link> 
+                </Button>
             </section>
             
             <ProductsTbl page={currentPage} limit={limit} query={query} status={status} />

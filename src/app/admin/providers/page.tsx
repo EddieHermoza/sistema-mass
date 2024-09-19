@@ -4,6 +4,7 @@ import ToogleStatus from "@/components/filters/toogle-status";
 import ProvidersTbl from "@/components/providers/providers-tbl";
 import ToogleLimit from "@/components/filters/toogle-limit";
 import SearchByName from "@/components/filters/search-name";
+import { Button } from "@/components/ui/button";
 
 
 export default function Page({searchParams}:any) {
@@ -21,9 +22,11 @@ export default function Page({searchParams}:any) {
                     <ToogleStatus/>
                 </div>
 
-                <Link href={"/admin/providers/create"} className="max-sm:w-full bg-black dark:bg-primary dark:hover:bg-primary/80 hover:bg-black/80 py-2 px-4 rounded text-white dark:text-primary-foreground flex-center gap-2 duration-200 focus:ring ring-ring ring-offset-2">
-                    <IoAddCircleOutline size={22}/> Agregar Proveedor 
-                </Link>
+                <Button variant={"secondary"} asChild>
+                    <Link href={"/admin/providers/create"} className="max-sm:w-full flex gap-2 ">
+                        <IoAddCircleOutline size={22}/> Agregar Proveedor 
+                    </Link> 
+                </Button>
             </section>
 
             <ProvidersTbl query={query} limit={limit} page={currentPage} status={status}/>

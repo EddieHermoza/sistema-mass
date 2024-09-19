@@ -7,7 +7,7 @@
 @layer base {
 
   body {
-    @apply relative w-screen overflow-x-hidden
+    @apply relative w-screen overflow-x-hidden bg-background
   }
 
   :root {
