@@ -22,7 +22,7 @@ import { Button } from "../ui/button";
 import { useCartStore } from "@/store/cart-store";
 import RemoveProductButton from "./remove-product-button";
 
-const cartIcon =() => {
+const CartIcon =() => {
     const totalQuantity = useCartStore(state => state.getTotalProductsQuantity())
 
     return(
@@ -37,7 +37,7 @@ const cartIcon =() => {
 
 
 
-const Content = ({ click }: { click: () => void }) => {
+ const Content = ({ click }: { click: () => void }) => {
     const cartProducts = useCartStore(state => state.cart)
     const cartTotalPrice = useCartStore(state => state.getFinalPrice())
     return (
@@ -77,7 +77,7 @@ const Content = ({ click }: { click: () => void }) => {
     );
 };
 
-const dialogContent = (click: () => void) => {
+const DialogCartContent = (click: () => void) => {
     return (
         <DialogContent className="sm:max-w-[768px]">
             <DialogHeader>
@@ -90,7 +90,7 @@ const dialogContent = (click: () => void) => {
     );
 };
 
-const drawerContent = (click: () => void) => {
+const DrawerCartContent = (click: () => void) => {
     return (
         <DrawerContent className="border rounded-t-xl dark:border-t-primary">
             <DrawerHeader className="text-center">
@@ -113,9 +113,9 @@ export function CartButton() {
         return (
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
-                    {cartIcon()}
+                    <CartIcon/>
                 </DialogTrigger>
-                {dialogContent(toggleDialog)}
+                {DialogCartContent(toggleDialog)}
             </Dialog>
         );
     }
@@ -123,9 +123,9 @@ export function CartButton() {
     return (
         <Drawer open={open} onOpenChange={setOpen}>
             <DrawerTrigger asChild>
-                {cartIcon()}
+                <CartIcon/>
             </DrawerTrigger>
-            {drawerContent(toggleDialog)}
+            {DrawerCartContent(toggleDialog)}
         </Drawer>
     );
 }
