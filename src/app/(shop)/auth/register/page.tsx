@@ -15,9 +15,6 @@ import {
 export default function Page() {
     return (
         <main className="h-[calc(100vh-120px)] w-full flex-center flex-col gap-2">
-            <div className="w-full flex items-center justify-end max-w-md px-3">
-                <ToogleTheme align="end" />
-            </div>
             <Card className="max-w-md w-full">
                 <CardHeader>
                     <CardTitle className="text-center text-3xl">Registrarse</CardTitle>
