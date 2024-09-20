@@ -1,28 +1,35 @@
-'use client'
+'use client';
 
 import React, { HTMLAttributes } from 'react';
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 type LinkTransitionProps = HTMLAttributes<HTMLAnchorElement> & {
     href: string;
-}
+};
 
 export function LinkTransition({ href, children, ...rest }: LinkTransitionProps) {
-    const router = useRouter()
+    const isDesktop = useMediaQuery('(min-width: 1024px)');
+    const router = useRouter();
+
     const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
         if (!document.startViewTransition) {
-            return
+            return;
         } else {
             e.preventDefault();
             document.startViewTransition(() => {
                 router.push(href);
-            })
+            });
         }
     };
 
-    return (
+    return isDesktop ? (
         <Link href={href} onClick={handleClick} {...rest} scroll={true}>
+            {children}
+        </Link>
+    ) : (
+        <Link href={href} {...rest} scroll={true}>
             {children}
         </Link>
     );
