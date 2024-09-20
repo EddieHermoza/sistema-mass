@@ -7,7 +7,9 @@ import { ToogleTheme } from "../ui/toggle-theme";
 export default function Header() {
     return (
         <header className="w-screen h-[80px] flex items-center justify-between px-5 sticky top-0 bg-background z-50 border-b border-border shadow-sm">
-            <ToogleTheme align="start"/>
+            <div className="sm:hidden">
+                <ToogleTheme align="start"/>
+            </div>
             <div className="max-sm:hidden">
                 <NavBarMobile variant="cliente" />
             </div>
