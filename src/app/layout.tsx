@@ -21,6 +21,7 @@ export default function RootLayout({
 						attribute="class"
 						defaultTheme="light"
 						enableSystem
+						disableTransitionOnChange
 					>
 						<div vaul-drawer-wrapper="" className="bg-background ">
 							{children}

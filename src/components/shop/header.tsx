@@ -1,20 +1,23 @@
-
 import Mass from "../ui/mass";
 import NavBarMobile from "../NavBarMobile";
-import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import { CartButton } from "../cart/cart-ui";
-import { ToogleTheme } from "@/components/ui/toggle-theme";
-import UserPopover from "../session/user-popover";
 import InstallButton from "../install-button";
+import { ToogleTheme } from "../ui/toggle-theme";
 
 export default function Header() {
     return (
-        <header className="w-screen h-[80px] flex items-center justify-between px-5 sticky top-0 bg-background z-50">
-            <NavBarMobile variant="cliente"/>
-            <Mass/>
+        <header className="w-screen h-[80px] flex items-center justify-between px-5 sticky top-0 bg-background z-50 border-b border-border shadow-sm">
+            <ToogleTheme align="start"/>
+            <div className="max-sm:hidden">
+                <NavBarMobile variant="cliente" />
+            </div>
+
+            <div className="absolute left-1/2 transform -translate-x-1/2">
+                <Mass />
+            </div>
             <div className="flex-center gap-2">
-                <InstallButton/>
-                <CartButton/>
+                <InstallButton />
+                <CartButton />
             </div>
         </header>
     );

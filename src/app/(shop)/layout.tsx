@@ -1,3 +1,4 @@
+import FooterNav from "@/components/shop/footer";
 import Header from "@/components/shop/header";
 
 export default function Layout({
@@ -14,6 +15,7 @@ export default function Layout({
             </div>
 			<Header />
             {children}
+            <FooterNav/>
 
         </>
     );

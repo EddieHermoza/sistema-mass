@@ -24,7 +24,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                 </Button>
                 {category ? (
                     <div className="flex items-center gap-3 py-2">
-                        {Icon && <Icon size={60} />}
+                        {Icon && <Icon size={60} className=" text-primary"/>}
                         <h2 className="text-4xl">{category.name}</h2>
                     </div>
                 ) : (
