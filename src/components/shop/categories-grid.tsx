@@ -1,6 +1,6 @@
 import { CATEGORIES } from "@/data/categories";
 
-import {LinkTransition} from "@/components/ui";
+import Link from "next/link";
 
 export default function GridCategories() {
     return (
@@ -9,10 +9,10 @@ export default function GridCategories() {
             CATEGORIES.map((category, index) => {
                 const Icon = category.icon
                 return (
-                    <LinkTransition href={`/category/${category.slug}`} key={index} className='bg-background flex-center flex-col gap-5 h-32 hover:bg-secondary hover:text-primary duration-200'>
+                    <Link href={`/category/${category.slug}`} key={index} className='bg-background flex-center flex-col gap-5 h-32 hover:bg-secondary hover:text-primary duration-200'>
                         <Icon size={40}/>
                         {category.name}
-                    </LinkTransition>
+                    </Link>
                 );
             })
             }

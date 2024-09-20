@@ -6,7 +6,7 @@ import { ProductsCarousel } from "@/components/shop/products-carousel";
 import { Button } from "@/components/ui/button";
 import GridCategories from "@/components/shop/categories-grid";
 import { CATEGORIES } from "@/data/categories";
-import {LinkTransition} from "@/components/ui";
+import Link from "next/link";
 
 export default function Page() {
 	return (
@@ -44,9 +44,9 @@ export default function Page() {
 									<p className="text-muted-foreground">Lo más vendido</p>
 								</div>
 								<Button asChild variant={"link"} className="text-lg">
-									<LinkTransition href={`/category/${category.slug}`} >
+									<Link href={`/category/${category.slug}`} >
 										Ver Más
-									</LinkTransition>
+									</Link>
 								</Button>
 							</div>
 							<ProductsCarousel/>

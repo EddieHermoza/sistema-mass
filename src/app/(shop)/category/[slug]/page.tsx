@@ -4,10 +4,10 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import {AddCartProductButton} from "@/components/cart/add-product-button";
 import Image from "next/image";
 import {SearchByName} from "@/components/filters";
-import {LinkTransition} from "@/components/ui";
 import { Button } from "@/components/ui/button";
 import { RxCaretLeft } from "react-icons/rx";
 import FiltersContainer from "@/components/shop/filters-container";
+import Link from "next/link";
 
 
 export default function Page({ params }: { params: { slug: string } }) {
@@ -15,15 +15,13 @@ export default function Page({ params }: { params: { slug: string } }) {
     const Icon = category?.icon;
 
     return (
-        <main className="relative w-full flex flex-col gap-10">
-            <section className="container">
-                <Button asChild variant={"outline"} size={"icon"}>
-                    <LinkTransition href={"/"} >
-                        <RxCaretLeft size={32}/>
-                    </LinkTransition>
+        <main className="relative w-full flex flex-col gap-10 py-10">
+            <section className="container flex sm:items-center gap-5 max-sm:flex-col">
+                <Button asChild variant={"outline"} size={"icon"} className="rounded-full h-10 w-10">
+                    <Link href={"/"} >
+                        <RxCaretLeft size={40}/>
+                    </Link>
                 </Button>
-            </section>
-            <section className="container">
                 {category ? (
                     <div className="flex items-center gap-3 py-2">
                         {Icon && <Icon size={60} />}
