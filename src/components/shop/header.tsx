@@ -6,7 +6,7 @@ import { ToogleTheme } from "../ui/toggle-theme";
 
 export default function Header() {
     return (
-        <header className="w-screen h-[80px] flex items-center justify-between px-5 sticky top-0 bg-background z-50 border-b border-border shadow-sm">
+        <header className="w-screen h-[60px] flex items-center justify-between px-5 sticky top-0 bg-background z-50 border-b border-border">
             <div className="sm:hidden">
                 <ToogleTheme align="start"/>
             </div>

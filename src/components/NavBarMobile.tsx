@@ -1,27 +1,11 @@
 "use client"
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import Image from "next/image";
 import { ToogleTheme } from "@/components/ui/toggle-theme";
-
-//Iconos de admin
-import { FiUsers } from "react-icons/fi";
-import { MdOutlineInventory2 } from "react-icons/md";
-import { FaUsersGear } from "react-icons/fa6";
-import { MdOutlinePayment } from "react-icons/md";
-import { IoShieldHalfSharp } from "react-icons/io5";
-import { BsBoxSeam } from "react-icons/bs";
-import { AiOutlineLineChart } from "react-icons/ai";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
-import { CiLogout } from "react-icons/ci";
-
-//Iconos de Cliente
-import { MdStoreMallDirectory } from "react-icons/md";
-import { MdCategory } from "react-icons/md";
-import { MdOutlineDiscount } from "react-icons/md";
-import { PiUserCheckLight } from "react-icons/pi";
-import { TbMoneybag } from "react-icons/tb";
+import { dashboardLinks,shopLinks } from "@/app/config/links";
 
 import {
     Sheet,
@@ -36,30 +20,14 @@ const OPTIONS = ["cliente", "admin"] as const
 type Variant = (typeof OPTIONS)[number]
 
 export default function NavBarMobile( { variant } : { variant : Variant } ) {
+
     const pathname = usePathname()
-    const [activeLink, setActiveLink] = useState(pathname);
+    const [activeLink, setActiveLink] = useState(pathname)
 
     const handleSetActiveLink = (link: string) => {
-        setActiveLink(link);
+        setActiveLink(link)
     }
 
-	const dashboardLinks = [
-		{ label: "Dashboard", href: "/admin/dashboard", icon: AiOutlineLineChart },
-		{ label: "Productos", href: "/admin/products", icon: BsBoxSeam },
-		{ label: "Clientes", href: "/admin/customers", icon: FiUsers },
-		{ label: "Inventario", href: "/admin/inventory", icon: MdOutlineInventory2 },
-		{ label: "Proveedores", href: "/admin/providers", icon: FaUsersGear },
-		{ label: "Usuarios", href: "/admin/users", icon: IoShieldHalfSharp },
-		{ label: "Ventas", href: "/admin/sales", icon: MdOutlinePayment },
-	]
-
-    const shopLinks = [
-		{ label: "Tienda", href: "/", icon: MdStoreMallDirectory },
-		// { label: "Categorias", href: "/shop/categories", icon: MdCategory },
-		{ label: "Descuentos", href: "/discounts", icon: MdOutlineDiscount },
-		{ label: "Compras", href: "/orders", icon: TbMoneybag },
-		{ label: "Cuenta", href: "/auth/login", icon: PiUserCheckLight },
-	]
 
     return (
         <Sheet >
@@ -85,7 +53,7 @@ export default function NavBarMobile( { variant } : { variant : Variant } ) {
                                                 <Link
                                                     href={link.href}
                                                     onClick={() => handleSetActiveLink(link.href)}
-                                                    className={` w-full rounded h-full flex items-center gap-2 tracking-wide p-3 ring-offset-background  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${activeLink === link.href
+                                                    className={` w-full rounded h-full flex items-center gap-2 tracking-wide p-3 ring-offset-background  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${activeLink.startsWith(link.href) 
                                                             ? "bg-primary shadow-md shadow-primary/50 text-primary-foreground"
                                                             : "active:bg-pressed hover:bg-secondary"
                                                         }`}

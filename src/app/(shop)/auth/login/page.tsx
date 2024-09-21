@@ -13,7 +13,7 @@ import {
 
 export default function Page() {
     return (
-        <main className="h-[calc(100vh-120px)] w-full flex-center flex-col gap-2">
+        <>
             <Card className="max-w-md w-full">
                 <CardHeader>
                     <CardTitle className="text-center text-3xl">Iniciar Sesión</CardTitle>
@@ -48,6 +48,6 @@ export default function Page() {
                 </CardContent>
             </Card>
 
-        </main>
+        </>
     );
 }

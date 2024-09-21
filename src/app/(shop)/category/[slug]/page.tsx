@@ -40,7 +40,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                 <SearchByName className="focus-visible:h-14"/>
             </section>
 
-            <section className="relative sm:container grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 sm:gap-10">
+            <section className="relative sm:container grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 sm:gap-7">
                     {
                         products.map((product,index)=>(
                             <article key={index} >

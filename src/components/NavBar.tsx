@@ -1,43 +1,25 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
-import { FiUsers } from "react-icons/fi";
-import { MdOutlineInventory2 } from "react-icons/md";
-import { FaUsersGear } from "react-icons/fa6";
-import { MdOutlinePayment } from "react-icons/md";
-import { IoShieldHalfSharp } from "react-icons/io5";
-import { BsBoxSeam } from "react-icons/bs";
-import { AiOutlineLineChart } from "react-icons/ai";
-
-
+import { useEffect, useState } from "react";
+import { dashboardLinks } from "@/app/config/links";
+import { ToogleTheme } from "@/components/ui/toggle-theme";
 import {
 	Tooltip,
 	TooltipContent,
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { ToogleTheme } from "@/components/ui/toggle-theme";
 
 
 export default function NavAdmin() {
 	const pathname = usePathname();
-	const [activeLink, setActiveLink] = useState(pathname);
+	const [activeLink, setActiveLink] = useState(pathname)
 
 	const handleSetActiveLink = (link: string) => {
-		setActiveLink(link);
-	};
-
-	const dashboardLinks = [
-		{ label: "Dashboard", href: "/admin/dashboard", icon: AiOutlineLineChart },
-		{ label: "Productos", href: "/admin/products", icon: BsBoxSeam },
-		{ label: "Clientes", href: "/admin/customers", icon: FiUsers },
-		{ label: "Inventario", href: "/admin/inventory", icon: MdOutlineInventory2 },
-		{ label: "Proveedores", href: "/admin/providers", icon: FaUsersGear },
-		{ label: "Usuarios", href: "/admin/users", icon: IoShieldHalfSharp },
-		{ label: "Ventas", href: "/admin/sales", icon: MdOutlinePayment },
-	];
-
+		setActiveLink(link)
+	}
+	
 	return (
 		<nav className="h-full flex flex-col justify-between items-center pb-16 px-2 max-xl:hidden">
 			<ul className="w-full flex flex-col gap-3 items-center text-sm overflow-y-auto py-2">
