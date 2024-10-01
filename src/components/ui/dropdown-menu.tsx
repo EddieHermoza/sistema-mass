@@ -8,7 +8,23 @@ import { cn } from "@/lib/utils"
 
 const DropdownMenu = DropdownMenuPrimitive.Root
 
-const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger
+const DropdownMenuTrigger = React.forwardRef<
+  React.ElementRef<typeof DropdownMenuPrimitive.Trigger>,
+  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Trigger>
+>(({ className, children, ...props }, ref) => (
+  <DropdownMenuPrimitive.Trigger
+    ref={ref}
+    className={cn(
+      "ring-offset-background focus-visible:outline-none data-[state=open]:ring-2 data-[state=open]:ring-ring data-[state=open]:ring-offset-2 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2", // Clases personalizadas
+      className // Permite agregar más clases si es necesario
+    )}
+    {...props}
+  >
+    {children}
+  </DropdownMenuPrimitive.Trigger>
+))
+
+DropdownMenuTrigger.displayName = DropdownMenuPrimitive.Trigger.displayName
 
 const DropdownMenuGroup = DropdownMenuPrimitive.Group
 

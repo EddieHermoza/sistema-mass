@@ -7,7 +7,17 @@ import { cn } from "@/lib/utils"
 
 const Popover = PopoverPrimitive.Root
 
-const PopoverTrigger = PopoverPrimitive.Trigger
+const PopoverTrigger = React.forwardRef<
+  React.ElementRef<typeof PopoverPrimitive.Trigger>,
+  React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Trigger> & { className?: string }
+>(({ className, ...props }, ref) => (
+  <PopoverPrimitive.Trigger
+    ref={ref}
+    className={cn("custom-class ring-offset-background focus-visible:outline-none data-[state=open]:ring-2 data-[state=open]:ring-ring data-[state=open]:ring-offset-2 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2", className)} 
+    {...props}
+  />
+));
+PopoverTrigger.displayName = PopoverPrimitive.Trigger.displayName;
 
 const PopoverContent = React.forwardRef<
   React.ElementRef<typeof PopoverPrimitive.Content>,

@@ -37,8 +37,11 @@ export async function GET(request: Request) {
     const paginatedProducts = filteredProducts.slice(startIndex, endIndex)
 
     const totalProducts = filteredProducts.length
+    
     const totalPages = Math.ceil(totalProducts / limit)
+
     await sleep(1000)
+
     return NextResponse.json({
         products: paginatedProducts,
         page,

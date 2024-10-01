@@ -25,7 +25,7 @@ export function ToogleTheme({ align }: { align: Align } ) {
                     <span className="sr-only">Toggle theme</span>
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align={align} className="w-auto">
+            <DropdownMenuContent align={align} sideOffset={10} className="w-auto">
                 <DropdownMenuItem onClick={() => setTheme("light")} className="flex items-center gap-2">
                     <PiSunLight />
                     Claro

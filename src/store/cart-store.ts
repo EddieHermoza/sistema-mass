@@ -117,7 +117,6 @@ export const useCartStore = create<CartState>()(
         })
         , {
             name: "cart",
-            skipHydration:true,
         })
 
 

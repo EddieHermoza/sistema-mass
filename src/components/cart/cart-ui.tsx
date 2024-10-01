@@ -1,6 +1,6 @@
 "use client";
 import { MdOutlineShoppingCart } from "react-icons/md";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import Image from "next/image";
 import Link from "next/link";
@@ -21,20 +21,35 @@ import {
 import { Button } from "../ui/button";
 import { useCartStore } from "@/store/cart-store";
 import RemoveProductButton from "./remove-product-button";
+import { AiOutlineLoading } from "react-icons/ai";
 
 const CartIcon = ({ click }: { click: () => void }) => {
     const totalQuantity = useCartStore((state) => state.getTotalProductsQuantity());
+    const [loaded, setloaded] = useState(false)
+
+    useEffect(() => {
+        setloaded(true)
+    }, [])
+    
 
     return (
-        <Button variant={"outline"} onClick={click} className="duration-200 w-14 flex-center gap-2" size={"icon"}>
-            {totalQuantity}
-            <MdOutlineShoppingCart size={22} />
+        <Button variant={"outline"} onClick={click} disabled={!loaded} className="duration-200 w-14 flex-center gap-2" size={"icon"}>
+            {
+                loaded ? (
+                    <>
+                        {totalQuantity}
+                        <MdOutlineShoppingCart size={22} />
+                    </>
+                ) :(
+                    <AiOutlineLoading size={18} className="animate-spin ease-in-out"/>
+                )
+            }
         </Button>
     );
 };
 
 const Content = ({ click }: { click: () => void }) => {
-    const cartProducts = useCartStore((state) => state.cart);
+    const cartProducts = useCartStore(state => state.cart);
     const cartTotalPrice = useCartStore((state) => state.getFinalPrice());
     return (
         <>
@@ -54,7 +69,7 @@ const Content = ({ click }: { click: () => void }) => {
                                     <span className="max-sm:text-xs text-sm text-muted-foreground">
                                         {product.quantity} <span> x </span> S/ {product.price}
                                     </span>
-                                    <span className=" leading-none tracking-tight font-semibold text-primary-foreground dark:text-white">
+                                    <span className=" leading-none tracking-tight text-primary-foreground dark:text-white">
                                         S/ {product.quantity * product.price}
                                     </span>
                                 </div>
