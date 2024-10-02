@@ -8,12 +8,16 @@ import GridCategories from "@/components/shop/categories-grid";
 import { CATEGORIES } from "@/data/categories";
 import Link from "next/link";
 
-export default function Page() {
+export default function Page({searchParams}:any) {
+
+    const limit = Number(searchParams?.limit) || 15
+    const status = searchParams?.status || 'en'
+
 	return (
 		<>
 			<main className="w-full flex flex-col gap-16 py-10 px-2 sm:px-5">
 
-				<section className="relative container flex-center my-5 sm:my-10 animate-in fade-in-0  duration-3000">
+				<section className="relative container flex-center my-5 sm:my-10">
 					<h2 className="text-5xl lg:text-6xl xl:text-8xl inline-block">
 						Bienvenido, <span className="text-primary animate-pulse">Usuario</span>
 					</h2>
@@ -49,7 +53,7 @@ export default function Page() {
 									</Link>
 								</Button>
 							</div>
-							<ProductsCarousel/>
+							<ProductsCarousel category={category.name} limit={limit} status={status}/>
 						</section>
 					))
 				}

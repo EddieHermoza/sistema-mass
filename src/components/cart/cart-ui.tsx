@@ -70,7 +70,7 @@ const Content = ({ click }: { click: () => void }) => {
                                         {product.quantity} <span> x </span> S/ {product.price}
                                     </span>
                                     <span className=" leading-none tracking-tight text-primary-foreground dark:text-white">
-                                        S/ {product.quantity * product.price}
+                                        S/ {(product.quantity * product.price).toFixed(2)}
                                     </span>
                                 </div>
                             </div>
@@ -87,7 +87,7 @@ const Content = ({ click }: { click: () => void }) => {
             </div>
 
             <div className="flex flex-col items-center justify-between gap-3 px-5 mt-4 text-xl">
-                <span>Total: S/ {cartTotalPrice}</span>
+                <span>Total: S/ {cartTotalPrice.toFixed(2)}</span>
                 <Button asChild className="w-full text-xl" onClick={click}>
                     <Link href={"/cart"}>Ir a Pagar</Link>
                 </Button>

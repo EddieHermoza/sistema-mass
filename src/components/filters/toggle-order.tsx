@@ -27,7 +27,7 @@ export function ToogleOrder() {
     }
     return (
         <Select onValueChange={handleOrder} defaultValue={searchParams.get('order') ? searchParams.get('order')?.toString() : undefined}>
-            <SelectTrigger className="lg:max-w-screen-xs w-full h-12 hover:bg-secondary">
+            <SelectTrigger className="lg:max-w-96 w-full h-12 hover:bg-secondary">
                 <span>Ordernar Por: </span>
                 <SelectValue placeholder="Seleccionar" />
             </SelectTrigger>

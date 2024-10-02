@@ -26,15 +26,15 @@ export function CartDetails() {
                         </div>
                         <div className="w-full flex items-center justify-between">
                             <span className="text-lg tracking-tight leading-none">Total Productos:</span>
-                            <span>S/ {totalPrice}</span>
+                            <span>S/ {totalPrice.toFixed(2)}</span>
                         </div>
                         <div className="w-full flex items-center justify-between">
                             <span className="text-lg tracking-tight leading-none">Total Descuento:</span>
-                            <span>S/ {totalDiscount}</span>
+                            <span>S/ {totalDiscount.toFixed(2)}</span>
                         </div>
                         <div className="w-full flex items-center justify-between">
                             <span className="text-lg tracking-tight leading-none">Total:</span>
-                            <span>S/ {finalPrice}</span>
+                            <span>S/ {finalPrice.toFixed(2)}</span>
                         </div>
                     </>
                 )

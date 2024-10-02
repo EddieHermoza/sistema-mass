@@ -5,6 +5,8 @@ import { sleep } from "@/lib/utils";
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
 
+    const max= searchParams.get("max") || ""
+    const order = searchParams.get("order") || ""
     const page = parseInt(searchParams.get("page") || "1")
     const limit = parseInt(searchParams.get("limit") || "5")
     const query = searchParams.get("query") || ""
@@ -17,13 +19,13 @@ export async function GET(request: Request) {
         "all": null
     }
 
- 
+
     const statusValue = statusMap[status] ?? null
 
 
     let filteredProducts = products.filter(product => {
-    
-        const matchesQuery = product.name.toLowerCase().includes(query.toLowerCase()) 
+
+        const matchesQuery = product.name.toLowerCase().includes(query.toLowerCase())
 
 
         const matchesStatus = statusValue === null || product.status === statusValue
@@ -37,7 +39,7 @@ export async function GET(request: Request) {
     const paginatedProducts = filteredProducts.slice(startIndex, endIndex)
 
     const totalProducts = filteredProducts.length
-    
+
     const totalPages = Math.ceil(totalProducts / limit)
 
     await sleep(1000)

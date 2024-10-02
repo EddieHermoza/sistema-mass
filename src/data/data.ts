@@ -117,7 +117,7 @@ export const products = [
 		stock: 160,
 		description: "Galletas crujientes con trozos de chocolate, perfectas para cualquier ocasión.",
 		provider: "Molitalia S.A.",
-		status: 1,
+		status: 0,
 	},
 	{
 		id: 13,

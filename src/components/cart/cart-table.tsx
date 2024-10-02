@@ -42,7 +42,7 @@ export function CartTable() {
                                     <QuantitySelector product={product} />
                                 </td>
                                 <td>
-                                    S/ {product.price}
+                                    S/ {product.price.toFixed(2)}
                                 </td>
                                 <td>
                                     <RemoveProductButton product={product} />
