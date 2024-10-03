@@ -14,7 +14,7 @@ export default function FooterNav() {
     }
 
     return (
-        <footer className="w-full sticky bottom-0 grid grid-cols-4 bg-background border-t border-border sm:hidden h-20">
+        <footer className="w-full fixed bottom-0 grid grid-cols-4 bg-background border-t border-border sm:hidden h-20">
             {
                 shopLinks.map((link, index) => {
                     const Icon = link.icon;

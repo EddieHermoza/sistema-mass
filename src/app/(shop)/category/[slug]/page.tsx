@@ -12,12 +12,12 @@ export default function Page({ params, searchParams }: { params: { slug: string 
     const Icon = category?.icon;
 
     const query = searchParams?.query || ''
-    const limit = Number(searchParams?.limit) || 15
     const currentPage = Number(searchParams?.page) || 1
-    const status = searchParams?.status || 'en'
+    const limit = 15
+    const status = 'en'
 
     return (
-        <main className="relative w-full flex flex-col gap-10 py-10">
+        <main className="relative w-full flex flex-col gap-10 pt-10 pb-24">
             <section className="container flex sm:items-center gap-5 max-sm:flex-col">
                 <Button asChild variant={"outline"} size={"icon"} className="rounded-full h-10 w-10">
                     <Link href={"/"} >

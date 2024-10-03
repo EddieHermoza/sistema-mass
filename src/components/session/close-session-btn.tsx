@@ -11,10 +11,10 @@ type Props={
 }
 
 export default function CloseSessionButton({label,iconSize,className}:Props) {
-    const router = useRouter()
+    const {push} = useRouter()
 
     const handleCloseSession = () => {
-        router.push("/")
+        push("/")
     }
 
     return (

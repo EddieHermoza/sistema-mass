@@ -16,7 +16,7 @@ export function ToogleLimit() {
     const currentLimit = searchParams.get('limit') || "5"
 
     function handleOrder(term: string) {
-        const params = new URLSearchParams(searchParams);
+        const params = new URLSearchParams(searchParams)
         if (term) {
             params.set('limit', term)
         } else {

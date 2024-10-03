@@ -8,7 +8,7 @@ export default function ProductsGridSkeleton({items}:Props) {
     return (
         <>
             {skeletonItems.map((_, index) => (
-                <Skeleton key={index} className={`h-44 sm:h-80 relative max-sm:rounded-none w-full ${index % 2 == 0 ? "duration-700" :"" }`}>
+                <Skeleton key={index} className={`h-44 sm:h-80 relative max-sm:rounded-none max-sm:border border-border w-full ${index % 2 == 0 ? "duration-700" :"" }`}>
 
                 </Skeleton>
             ))}

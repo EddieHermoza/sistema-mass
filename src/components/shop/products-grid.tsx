@@ -72,7 +72,7 @@ export default function ProductsGrid({ query, page, limit, status }: Props) {
                         ))
                     ) : (
                         <div className="relative h-96 col-span-5 text-center w-full">
-                            No hay datos disponibles
+                            No hay productos disponibles
                         </div>
                     ))
             }

@@ -50,14 +50,14 @@ export function ProductsCarousel({ category, status, limit }: Props) {
                 align: "start",
                 dragFree: true
             }} >
-            <CarouselContent className="-ml-2 md:-ml-5">
+            <CarouselContent className="-ml-2 md:-ml-3">
                 {
                     loading ? (
                         <ProductsCarouselSkeleton items={6} />
                     ) : (
                         products.length > 0 ? (
                             products.map((product, index) => (
-                                <CarouselItem key={index} className={`pl-2 md:pl-5 basis-[65%] xs:basis-1/2 sm:basis-1/3 lg:basis-1/4 xl:basis-1/5 2xl:basis-1/6 `}>
+                                <CarouselItem key={index} className={`pl-2 md:pl-3 basis-[65%] xs:basis-1/2 sm:basis-1/3 lg:basis-1/4 xl:basis-1/5 2xl:basis-1/6 `}>
 
                                     <Card className="p-3 h-80 relative flex flex-col justify-between hover:bg-muted/40 duration-200">
                                         <CardHeader className="p-0">

@@ -7,15 +7,16 @@ import { Button } from "@/components/ui/button";
 import GridCategories from "@/components/shop/categories-grid";
 import { CATEGORIES } from "@/data/categories";
 import Link from "next/link";
+import SearchProducts from "@/components/shop/search-products";
 
 export default function Page({searchParams}:any) {
 
-    const limit = Number(searchParams?.limit) || 15
-    const status = searchParams?.status || 'en'
+    const limit = 15
+    const status = 'en'
 
 	return (
 		<>
-			<main className="w-full flex flex-col gap-16 py-10 px-2 sm:px-5">
+			<main className="w-full flex flex-col gap-16 pt-10 pb-24 px-2 sm:px-5">
 
 				<section className="relative container flex-center my-5 sm:my-10">
 					<h2 className="text-5xl lg:text-6xl xl:text-8xl inline-block">
@@ -28,13 +29,7 @@ export default function Page({searchParams}:any) {
 				</section>
 
 				<section className="container relative ">
-					<label className="relative flex-center ">
-						<IoSearchOutline className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-						<Input
-							placeholder="Buscar Productos"
-							className="rounded-lg bg-background pl-8 w-full focus-visible:h-14 "
-						/>
-					</label>
+					<SearchProducts/>
 				</section>
 				{
 					CATEGORIES.map((category,index)=>(

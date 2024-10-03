@@ -6,20 +6,20 @@ import { Slider } from "@/components/ui";
 
 export function PriceSelector() {
     const [Max, setMax] = useState(100)
-    const searchParams=useSearchParams();
-    const pathname = usePathname();
-    const { replace } = useRouter();
+    const searchParams=useSearchParams()
+    const pathname = usePathname()
+    const { replace } = useRouter()
 
     function handleMaxPrice(term:any) {
-        const params = new URLSearchParams(searchParams);
+        const params = new URLSearchParams(searchParams)
             if (term) {
-                params.set('max', term);
-                params.set('page', '1');
+                params.set('max', term)
+                params.set('page', '1')
             } else {
-                params.delete('max');
-                params.set('page', '1');
+                params.delete('max')
+                params.set('page', '1')
             }
-        replace(`${pathname}?${params.toString()}`,{ scroll: false });
+        replace(`${pathname}?${params.toString()}`,{ scroll: false })
       }
     const debouncedHandleMaxPrice=useDebouncedCallback(handleMaxPrice,500)
 

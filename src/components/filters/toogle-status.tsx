@@ -9,14 +9,14 @@ import {
 } from "@/components/ui/select"
 
 export function ToogleStatus() {
-    const searchParams = useSearchParams();
-    const pathname = usePathname();
-    const { replace } = useRouter();
+    const searchParams = useSearchParams()
+    const pathname = usePathname()
+    const { replace } = useRouter()
 
     const currentStatus = searchParams.get('status') || "all"
 
     function handleOrder(term: string) {
-        const params = new URLSearchParams(searchParams);
+        const params = new URLSearchParams(searchParams)
         if (term) {
             params.set('status', term)
         } else {

@@ -17,7 +17,7 @@ export default function Page() {
 
     return (
         <>
-            <main className="relative w-full h-full flex max-xl:flex-col gap-5 p-5">
+            <main className="relative w-full h-full flex max-xl:flex-col gap-5 p-5 max-sm:pb-24">
                 <div className="w-full relative xl:h-[calc(100vh-100px)] flex flex-col gap-5 xl:p-5">
                     <Card className="max-w-sm">
                         <CardHeader>

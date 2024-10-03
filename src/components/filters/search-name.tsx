@@ -10,20 +10,20 @@ type Props = {
 
 export function SearchByName({className}:Props) {
 
-    const searchParams = useSearchParams();
-    const pathname = usePathname();
-    const { replace } = useRouter();
+    const searchParams = useSearchParams()
+    const pathname = usePathname()
+    const { replace } = useRouter()
 
     function handleSearch(term: string) {
-        const params = new URLSearchParams(searchParams);
+        const params = new URLSearchParams(searchParams)
         if (term) {
-            params.set('query', term);
-            params.set('page', '1');
+            params.set('query', term)
+            params.set('page', '1')
         } else {
-            params.delete('query');
-            params.set('page', '1');
+            params.delete('query')
+            params.set('page', '1')
         }
-        replace(`${pathname}?${params.toString()}`, { scroll: false });
+        replace(`${pathname}?${params.toString()}`, { scroll: false })
     }
     const debouncedHandleSearch = useDebouncedCallback(handleSearch, 500)
 

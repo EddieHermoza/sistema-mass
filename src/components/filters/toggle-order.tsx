@@ -9,21 +9,21 @@ import {
 } from "@/components/ui/select"
 
 export function ToogleOrder() {
-    const searchParams = useSearchParams();
-    const pathname = usePathname();
-    const { replace } = useRouter();
+    const searchParams = useSearchParams()
+    const pathname = usePathname()
+    const { replace } = useRouter()
 
 
     function handleOrder(term: string) {
-        const params = new URLSearchParams(searchParams);
+        const params = new URLSearchParams(searchParams)
         if (term) {
-            params.set('order', term);
-            params.set('page', '1');
+            params.set('order', term)
+            params.set('page', '1')
         } else {
-            params.delete('order');
-            params.set('page', '1');
+            params.delete('order')
+            params.set('page', '1')
         }
-        replace(`${pathname}?${params.toString()}`, { scroll: false });
+        replace(`${pathname}?${params.toString()}`, { scroll: false })
     }
     return (
         <Select onValueChange={handleOrder} defaultValue={searchParams.get('order') ? searchParams.get('order')?.toString() : undefined}>
