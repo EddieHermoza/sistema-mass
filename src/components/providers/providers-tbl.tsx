@@ -1,6 +1,6 @@
 'use client';
-import { useState,useEffect } from "react";
-import { Provider } from "@/types/types"
+import { useState, useEffect } from "react";
+import { Provider } from "@/types";
 import { AiOutlineInfoCircle } from "react-icons/ai"
 import { RiDeleteBin6Line } from "react-icons/ri"
 import { FiEdit } from "react-icons/fi";
@@ -14,7 +14,7 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover"
 
-import {Card, CardContent,CardDescription,CardFooter, CardHeader, CardTitle} from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import TableSkeleton from "../skeletons/table-skeleton";
 
 type SortConfig = {
@@ -31,9 +31,9 @@ type Props = {
 
 export default function ProvidersTbl({ page, limit, status, query }: Props) {
 
-    const [sortConfig, setSortConfig] = useState<SortConfig>({ key: 'id', order: 'desc' })
+    const [sortConfig, setSortConfig] = useState<SortConfig>({ key: 'id', order: 'asc' })
     const [providers, setProviders] = useState<Provider[]>([])
-    const [totalPages, settotalPages] = useState<number>(0)
+    const [totalPages, setTotalPages] = useState<number>(0)
     const [loading, setLoading] = useState<boolean>(true)
 
     const handleSort = (key: keyof Provider) => {
@@ -65,10 +65,10 @@ export default function ProvidersTbl({ page, limit, status, query }: Props) {
             delayTimeout = setTimeout(() => setLoading(true), 100)
             try {
                 const response = await fetch(`/api/providers?page=${page}&query=${query}&status=${status}&limit=${limit}`);
-                const data = await response.json()
+                const {totalPages,providers} = await response.json()
 
-                settotalPages(data.totalPages)
-                setProviders(data.providers)
+                setTotalPages(totalPages)
+                setProviders(providers)
 
             } catch (error) {
                 console.error("Error:", error)
@@ -79,7 +79,7 @@ export default function ProvidersTbl({ page, limit, status, query }: Props) {
         }
 
         fetchProviders()
-        
+
     }, [page, limit, query, status])
 
     return (
@@ -110,8 +110,8 @@ export default function ProvidersTbl({ page, limit, status, query }: Props) {
                             <td className="max-md:hidden">
                                 Correo
                             </td>
-                            <td className="max-lg:hidden">
-                                Web
+                            <td className="max-sm:hidden">
+                                Estado
                             </td>
                             <td className="max-xl:hidden">
                                 Creado
@@ -126,62 +126,64 @@ export default function ProvidersTbl({ page, limit, status, query }: Props) {
                     </thead>
                     <tbody className="text-xs sm:text-sm relative">
                         {loading ? (
-                            <TableSkeleton rows={limit}/>
-                        ):(
-                        providers.length > 0 ? (
-                            providers.map((provider, index) => (
-                                <tr key={index} className="hover:bg-muted/50 duration-300 relative h-24">
-                                    <td className=" rounded-l-lg">
-                                        {provider.id}
-                                    </td>
-                                    <td className="text-left  max-lg:hidden">
-                                        {provider.ruc}
-                                    </td>
-                                    <td className="sm:text-left">
-                                        {provider.name}
-                                    </td>
-                                    <td>
-                                        {provider.number}
-                                    </td>
-                                    <td className="max-md:hidden">
-                                        {provider.email}
-                                    </td>
-                                    <td className="max-lg:hidden">
-                                        {provider.web}
-                                    </td>
-                                    <td className="max-xl:hidden">
-                                        27-06-2024
-                                    </td>
-                                    <td className="max-xl:hidden">
-                                        27-06-2024
-                                    </td>
-                                    <td className="rounded-r-lg space-x-2 ">
-                                        <Popover>
-                                            <PopoverTrigger className="p-2 rounded bg-transparent hover:shadow-lg hover:shadow-secondary/50 hover:bg-background block duration-300"><MdOutlineUnfoldMore size={20} /></PopoverTrigger>
-                                            <PopoverContent align="end" className="flex flex-col gap-2 items-start text-sm">
-                                                {/* <Link href={`/admin/providers/${provider.id}`} className="flex items-center gap-2 hover:bg-secondary p-2 w-full rounded-sm ">
+                            <TableSkeleton rows={limit} />
+                        ) : (
+                            providers.length > 0 ? (
+                                providers.map((provider, index) => (
+                                    <tr key={index} className="hover:bg-muted/50 duration-300 relative h-24">
+                                        <td className=" rounded-l-lg">
+                                            {provider.id}
+                                        </td>
+                                        <td className="text-left  max-lg:hidden">
+                                            {provider.ruc}
+                                        </td>
+                                        <td className="sm:text-left">
+                                            {provider.name}
+                                        </td>
+                                        <td>
+                                            {provider.number}
+                                        </td>
+                                        <td className="max-md:hidden">
+                                            {provider.email}
+                                        </td>
+                                        <td
+                                            className={`max-sm:hidden text-shadow-lg ${provider.status ? "text-green-500 shadow-green-500/50" : "text-red-500 shadow-red-500/50"}`}
+                                        >
+                                            {provider.status ? "Activo" : "Inactivo"}
+                                        </td>
+                                        <td className="max-xl:hidden">
+                                            {provider.created}
+                                        </td>
+                                        <td className="max-xl:hidden">
+                                            {provider.updated}
+                                        </td>
+                                        <td className="rounded-r-lg space-x-2 ">
+                                            <Popover>
+                                                <PopoverTrigger className="p-2 rounded bg-transparent hover:shadow-lg hover:shadow-secondary/50 hover:bg-background block duration-300"><MdOutlineUnfoldMore size={20} /></PopoverTrigger>
+                                                <PopoverContent align="end" className="flex flex-col gap-2 items-start text-sm">
+                                                    {/* <Link href={`/admin/providers/${provider.id}`} className="flex items-center gap-2 hover:bg-secondary p-2 w-full rounded-sm ">
                                                     <AiOutlineInfoCircle size={18} /> Información
                                                 </Link> */}
-                                                <Link href={`/admin/providers/edit/${provider.id}`} className="flex items-center gap-2 hover:bg-secondary p-2 w-full rounded-sm ">
-                                                    <FiEdit size={18} /> Editar
-                                                </Link>
-                                                <button className="flex items-center gap-2 hover:bg-secondary p-2 rounded-sm w-full"><RiDeleteBin6Line size={18} /> Eliminar</button>
-                                            </PopoverContent>
-                                        </Popover>
-                                    </td>
+                                                    <Link href={`/admin/providers/edit/${provider.id}`} className="flex items-center gap-2 hover:bg-secondary p-2 w-full rounded-sm ">
+                                                        <FiEdit size={18} /> Editar
+                                                    </Link>
+                                                    <button className="flex items-center gap-2 hover:bg-secondary p-2 rounded-sm w-full"><RiDeleteBin6Line size={18} /> Eliminar</button>
+                                                </PopoverContent>
+                                            </Popover>
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr className="relative h-24">
+                                    <td colSpan={9} className="text-center py-4">No hay datos disponibles</td>
                                 </tr>
-                            ))
-                        ):(
-                            <tr className="relative h-24">
-                                <td colSpan={9} className="text-center py-4">No hay datos disponibles</td>
-                            </tr>
-                        ))}
+                            ))}
                     </tbody>
                 </table>
 
             </CardContent>
             <CardFooter>
-                <Pagination totalPages={totalPages}/>
+                <Pagination totalPages={totalPages} />
             </CardFooter>
 
         </Card>

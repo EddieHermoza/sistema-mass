@@ -8,7 +8,7 @@ import { BsBoxSeam } from "react-icons/bs";
 import { AiOutlineLineChart } from "react-icons/ai";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import { CiLogout } from "react-icons/ci";
-
+import { BiPurchaseTag } from "react-icons/bi";
 //Iconos de Cliente
 import { MdStoreMallDirectory } from "react-icons/md";
 import { MdCategory } from "react-icons/md";
@@ -25,12 +25,13 @@ export const dashboardLinks = [
     { label: "Proveedores", href: "/admin/providers", icon: FaUsersGear },
     { label: "Usuarios", href: "/admin/users", icon: IoShieldHalfSharp },
     { label: "Ventas", href: "/admin/sales", icon: MdOutlinePayment },
+    { label: "Compras", href: "/admin/purchases", icon: BiPurchaseTag },
 ]
 
 export const shopLinks = [
     { label: "Tienda", href: "/", icon: MdStoreMallDirectory },
-    // { label: "Categorias", href: "/shop/categories", icon: MdCategory },
     { label: "Mi Carrito", href: "/cart", icon: MdOutlineShoppingCart },
     { label: "Compras", href: "/auth/login", icon: TbMoneybag },
     { label: "Cuenta", href: "/auth/login", icon: PiUserCheckLight },
+    // { label: "Categorias", href: "/shop/categories", icon: MdCategory },
 ]

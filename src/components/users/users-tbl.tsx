@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from "react";
-import { User } from "@/types/types"
+import { User } from "@/types";
 import { AiOutlineInfoCircle } from "react-icons/ai"
 import { RiDeleteBin6Line } from "react-icons/ri"
 import { FiEdit } from "react-icons/fi";
@@ -57,14 +57,16 @@ export default function UserTbl({ page, limit, status, query }: Props) {
 
     useEffect(() => {
         let delayTimeout: NodeJS.Timeout;
+
         const fetchUsers = async () => {
             delayTimeout = setTimeout(() => setLoading(true), 100)
             try {
-                const response = await fetch(`/api/users?page=${page}&query=${query}&status=${status}&limit=${limit}`);
-                const data = await response.json()
+                const response = await fetch(`/api/users?page=${page}&query=${query}&status=${status}&limit=${limit}`)
 
-                settotalPages(data.totalPages)
-                setUsers(data.users)
+                const {totalPages,users} = await response.json()
+                console.log(users)
+                settotalPages(totalPages)
+                setUsers(users)
 
             } catch (error) {
                 console.error("Error:", error)
@@ -137,13 +139,13 @@ export default function UserTbl({ page, limit, status, query }: Props) {
                                         <td className="rounded-l-lg max-lg:hidden">{user.id}</td>
                                         <td className="rounded-l-lg">{user.dni}</td>
                                         <td>{`${user.name} ${user.lastName}`}</td>
-                                        <td className={`max-lg:hidden text-shadow-lg ${user.status === 1 ? 'text-green-500 shadow-green-500/50' : 'text-red-500 shadow-red-500/50'}`}>
-                                            {user.status === 1 ? 'Activo' : 'Inactivo'}
+                                        <td className={`max-lg:hidden text-shadow-lg ${user.status ? 'text-green-500 shadow-green-500/50' : 'text-red-500 shadow-red-500/50'}`}>
+                                            {user.status  ? 'Activo' : 'Inactivo'}
                                         </td>
                                         <td className="max-lg:hidden">{user.role}</td>
                                         <td className="max-md:hidden">{user.email}</td>
-                                        <td className="max-xl:hidden">27-06-2024</td>
-                                        <td className="max-xl:hidden">27-06-2024</td>
+                                        <td className="max-xl:hidden">{user.created}</td>
+                                        <td className="max-xl:hidden">{user.updated}</td>
                                         <td className="rounded-r-lg space-x-2">
                                             <Popover>
                                                 <PopoverTrigger className="p-2 rounded hover:shadow-xl hover:shadow-pressed/50 hover:bg-background duration-200">

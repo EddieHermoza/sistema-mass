@@ -34,7 +34,7 @@ export function CartTable() {
                                     <Image src={"/CocaColaCombo.webp"} height={96} width={96} className="h-24 w-auto" alt="" />
                                     <div className="flex flex-col gap-2">
                                         <span className="font-semibold tracking-tight leading-none">{product.name}</span>
-                                        <span className="text-muted-foreground">2x1</span>
+                                        <span className="text-muted-foreground">{product.description}</span>
                                     </div>
 
                                 </td>

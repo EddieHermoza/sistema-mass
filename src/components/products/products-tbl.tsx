@@ -4,7 +4,7 @@ import { AiOutlineInfoCircle } from "react-icons/ai";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
 import { MdOutlineUnfoldMore } from "react-icons/md";
-import { Product } from "@/types/types";
+import { Product } from "@/types";
 import { useState,useEffect } from "react";
 import { HiOutlineArrowsUpDown } from "react-icons/hi2";
 import Link from "next/link";
@@ -64,10 +64,10 @@ export default function ProductsTbl({query,status,page,limit} : Props ) {
 			delayTimeout = setTimeout(() => setLoading(true), 100)
             try {
                 const response = await fetch(`/api/products?page=${page}&query=${query}&status=${status}&limit=${limit}`);
-                const data = await response.json()
-
-                settotalPages(data.totalPages)
-                setProducts(data.products)
+                const {totalPages,products} = await response.json()
+				console.log(products)
+                settotalPages(totalPages)
+                setProducts(products)
 
             } catch (error) {
                 console.error("Error:", error)
@@ -139,17 +139,17 @@ export default function ProductsTbl({query,status,page,limit} : Props ) {
 	
 								<td className="text-left max-sm:text-xs">{product.name}</td>
 								<td
-									className={`max-sm:hidden  text-shadow-lg ${product.status === 1
+									className={`max-sm:hidden  text-shadow-lg ${product.status
 											? "text-green-500 shadow-green-500/50"
 											: "text-red-500 shadow-red-500/50"
 										}`}
 								>
-									{product.status === 1 ? "Activo" : "Inactivo"}
+									{product.status ? "Activo" : "Inactivo"}
 								</td>
-								<td className="max-sm:hidden">$/ {product.price}</td>
-								<td className="max-lg:hidden">$/ {product.price}</td>
-								<td className="max-lg:hidden">27-06-2024</td>
-								<td className="max-lg:hidden">27-06-2024</td>
+								<td className="max-sm:hidden">S/ {parseFloat(product.price).toFixed(2)}</td>
+								<td className="max-lg:hidden">% {parseFloat(product.discount).toFixed(2)}</td>
+								<td className="max-lg:hidden">{product.created}</td>
+								<td className="max-lg:hidden">{product.updated}</td>
 								<td className="rounded-r-lg space-x-2 ">
 									<Popover>
 										<PopoverTrigger className="p-2 rounded bg-transparent hover:shadow-lg hover:shadow-secondary/50 hover:bg-background duration-300">

@@ -5,8 +5,8 @@ import { Input } from "@/components/ui/input";
 import { useRouter } from 'next/navigation'
 import { toast } from "sonner"
 import { UserSchema } from "@/Schemas";
-import {useForm,Controller,SubmitHandler} from "react-hook-form"
-import {zodResolver} from "@hookform/resolvers/zod"
+import { useForm, Controller, SubmitHandler } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 import {
 	Card,
@@ -24,44 +24,85 @@ import {
 	SelectValue,
 } from "@/components/ui/select"
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { UserFormData } from "@/types";
+import { AiOutlineLoading } from "react-icons/ai";
 
 
-type Input={
-	name:string,
-	lastName:string,
-	status:string,
-	dni:string,
-	role:string,
-	number:string,
-	email:string
-	password:string,
-	confirmPassword:string
+type Input = {
+	name: string,
+	lastName: string,
+	status: string,
+	dni: string,
+	role: string,
+	number: string,
+	email: string
+	password: string,
+	confirmPassword: string
 }
 
 export default function Page() {
-	const {register,reset, control,watch,handleSubmit, formState:{errors} } = useForm<Input>({
-		resolver:zodResolver(UserSchema)
+	const [loading, setLoading] = useState(false)
+	const { register, reset, control, watch, handleSubmit, formState: { errors } } = useForm<Input>({
+		resolver: zodResolver(UserSchema)
 	})
 
 	const router = useRouter()
 
-	const onSubmit: SubmitHandler<Input> = (data) => {
-		toast("Usuario Creado Correctamente", {
-			description: "Sunday, December 03, 2023 at 9:00 AM",
-			duration: 5000,
-			action: {
-				label: "Entendido",
-				onClick: () => console.log("Entendido"),
-			},
-		});
-		router.push('/admin/users');
-		reset();
+	const onSubmit: SubmitHandler<UserFormData> = async (data) => {
+		setLoading(true)
+		try {
+			const response = await fetch("/api/users", {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(data),
+			});
+
+			if (!response.ok) {
+				const errorResponse = await response.json()
+				throw {
+					message: errorResponse.message || "Error en la solicitud",
+					details: errorResponse.error
+				}
+			}
+
+
+			toast("Usuario Creado Correctamente", {
+				description: `${new Date().toLocaleDateString('es-ES', {
+					weekday: 'long',
+					year: 'numeric',
+					month: 'long',
+					day: 'numeric',
+					hour: 'numeric',
+					minute: 'numeric'
+				})}`,
+				duration: 5000,
+				action: {
+					label: "Entendido",
+					onClick: () => console.log("Entendido"),
+				},
+			})
+
+			router.push('/admin/users')
+
+		} catch (error: any) {
+			setLoading(false);
+
+			const errorMessage = error.message || "Error desconocido"
+			const errorDetails = error.details ? `El campo ${error.details} es inválido` : ""
+
+			console.log(errorMessage)
+			toast.error(errorMessage, { description: errorDetails })
+		}
 	}
+
 	return (
 		<>
 			<section className="max-w-screen-xl w-full mx-auto flex items-center justify-start gap-5">
 				<Button asChild variant={"outline"} size={"icon"}>
-					<Link href={"/admin/users"}><MdOutlineChevronLeft size={25}/></Link>
+					<Link href={"/admin/users"}><MdOutlineChevronLeft size={25} /></Link>
 				</Button>
 
 				<h1 className="text-3xl">Nuevo Usuario</h1>
@@ -78,21 +119,21 @@ export default function Page() {
 						</CardHeader>
 						<CardContent>
 							<Controller
-                                name="status"
-                                control={control}
-                                defaultValue="1"
-                                render={({ field }) => (
-                                    <Select onValueChange={field.onChange} value={field.value}>
-                                        <SelectTrigger className="hover:bg-secondary">
-                                            <SelectValue placeholder="Seleccionar" />
-                                        </SelectTrigger>
-                                        <SelectContent position="popper" sideOffset={5} hideWhenDetached>
-                                            <SelectItem value="1">Activo</SelectItem>
-                                            <SelectItem value="0">Inactivo</SelectItem>
-                                        </SelectContent>
-                                    </Select>
-                                )}
-                            />
+								name="status"
+								control={control}
+								defaultValue="1"
+								render={({ field }) => (
+									<Select onValueChange={field.onChange} value={field.value}>
+										<SelectTrigger className="hover:bg-secondary">
+											<SelectValue placeholder="Seleccionar" />
+										</SelectTrigger>
+										<SelectContent position="popper" sideOffset={5} hideWhenDetached>
+											<SelectItem value="1">Activo</SelectItem>
+											<SelectItem value="0">Inactivo</SelectItem>
+										</SelectContent>
+									</Select>
+								)}
+							/>
 							{
 								errors.status && <p className="text-red-600 text-xs">{errors.status.message}</p>
 							}
@@ -104,24 +145,24 @@ export default function Page() {
 							<CardTitle className="text-xl font-normal">Detalles</CardTitle>
 						</CardHeader>
 						<CardContent className="space-y-3">
-                            <label className="flex flex-col gap-2">
+							<label className="flex flex-col gap-2">
 								<span className="text-sm">DNI</span>
-								<Input id="dni" {...register("dni")}/>
+								<Input id="dni" {...register("dni")} />
 								{
 									errors.dni && <p className="text-red-600 text-xs">{errors.dni.message}</p>
 								}
 							</label>
 							<label className="flex flex-col gap-2">
 								<span className="text-sm">Nombres</span>
-								<Input id="name" {...register("name")}/>
+								<Input id="name" {...register("name")} />
 								{
 									errors.name && <p className="text-red-600 text-xs">{errors.name.message}</p>
 								}
 							</label>
 
-							<label  className="flex flex-col gap-2">
+							<label className="flex flex-col gap-2">
 								<span className="text-sm">Apellidos</span>
-								<Input id="lastName" {...register("lastName")}/>
+								<Input id="lastName" {...register("lastName")} />
 								{
 									errors.lastName && <p className="text-red-600 text-xs">{errors.lastName.message}</p>
 								}
@@ -136,7 +177,7 @@ export default function Page() {
 						<CardContent className="flex gap-5 max-md:flex-col">
 							<label className="flex flex-col gap-2 w-full">
 								<span className="text-sm">Correo Electrónico</span>
-								<Input id="email" {...register("email")}/>
+								<Input id="email" {...register("email")} />
 								{
 									errors.email && <p className="text-red-600 text-xs">{errors.email.message}</p>
 								}
@@ -144,7 +185,7 @@ export default function Page() {
 
 							<label className="flex flex-col gap-2 w-full">
 								<span className="text-sm">Número</span>
-								<Input id="number" {...register("number")}/>
+								<Input id="number" {...register("number")} />
 								{
 									errors.number && <p className="text-red-600 text-xs">{errors.number.message}</p>
 								}
@@ -154,27 +195,27 @@ export default function Page() {
 				</div>
 
 				<div className="w-full lg:w-[40%] relative flex flex-col gap-5">
-                    <Card className="w-full">
+					<Card className="w-full">
 						<CardHeader>
 							<CardTitle className="text-xl font-normal">Rol asignado</CardTitle>
 						</CardHeader>
 						<CardContent>
 							<Controller
-                                name="role"
-                                control={control}
-                                defaultValue="1"
-                                render={({ field }) => (
-                                    <Select onValueChange={field.onChange} value={field.value}>
-                                        <SelectTrigger className="hover:bg-secondary">
-                                            <SelectValue placeholder="Seleccionar" />
-                                        </SelectTrigger>
-                                        <SelectContent position="popper" sideOffset={5} hideWhenDetached>
-                                            <SelectItem value="1">Administrador</SelectItem>
-                                            <SelectItem value="2">Vendedor</SelectItem>
-                                        </SelectContent>
-                                    </Select>
-                                )}
-                            />
+								name="role"
+								control={control}
+								defaultValue="1"
+								render={({ field }) => (
+									<Select onValueChange={field.onChange} value={field.value}>
+										<SelectTrigger className="hover:bg-secondary">
+											<SelectValue placeholder="Seleccionar" />
+										</SelectTrigger>
+										<SelectContent position="popper" sideOffset={5} hideWhenDetached>
+											<SelectItem value="1">Administrador</SelectItem>
+											<SelectItem value="2">Vendedor</SelectItem>
+										</SelectContent>
+									</Select>
+								)}
+							/>
 							{
 								errors.role && <p className="text-red-600 text-xs">{errors.role.message}</p>
 							}
@@ -190,7 +231,7 @@ export default function Page() {
 						<CardContent className="flex flex-col gap-5">
 							<label className="flex flex-col gap-2 w-full">
 								<span className="text-sm">Contraseña</span>
-								<Input id="password" {...register("password")}/>
+								<Input id="password" {...register("password")} />
 								{
 									errors.password && <p className="text-red-600 text-xs">{errors.password.message}</p>
 								}
@@ -198,7 +239,7 @@ export default function Page() {
 
 							<label className="flex flex-col gap-2 w-full">
 								<span className="text-sm">Confirmar Contraseña</span>
-								<Input id="confirmPassword" {...register("confirmPassword")}/>
+								<Input id="confirmPassword" {...register("confirmPassword")} />
 								{
 									errors.confirmPassword && <p className="text-red-600 text-xs">{errors.confirmPassword.message}</p>
 								}
@@ -206,8 +247,14 @@ export default function Page() {
 						</CardContent>
 					</Card>
 
-					<Button variant={"secondary"}>
-						Guardar Usuario
+					<Button variant={"secondary"} disabled={loading}>
+						{loading ? (
+							<AiOutlineLoading size={18} className="animate-spin ease-in-out" />
+						) : (
+							<>
+								Guardar Usario
+							</>
+						)}
 					</Button>
 				</div>
 			</form>

@@ -67,7 +67,7 @@ const Content = ({ click }: { click: () => void }) => {
                                         {product.name}
                                     </span>
                                     <span className="max-sm:text-xs text-sm text-muted-foreground">
-                                        {product.quantity} <span> x </span> S/ {product.price}
+                                        {product.quantity} <span> x </span> S/ {product.price.toFixed(2)}
                                     </span>
                                     <span className=" leading-none tracking-tight text-primary-foreground dark:text-white">
                                         S/ {(product.quantity * product.price).toFixed(2)}

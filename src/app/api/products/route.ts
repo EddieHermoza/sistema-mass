@@ -1,10 +1,12 @@
 import { NextResponse } from "next/server";
-import { products } from "@/data/data";
-import { sleep } from "@/lib/utils";
+import { ProductFormData } from "@/types";
+import { ProductSchema } from "@/Schemas";
+import { createProduct, getProducts, getProductsPages } from "@/app/api/helpers/product-actions";
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
-
+    const hasStock = searchParams.get("hasStock") || ""
+    const category= searchParams.get("category") || ""
     const max= searchParams.get("max") || ""
     const order = searchParams.get("order") || ""
     const page = parseInt(searchParams.get("page") || "1")
@@ -13,42 +15,74 @@ export async function GET(request: Request) {
     const status = searchParams.get("status") || "all"
 
 
-    const statusMap: { [key: string]: number | null } = {
-        "en": 1,
-        "dis": 0,
+    const statusMap: { [key: string]: boolean | null } = {
+        "en": true,
+        "dis": false,
         "all": null
     }
-
-
     const statusValue = statusMap[status] ?? null
 
+    const hasStockMap: { [key: string]: boolean | null } = {
+        "true": true,
+    }
+    const stockValue = hasStockMap[hasStock] ?? null
 
-    let filteredProducts = products.filter(product => {
-
-        const matchesQuery = product.name.toLowerCase().includes(query.toLowerCase())
-
-
-        const matchesStatus = statusValue === null || product.status === statusValue
-
-        return matchesQuery && matchesStatus
-    })
-
-    const startIndex = (page - 1) * limit
-    const endIndex = startIndex + limit
-
-    const paginatedProducts = filteredProducts.slice(startIndex, endIndex)
-
-    const totalProducts = filteredProducts.length
-
-    const totalPages = Math.ceil(totalProducts / limit)
-
-    await sleep(1000)
+    const data = await getProducts({ query, page, limit, status: statusValue ,category,hasStock:stockValue})
+    const totalPages = await getProductsPages({ query, page, limit, status: statusValue,category,hasStock:stockValue })
 
     return NextResponse.json({
-        products: paginatedProducts,
-        page,
-        limit,
-        totalPages,
-        totalProducts,
+        products: data,
+        totalPages: totalPages,
     })
+
+}
+
+
+export async function POST(request: Request) {
+    try {
+        const rawBody: ProductFormData = await request.json()
+
+        const body = ProductSchema.parse(rawBody);
+
+        const { name, description, price, discount, category, status,orderLimit } = body
+
+        const product = {
+            status: status==="1",
+            name: name,
+            description: description,
+            price: parseFloat(price),
+            discount: parseFloat(discount),
+            category: category,
+            orderLimit: parseInt(orderLimit)
+        }
+
+        const newProduct = await createProduct(product)
+
+
+        const newProductResponse = {
+            ...newProduct,
+            product: {
+                id: newProduct.product?.id.toString(),
+                name,
+                description,
+                price,
+                discount,
+                orderLimit,
+                status: product.status,
+            }
+        }
+
+
+        if (newProductResponse.success) return NextResponse.json({ message: "Producto creado exitosamente", provider: newProductResponse.product }, { status: 201 })
+
+
+        return NextResponse.json({ message: newProductResponse.error?.msg, error: newProductResponse.error?.details }, { status: 500 })
+
+
+    } catch (error) {
+
+        console.error("Error en el registro del proveedor en la REST API:", error)
+
+        return NextResponse.json({ message: "Error en el registro del proveedor en la REST API:", error: error || "Error desconocido en la REST API" }, { status: 500 })
+    }
 }

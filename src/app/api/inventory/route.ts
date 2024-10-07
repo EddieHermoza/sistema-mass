@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { products } from "@/data/data";
-import { sleep } from "@/lib/utils";
+import { getProductsInventory,getProductsPages } from "@/app/api/helpers/product-actions";
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
@@ -10,40 +9,18 @@ export async function GET(request: Request) {
     const query = searchParams.get("query") || ""
     const status = searchParams.get("status") || "all"
 
-
-    const statusMap: { [key: string]: number | null } = {
-        "en": 1,
-        "dis": 0,
+    const statusMap: { [key: string]: boolean | null } = {
+        "en": true,
+        "dis": false,
         "all": null
     }
 
- 
     const statusValue = statusMap[status] ?? null
+    const data = await getProductsInventory({ query, page, limit, status: statusValue })
+    const totalPages = await getProductsPages({ query, page, limit, status: statusValue })
 
-
-    let filteredProducts = products.filter(product => {
-    
-        const matchesQuery = product.name.toLowerCase().includes(query.toLowerCase()) 
-
-
-        const matchesStatus = statusValue === null || product.status === statusValue
-
-        return matchesQuery && matchesStatus
-    })
-
-    const startIndex = (page - 1) * limit
-    const endIndex = startIndex + limit
-
-    const paginatedProducts = filteredProducts.slice(startIndex, endIndex)
-
-    const totalProducts = filteredProducts.length
-    const totalPages = Math.ceil(totalProducts / limit)
-    await sleep(1000)
     return NextResponse.json({
-        products: paginatedProducts,
-        page,
-        limit,
-        totalPages,
-        totalProducts,
+        products: data,
+        totalPages: totalPages,
     })
 }

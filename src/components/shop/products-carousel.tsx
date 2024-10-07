@@ -16,11 +16,12 @@ import ProductsCarouselSkeleton from "../skeletons/products-carousel-skeleton";
 
 type Props = {
     category: string,
+    hasStock:string
     status: string,
     limit: number,
 }
 
-export function ProductsCarousel({ category, status, limit }: Props) {
+export function ProductsCarousel({ category, status, limit,hasStock }: Props) {
     const [products, setProducts] = useState<Product[]>([])
     const [loading, setLoading] = useState<boolean>(false)
 
@@ -30,7 +31,7 @@ export function ProductsCarousel({ category, status, limit }: Props) {
             setLoading(true)
 
             try {
-                const response = await fetch(`/api/products?limit=${limit}&status=${status}`,{cache:"force-cache"});
+                const response = await fetch(`/api/products?limit=${limit}&status=${status}&category=${category}&hasStock=${hasStock}`)
                 const data = await response.json()
 
                 setProducts(data.products)
@@ -42,7 +43,7 @@ export function ProductsCarousel({ category, status, limit }: Props) {
         }
 
         fetchProducts()
-    }, [limit])
+    }, [limit,hasStock,category,status])
     return (
         <Carousel
             className="w-full"
@@ -62,13 +63,13 @@ export function ProductsCarousel({ category, status, limit }: Props) {
                                     <Card className="p-3 h-80 relative flex flex-col justify-between hover:bg-muted/40 duration-200">
                                         <CardHeader className="p-0">
                                             <CardTitle className="text-base">{product.name}</CardTitle>
-                                            <CardDescription className="text-lg">2x1</CardDescription>
+                                            <CardDescription className="text-lg">{product.description}</CardDescription>
                                         </CardHeader>
                                         <CardContent className="p-0 py-2 flex-center">
                                             <Image src={"/CocaColaCombo.webp"} width={160} height={160} alt="Coca Cola Combo" />
                                         </CardContent>
                                         <CardFooter className="p-0 flex justify-between">
-                                            <span className="leading-none">S/ {product.price.toFixed(2)}</span>
+                                            <span className="leading-none">S/ {parseFloat(product.price).toFixed(2)}</span>
                                             <AddCartProductButton product={product} />
                                         </CardFooter>
                                     </Card>

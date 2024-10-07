@@ -45,7 +45,7 @@ export default function QuantitySelector({ product }: Props) {
                 min={1}
                 max={product.maxQuantity}
             />
-            <Button onClick={() => toggleCount(1)} size={"icon"} variant={"ghost"} className="h-8 w-8" disabled={count === product.maxQuantity}>
+            <Button onClick={() => toggleCount(1)} size={"icon"} variant={"ghost"} className="h-8 w-8" disabled={count >= product.maxQuantity}>
                 <MdAdd size={18} />
             </Button>
         </div>

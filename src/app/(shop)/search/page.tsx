@@ -9,6 +9,7 @@ export default function Page({ searchParams }: any) {
     const currentPage = Number(searchParams?.page) || 1
     const limit = 15
     const status = 'en'
+    const hasStock='true'
 
     return (
         <main className="flex flex-col w-full gap-16 pt-10 pb-24">
@@ -31,7 +32,7 @@ export default function Page({ searchParams }: any) {
                 <SearchProducts />
             </section>
             <section className="relative sm:container">
-                <ProductsGrid query={query} limit={limit} status={status} page={currentPage} />
+                <ProductsGrid query={query} limit={limit} status={status} page={currentPage} hasStock={hasStock}/>
             </section>
         </main>
     );

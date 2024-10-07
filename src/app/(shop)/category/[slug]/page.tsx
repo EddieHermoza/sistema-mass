@@ -9,12 +9,13 @@ import ProductsGrid from "@/components/shop/products-grid";
 
 export default function Page({ params, searchParams }: { params: { slug: string }; searchParams:any }) {
     const category = CATEGORIES.find((category) => category.slug === params.slug);
-    const Icon = category?.icon;
+    const Icon = category?.icon
 
     const query = searchParams?.query || ''
     const currentPage = Number(searchParams?.page) || 1
     const limit = 15
     const status = 'en'
+    const hasStock='true'
 
     return (
         <main className="relative w-full flex flex-col gap-10 pt-10 pb-24">
@@ -43,7 +44,7 @@ export default function Page({ params, searchParams }: { params: { slug: string 
             </section>
 
             <section className="relative sm:container">
-                    <ProductsGrid page={currentPage} limit={limit} query={query} status={status}/>
+                    <ProductsGrid page={currentPage} limit={limit} query={query} status={status} category={params.slug} hasStock={hasStock}/>
             </section>
         </main>
     );

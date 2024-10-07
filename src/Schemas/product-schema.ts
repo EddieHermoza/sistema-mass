@@ -1,32 +1,42 @@
-
 import { z } from "zod";
+import { CATEGORIES } from "@/data/categories";
 
+const mapCategory = CATEGORIES.map((category) => category.slug)
 
 const status = ["0", "1"] as const
 
 export const ProductSchema = z.object({
     name: z
         .string()
-        .min(3, { message: "El nombre debe tener minimo 3 carácteres" })
-        .max(50,{message:"El nombre debe tener como máximo 50 carácteres"}),
+        .min(3, { message: "El nombre debe tener mínimo 3 caracteres" })
+        .max(50, { message: "El nombre debe tener como máximo 50 caracteres" }),
     description: z
         .string()
-        .min(3, { message: "La descripcion debe tener minimo 3 carácteres" })
-        .max(50,{message:"La descripcion debe tener como máximo 50 carácteres"}),
-    status: z.enum(status, { errorMap: () => ({ 
-        message: "El estado no es válido" 
-        }) 
+        .min(3, { message: "La descripción debe tener mínimo 3 caracteres" })
+        .max(50, { message: "La descripción debe tener como máximo 50 caracteres" }),
+    status: z.enum(status, {
+        errorMap: () => ({
+            message: "El estado no es válido",
+        }),
     }),
-    price:z.string().refine(price=>!isNaN(parseFloat(price)),{
-        message:"El precio no es válido"
-    }),
-    initStock:z.string().refine(initStock => !isNaN(parseInt(initStock)),{
-        message:"El stock no es valido"
-    }),
-    category:z.string().refine(category=>!isNaN(parseInt(category)),{
-        message:"La categoria no es válida"
-    }),
-    provider:z.string().refine(provider=>!isNaN(parseInt(provider)),{
-        message:"El proveedor no es válido"
-    })
-})
+    price: z
+        .string()
+        .refine((price) => !isNaN(parseFloat(price)) && parseFloat(price) > 0, {
+            message: "El precio debe ser un número positivo mayor a 0",
+        }),
+    discount: z
+        .string()
+        .refine((discount) => !isNaN(parseFloat(discount)) && parseFloat(discount) >= 0 && parseFloat(discount) <= 100, {
+            message: "El descuento debe ser un número entre 0 y 100",
+        }),
+    category: z
+        .string({required_error:"Selecciona una categoría"})
+        .refine((category) => mapCategory.includes(category), {
+            message: "La categoría no es válida",
+        }),
+    orderLimit: z
+        .string()
+        .refine((orderLimit) => !isNaN(parseInt(orderLimit)) && parseInt(orderLimit) > 0, {
+            message: "El límite de compra debe ser un número entero positivo mayor a 0",
+        }),
+}).strict()

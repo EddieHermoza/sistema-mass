@@ -11,8 +11,9 @@ import SearchProducts from "@/components/shop/search-products";
 
 export default function Page({searchParams}:any) {
 
-    const limit = 15
+    const limit = 8
     const status = 'en'
+	const hasStock='true'
 
 	return (
 		<>
@@ -48,7 +49,7 @@ export default function Page({searchParams}:any) {
 									</Link>
 								</Button>
 							</div>
-							<ProductsCarousel category={category.name} limit={limit} status={status}/>
+							<ProductsCarousel category={category.slug} limit={limit} status={status} hasStock={hasStock}/>
 						</section>
 					))
 				}

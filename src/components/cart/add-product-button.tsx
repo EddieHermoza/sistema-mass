@@ -16,14 +16,16 @@ export function AddCartProductButton( {product} : Props )  {
 
 	const addToCart = async () => {
 		setLoading(true)
+		console.log(product)
 
 		await sleep(1000)
 		const cartProduct : CartProduct ={
 			id: product.id,
 			name: product.name,
-			price: product.price,
+			description:product.description,
+			price: parseFloat(product.price),
 			discount: 0,
-			maxQuantity: product.stock,
+			maxQuantity: Math.min(product.stock, product.orderLimit),
 			quantity: 1
 		}
 

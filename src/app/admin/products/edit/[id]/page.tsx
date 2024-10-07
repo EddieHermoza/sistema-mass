@@ -6,8 +6,8 @@ import { Input } from "@/components/ui/input";
 import { useRouter } from 'next/navigation'
 import { toast } from "sonner"
 import { ProductSchema } from "@/Schemas";
-import {useForm,Controller,SubmitHandler} from "react-hook-form"
-import {zodResolver} from "@hookform/resolvers/zod"
+import { useForm, Controller, SubmitHandler } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 import {
 	Card,
@@ -27,19 +27,19 @@ import {
 import ImageUploader from "@/components/ui/image-uploader";
 import { Button } from "@/components/ui/button";
 
-type Input={
-	name:string,
-	description:string,
-	status:string,
-	category:string,
-	provider:string,
-	price:string,
-	initStock:string
+type Input = {
+	name: string,
+	description: string,
+	status: string,
+	category: string,
+	provider: string,
+	price: string,
+	initStock: string
 }
 
-export default function Page({params} : {params : { id : string } }) {
-	const {register,reset, control,watch,handleSubmit, formState:{errors} } = useForm<Input>({
-		resolver:zodResolver(ProductSchema)
+export default function Page({ params }: { params: { id: string } }) {
+	const { register, reset, control, watch, handleSubmit, formState: { errors } } = useForm<Input>({
+		resolver: zodResolver(ProductSchema)
 	})
 
 	const router = useRouter()
@@ -80,21 +80,21 @@ export default function Page({params} : {params : { id : string } }) {
 						</CardHeader>
 						<CardContent>
 							<Controller
-                                name="status"
-                                control={control}
-                                defaultValue="1"
-                                render={({ field }) => (
-                                    <Select onValueChange={field.onChange} value={field.value}>
-                                        <SelectTrigger className="hover:bg-secondary">
-                                            <SelectValue placeholder="Seleccionar" />
-                                        </SelectTrigger>
-                                        <SelectContent position="popper" sideOffset={5} hideWhenDetached>
-                                            <SelectItem value="1">Activo</SelectItem>
-                                            <SelectItem value="0">Inactivo</SelectItem>
-                                        </SelectContent>
-                                    </Select>
-                                )}
-                            />
+								name="status"
+								control={control}
+								defaultValue="1"
+								render={({ field }) => (
+									<Select onValueChange={field.onChange} value={field.value}>
+										<SelectTrigger className="hover:bg-secondary">
+											<SelectValue placeholder="Seleccionar" />
+										</SelectTrigger>
+										<SelectContent position="popper" sideOffset={5} hideWhenDetached>
+											<SelectItem value="1">Activo</SelectItem>
+											<SelectItem value="0">Inactivo</SelectItem>
+										</SelectContent>
+									</Select>
+								)}
+							/>
 							{
 								errors.status && <p className="text-red-600 text-xs">{errors.status.message}</p>
 							}
@@ -108,7 +108,7 @@ export default function Page({params} : {params : { id : string } }) {
 						<CardContent className="space-y-2">
 							<label className="flex flex-col gap-2">
 								<span>Nombre</span>
-								<Input id="name" {...register("name")}/>
+								<Input id="name" {...register("name")} />
 								{
 									errors.name && <p className="text-red-600 text-xs">{errors.name.message}</p>
 								}
@@ -116,7 +116,7 @@ export default function Page({params} : {params : { id : string } }) {
 
 							<label className="flex flex-col gap-2">
 								<span>Descripción</span>
-								<Textarea id="description" {...register("description")}/>
+								<Textarea id="description" {...register("description")} />
 								{
 									errors.description && <p className="text-red-600 text-xs ">{errors.description.message}</p>
 								}
@@ -188,7 +188,7 @@ export default function Page({params} : {params : { id : string } }) {
 							</CardHeader>
 							<CardContent>
 								<label className="flex flex-col gap-2">
-									<Input type="number" defaultValue={0} min={0} id="price" {...register("price")}/>
+									<Input type="number" defaultValue={0} min={0} id="price" {...register("price")} />
 								</label>
 								{
 									errors.price && <p className="text-red-600 text-xs">{errors.price.message}</p>
@@ -213,6 +213,23 @@ export default function Page({params} : {params : { id : string } }) {
 
 				</div>
 				<div className="w-full lg:w-[40%] relative flex flex-col gap-5">
+					
+					<Card className="w-full">
+						<CardHeader>
+							<CardTitle className="text-xl font-normal">Compra Limite</CardTitle>
+							<CardDescription>
+								Cantidad máxima que el cliente podra adquirir por compra.
+							</CardDescription>
+						</CardHeader>
+						<CardContent>
+							<label className="flex flex-col gap-2">
+								<Input type="number" defaultValue={0} min={0} id="initStock" {...register("initStock")} />
+							</label>
+							{
+								errors.initStock && <p className="text-red-600 text-xs">{errors.initStock.message}</p>
+							}
+						</CardContent>
+					</Card>
 
 					<Card className="w-full h-auto relative">
 						<CardHeader>
@@ -225,7 +242,7 @@ export default function Page({params} : {params : { id : string } }) {
 							<ImageUploader />
 						</CardContent>
 					</Card>
-					
+
 					<Button variant={"secondary"}>
 						Guardar Producto
 					</Button>

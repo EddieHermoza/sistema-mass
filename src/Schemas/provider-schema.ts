@@ -1,4 +1,4 @@
-import {  z } from "zod";
+import {  map, z } from "zod";
 
 const status = ["0", "1"] as const;
 
@@ -28,4 +28,4 @@ export const ProviderSchema = z.object({
         .min(3, { message: "El nombre del sitio web debe tener mínimo 3 caracteres" })
         .max(50, { message: "El nombre del sitio web debe tener como máximo 50 caracteres" })
         .regex(/^https?:\/\/[^\s$.?#].[^\s]*$/, { message: "El nombre del sitio web debe ser una URL válida" }),
-});
+}).strict();

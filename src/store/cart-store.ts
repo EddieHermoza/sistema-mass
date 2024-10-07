@@ -85,7 +85,7 @@ export const useCartStore = create<CartState>()(
                 const updatedCart = cart.map((item) => {
                     if (item.id === product.id) {
 
-                        if (item.maxQuantity <= item.quantity + product.quantity) return { ...item, quantity: product.quantity }
+                        if (item.maxQuantity <= item.quantity + product.quantity ) return { ...item, quantity: product.quantity }
 
                         return { ...item, quantity: item.quantity + product.quantity }
                     }

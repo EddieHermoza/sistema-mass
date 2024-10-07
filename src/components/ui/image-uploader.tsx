@@ -57,7 +57,7 @@ export default function ImageUploader() {
 
     return (
 
-        <div className=" z-10 h-[460px] relative flex-center  border rounded border-ring" onDrop={handleDrop} onDragOver={handleDragOver} >
+        <div className=" z-10 h-96 relative flex-center  border rounded border-ring" onDrop={handleDrop} onDragOver={handleDragOver} >
             <input
             type="file"
             multiple
@@ -68,10 +68,10 @@ export default function ImageUploader() {
             ref={inputRef} 
             />
 
-            {error && <p className=" absolute top-10 text-red-500 text-sm">{error}</p>}
+            {error && <p className=" absolute top-2 text-red-500 text-sm">{error}</p>}
 
             {image ? (
-                <div className=" group relative w-[300px] h-[300px] flex-center cursor-pointer rounded group border-dashed border border-foreground m-auto duration-200 dark:hover:bg-black hover:shadow-xl dark:hover:shadow-white/30" onClick={handleClick}>
+                <div className=" group relative w-60 h-60 flex-center cursor-pointer rounded group border-dashed border border-foreground m-auto duration-200 dark:hover:bg-black hover:shadow-xl dark:hover:shadow-white/30" onClick={handleClick}>
                     <Image
                     src={URL.createObjectURL(image)}
                     alt={`${image.name}`}

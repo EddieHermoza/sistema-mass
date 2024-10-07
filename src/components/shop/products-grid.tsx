@@ -9,13 +9,15 @@ import ProductsGridSkeleton from "../skeletons/products-grid-skeleton";
 
 
 type Props = {
+    category?:string,
+    hasStock:string
     query: string;
     page: number;
     limit: number;
     status: string;
 }
 
-export default function ProductsGrid({ query, page, limit, status }: Props) {
+export default function ProductsGrid({ query, page, limit, status,category,hasStock }: Props) {
     const [products, setProducts] = useState<Product[]>([])
     const [loading, setLoading] = useState<boolean>(false)
     const [totalPages, settotalPages] = useState<number>(0)
@@ -26,7 +28,8 @@ export default function ProductsGrid({ query, page, limit, status }: Props) {
         const fetchProducts = async () => {
             delayTimeout = setTimeout(() => setLoading(true), 100)
             try {
-                const response = await fetch(`/api/products?page=${page}&query=${query}&limit=${limit}&status=${status}`);
+                const categoryParam = category ? `&category=${encodeURIComponent(category)}` : ''
+                const response = await fetch(`/api/products?page=${page}&query=${query}&limit=${limit}&status=${status}&hasStock=${hasStock}${categoryParam}`)
                 const data = await response.json()
 
                 settotalPages(data.totalPages)
@@ -41,7 +44,7 @@ export default function ProductsGrid({ query, page, limit, status }: Props) {
         }
 
         fetchProducts()
-    }, [page, limit, query])
+    }, [page, limit, query,category,hasStock,status])
 
 
     return (
@@ -57,14 +60,14 @@ export default function ProductsGrid({ query, page, limit, status }: Props) {
                                 <Card className=" p-3 h-44 sm:h-80 relative flex sm:flex-col max-sm:items-center sm:justify-between max-sm:rounded-none hover:bg-muted/40 duration-200">
                                     <CardHeader className="p-0 max-sm:ml-2">
                                         <CardTitle className="text-base">{product.name}</CardTitle>
-                                        <CardDescription className="text-lg">2x1</CardDescription>
+                                        <CardDescription className="text-lg">{product.description}</CardDescription>
                                         <span className="leading-none sm:hidden dark:text-white text-primary-foreground">S/ {product.price}</span>
                                     </CardHeader>
                                     <CardContent className="p-0 py-2 flex-center max-sm:order-first">
                                         <Image src={"/CocaColaCombo.webp"} width={160} height={160} alt="Coca Cola Combo" className="max-sm:h-24 max-sm:w-auto" />
                                     </CardContent>
                                     <CardFooter className="p-0 flex justify-between max-sm:order-last max-sm:ml-auto ">
-                                        <span className="leading-none max-sm:hidden">S/ {product.price.toFixed(2)}</span>
+                                        <span className="leading-none max-sm:hidden">S/ {parseFloat(product.price).toFixed(2)}</span>
                                         <AddCartProductButton product={product} />
                                     </CardFooter>
                                 </Card>
