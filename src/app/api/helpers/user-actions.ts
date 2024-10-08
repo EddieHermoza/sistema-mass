@@ -1,4 +1,5 @@
 import db from "@/lib/db"
+import { formatDate } from "@/lib/utils"
 import { UserDTO } from "@/types"
 import { format } from "date-fns"
 
@@ -69,10 +70,10 @@ export const getUsers = async ({ query, limit, page, status }: GetUsersProps) =>
         })
 
 
-        const formattedUsers = users.map((provider) => ({
-            ...provider,
-            created: format(new Date(provider.created), 'dd-MM-yyyy HH:mm'),
-            updated: format(new Date(provider.created), 'dd-MM-yyyy HH:mm'),
+        const formattedUsers = users.map((user) => ({
+            ...user,
+            created: formatDate(new Date(user.created)),
+            updated: formatDate(new Date(user.updated)),
         }))
 
         return formattedUsers

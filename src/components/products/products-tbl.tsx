@@ -37,7 +37,7 @@ export default function ProductsTbl({query,status,page,limit} : Props ) {
 	const [loading,setLoading] = useState<boolean>(false)
 	const [totalPages, settotalPages] = useState<number>(0)
 
-
+	
 	const handleSort = (key: keyof Product) => {
 		const order = sortConfig.key === key && sortConfig.order === "asc" ? "desc" : "asc"
 
@@ -63,7 +63,7 @@ export default function ProductsTbl({query,status,page,limit} : Props ) {
         const fetchProducts = async () => {
 			delayTimeout = setTimeout(() => setLoading(true), 100)
             try {
-                const response = await fetch(`/api/products?page=${page}&query=${query}&status=${status}&limit=${limit}`);
+                const response = await fetch(`/api/products?page=${page}&query=${query}&status=${status}&limit=${limit}`)
                 const {totalPages,products} = await response.json()
 				console.log(products)
                 settotalPages(totalPages)

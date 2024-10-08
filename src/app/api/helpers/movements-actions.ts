@@ -34,7 +34,9 @@ export const createMovement = async (movement: MovementDTO) => {
 
             if (newMovement.type === "ENTRADA") {
                 newStock = product.stock + newMovement.quantity
-            } else if (newMovement.type === "SALIDA") {
+            }
+            
+            if (newMovement.type === "SALIDA") {
                 newStock = Math.max(0, product.stock - newMovement.quantity)
             }
 

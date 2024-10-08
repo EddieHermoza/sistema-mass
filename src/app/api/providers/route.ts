@@ -70,7 +70,7 @@ export async function POST(request: Request) {
         }
 
 
-        if (newProviderResponse.success) return NextResponse.json({ message: "Proveedor creado exitosamente", provider: newProviderResponse.provider }, { status: 201 })
+        if (newProviderResponse.ok) return NextResponse.json({ message: "Proveedor creado exitosamente", provider: newProviderResponse.provider }, { status: 201 })
 
 
         return NextResponse.json({ message: newProviderResponse.error?.msg, error: newProviderResponse.error?.details }, { status: 500 })

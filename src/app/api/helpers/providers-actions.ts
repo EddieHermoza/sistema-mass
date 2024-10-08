@@ -1,4 +1,5 @@
 import db from "@/lib/db"
+import { formatDate } from "@/lib/utils";
 import { ProviderDTO } from "@/types"
 import { format } from 'date-fns';
 
@@ -21,13 +22,13 @@ export const createProvider = async (provider: ProviderDTO) => {
         })
 
 
-        return { success: true, provider: newProvider }
+        return { ok: true, provider: newProvider }
 
     } catch (error: any) {
         console.error("Error en el registro del proveedor en la BD:", error.meta?.target[0])
 
         return {
-            success: false,
+            ok: false,
             error: {
                 msg: "Error en el registro del proveedor en la BD",
                 details: error.meta?.target[0] || "Error desconocido en la BD",
@@ -38,8 +39,38 @@ export const createProvider = async (provider: ProviderDTO) => {
 
 
 
-const updateProvider = async () => {
+export const updateProvider = async (id: number, provider: ProviderDTO) => {
+    const { status, web, name, ruc, email, number, legal } = provider
 
+    try {
+        const updatedProvider = await db.provider.update({
+            where: {
+                id
+            },
+            data: {
+                status,
+                ruc,
+                name,
+                legal,
+                web,
+                email,
+                number,
+            }
+        })
+
+
+        return { ok: true, provider: updatedProvider }
+
+    } catch (error: any) {
+        console.log(error)
+        return {
+            ok: false,
+            error: {
+                msg: "Error en la actualizacion del proveedor en la BD",
+                details: error.meta?.target[0] || "Error desconocido en la BD",
+            }
+        }
+    }
 }
 
 const deleteProvider = async () => {
@@ -74,8 +105,8 @@ export const getProviders = async ({ query, limit, page, status }: GetProvidersP
 
         const formattedProviders = providers.map((provider) => ({
             ...provider,
-            created: format(new Date(provider.created), 'dd-MM-yyyy HH:mm'),
-            updated: format(new Date(provider.created), 'dd-MM-yyyy HH:mm'),
+            created: formatDate(new Date(provider.created)),
+            updated: formatDate(new Date(provider.updated)),
         }))
 
         return formattedProviders
@@ -110,6 +141,20 @@ export const getProvidersPages = async ({ query, limit, status }: GetProvidersPr
 }
 
 
-const getProviderById = async () => {
+export const getProviderById = async (id: number) => {
+    try {
 
+        const provider = await db.provider.findUnique({ where: { id } })
+
+        if (provider === null) return { ok: false, provider: provider }
+
+        return { ok: true, provider: provider }
+
+    } catch (error: any) {
+
+        return {
+            ok: false,
+            error: error
+        }
+    }
 }

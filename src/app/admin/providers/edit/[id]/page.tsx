@@ -7,7 +7,8 @@ import { toast } from "sonner"
 import { ProviderSchema } from "@/Schemas";
 import { useForm, Controller, SubmitHandler } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-
+import { useEffect } from "react";
+import _ from 'lodash';
 import {
 	Card,
 	CardHeader,
@@ -24,45 +25,109 @@ import {
 	SelectValue,
 } from "@/components/ui/select"
 import { Button } from "@/components/ui/button";
+import { ProviderFormData } from "@/types";
+import { useState } from "react";
+import { AiOutlineLoading } from "react-icons/ai";
 
-
-type Input = {
-	name: string,
-	legal: string,
-	status: string,
-	ruc: string,
-	number: string,
-	email: string,
-	web: string,
-}
 
 export default function Page({ params }: { params: { id: string } }) {
-	const { register, reset, control, watch, handleSubmit, formState: { errors } } = useForm<Input>({
+	const [loading, setLoading] = useState(false)
+	const [provider, setProvider] = useState<ProviderFormData>()
+	const router = useRouter()
+	const { register, reset, control, watch, handleSubmit, formState: { errors } } = useForm<ProviderFormData>({
 		resolver: zodResolver(ProviderSchema)
 	})
 
-	const router = useRouter()
+	useEffect(() => {
+		const fetchProvider = async () => {
 
-	const onSubmit: SubmitHandler<Input> = (data) => {
-		toast("Proveedor Editado Correctamente", {
-			description: "Sunday, December 03, 2023 at 9:00 AM",
-			duration: 5000,
-			action: {
-				label: "Entendido",
-				onClick: () => console.log("Entendido"),
-			},
-		});
-		router.push('/admin/providers');
-		reset();
+			try {
+				const response = await fetch(`/api/providers/${params.id}`)
+				const { provider,message,error } = await response.json()
+				
+				if (provider) {
+					setProvider(provider)
+					reset(provider)
+					return
+				}
+
+				toast.error(message, { description: error })
+
+			} catch (error) {
+				console.error("Error:", error)
+			}
+		}
+
+		fetchProvider()
+	}, [params.id])
+
+
+
+	const onSubmit: SubmitHandler<ProviderFormData> = async (data) => {
+		setLoading(true)
+
+		if ( _.isEqual(provider, data)) {
+
+			setLoading(false)
+			toast.warning("No se está actualizando nada en los datos del proveedor");
+			return
+			
+		}
+
+		try {
+			const response = await fetch(`/api/providers/${params.id}`, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(data),
+			})
+
+			if (!response.ok) {
+				const errorResponse = await response.json()
+				throw {
+					message: errorResponse.message || "Error en la solicitud",
+					details: errorResponse.error
+				}
+			}
+
+
+			toast("Actualizado Correctamente", {
+				description: `${new Date().toLocaleDateString('es-ES', {
+					weekday: 'long',
+					year: 'numeric',
+					month: 'long',
+					day: 'numeric',
+					hour: 'numeric',
+					minute: 'numeric'
+				})}`,
+				duration: 5000,
+				action: {
+					label: "Entendido",
+					onClick: () => console.log("Entendido"),
+				},
+			})
+
+			router.push('/admin/providers')
+
+		} catch (error: any) {
+			setLoading(false);
+
+			const errorMessage = error.message || "Error desconocido"
+			const errorDetails = error.details ? `El campo ${error.details} es inválido` : ""
+	
+			toast.error(errorMessage, { description: errorDetails })
+		}
 	}
 	return (
 		<>
 			<section className="max-w-screen-xl w-full mx-auto flex items-center justify-start gap-5">
 
 				<Button asChild variant={"outline"} size={"icon"}>
-					<Link href={"/admin/providers"}><MdOutlineChevronLeft size={25}/></Link>
+					<Link href={"/admin/providers"}><MdOutlineChevronLeft size={25} /></Link>
 				</Button>
-				<h1 className="text-3xl">Editar Proveedor {params.id}</h1>
+
+				<h1 className="text-3xl">Editar Proveedor ID : {params.id}</h1>
 			</section>
 
 			<form onSubmit={handleSubmit(onSubmit)} className="flex max-w-screen-xl w-full max-lg:flex-col mx-auto gap-5">
@@ -78,7 +143,6 @@ export default function Page({ params }: { params: { id: string } }) {
 							<Controller
 								name="status"
 								control={control}
-								defaultValue="1"
 								render={({ field }) => (
 									<Select onValueChange={field.onChange} value={field.value}>
 										<SelectTrigger className="hover:bg-secondary">
@@ -163,9 +227,17 @@ export default function Page({ params }: { params: { id: string } }) {
 							}
 						</CardContent>
 					</Card>
-					<Button variant={"secondary"}>
-						Guardar Proveedor
+
+					<Button variant={"secondary"} disabled={loading}>
+						{loading ? (
+							<AiOutlineLoading size={18} className="animate-spin ease-in-out" />
+						) : (
+							<>
+								Guardar Proveedor
+							</>
+						)}
 					</Button>
+
 				</div>
 
 			</form>

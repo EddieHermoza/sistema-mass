@@ -1,6 +1,5 @@
 import db from "@/lib/db"
 import { ProductDTO } from "@/types"
-import { format } from "date-fns"
 import {formatDate} from "@/lib/utils"
 
 export const createProduct = async (product: ProductDTO) => {
@@ -133,7 +132,7 @@ export const getProductsInventory= async({ page, query, limit, status }: GetProd
 
         const formattedProducts = products.map((product) => ({
             ...product,
-            lastStockEntry: product.lastStockEntry !== null ? format(new Date(product.lastStockEntry), 'dd-MM-yyyy HH:mm') : null,
+            lastStockEntry: product.lastStockEntry !== null ? formatDate(new Date(product.lastStockEntry)) : null,
         }))
 
         return formattedProducts
