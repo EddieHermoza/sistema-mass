@@ -38,7 +38,7 @@ export async function POST(request: Request) {
     try {
         const rawBody: ProviderFormData = await request.json()
 
-        const body = ProviderSchema.parse(rawBody);
+        const body = ProviderSchema.parse(rawBody)
 
         const { name, ruc, legal, web, email, number, status } = body
 
