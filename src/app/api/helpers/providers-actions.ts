@@ -73,8 +73,27 @@ export const updateProvider = async (id: number, provider: ProviderDTO) => {
     }
 }
 
-const deleteProvider = async () => {
+export const deleteProvider = async (id:number) => {
+    try {
+        
+        const deletedProvider = await db.provider.delete({
+            where:{
+                id
+            }
+        })
 
+        return {ok:true, provider:deletedProvider}
+
+    } catch (error:any) {
+        console.log(error)
+        return {
+            ok: false,
+            error: {
+                msg: "Error en la eliminación del proveedor en la BD",
+                details: error.meta?.target[0] || "Error desconocido en la BD",
+            }
+        }
+    }
 }
 
 

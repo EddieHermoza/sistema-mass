@@ -17,6 +17,8 @@ import {
 	PopoverTrigger,
 } from "@/components/ui/popover"
 import TableSkeleton from "../skeletons/table-skeleton";
+import { DeleteProductDialog } from "./delete-product-dialog";
+import { sleep } from "@/lib/utils";
 
 
 type SortConfig = {
@@ -36,6 +38,17 @@ export default function ProductsTbl({query,status,page,limit} : Props ) {
 	const [products, setProducts] = useState<Product[]>([])
 	const [loading,setLoading] = useState<boolean>(false)
 	const [totalPages, settotalPages] = useState<number>(0)
+	const [open, setOpen] = useState(false)
+    const [productDelete, setProductDelete] = useState<Product>()
+    const [refreshKey, setRefreshKey] = useState(0)
+
+    const handleRefresh = () => {
+        setRefreshKey(prevKey => prevKey + 1)
+    }
+
+    const handleOpenChange = (newState: boolean) => {
+        setOpen(newState);
+    }
 
 	
 	const handleSort = (key: keyof Product) => {
@@ -64,6 +77,7 @@ export default function ProductsTbl({query,status,page,limit} : Props ) {
 			delayTimeout = setTimeout(() => setLoading(true), 100)
             try {
                 const response = await fetch(`/api/products?page=${page}&query=${query}&status=${status}&limit=${limit}`)
+				await sleep(3000)
                 const {totalPages,products} = await response.json()
 				console.log(products)
                 settotalPages(totalPages)
@@ -78,7 +92,7 @@ export default function ProductsTbl({query,status,page,limit} : Props ) {
         }
 
         fetchProducts()
-    }, [page, limit, query, status])
+    }, [page, limit, query, status,refreshKey])
 	
 
 	return (
@@ -162,7 +176,7 @@ export default function ProductsTbl({query,status,page,limit} : Props ) {
 											<Link href={`/admin/products/edit/${product.id}`} className="flex items-center gap-2 hover:bg-secondary p-2 w-full rounded-sm ">
 												<FiEdit size={18} /> Editar
 											</Link>
-											<button className="flex items-center gap-2 hover:bg-secondary p-2 rounded-sm w-full">
+											<button  onClick={() => { setProductDelete(product), handleOpenChange(true) }} className="flex items-center gap-2 hover:bg-secondary p-2 rounded-sm w-full">
 												<RiDeleteBin6Line size={18} /> Eliminar
 											</button>
 										</PopoverContent>
@@ -181,6 +195,7 @@ export default function ProductsTbl({query,status,page,limit} : Props ) {
 		<CardFooter>
             <Pagination totalPages={totalPages} />
         </CardFooter>
+		<DeleteProductDialog open={open} product={productDelete} handleOpenChange={handleOpenChange} handlRefresh={handleRefresh}/>
 	</Card>
 	);
 }

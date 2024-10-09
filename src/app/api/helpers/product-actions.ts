@@ -35,13 +35,62 @@ export const createProduct = async (product: ProductDTO) => {
     }
 }
 
-const updateProduct = async  () => {
+export const updateProduct = async (id: number, product: ProductDTO) => {
+    const { status, name, description, price, discount, orderLimit, category } = product
 
+    try {
+        const updatedProduct = await db.product.update({
+            where: {
+                id
+            },
+            data: {
+                status,
+                name,
+                description,
+                category,
+                price,
+                discount,
+                orderLimit,
+
+            }
+        })
+
+
+        return { ok: true, product: updatedProduct }
+
+    } catch (error: any) {
+
+        return {
+            ok: false,
+            error: {
+                msg: "Error en la actualizacion del producto en la BD",
+                details: error.meta?.target[0] || "Error desconocido en la BD",
+            }
+        }
+    }
 }
 
+export const deleteProduct = async (id:number) => {
+    try {
+        
+        const deletedProduct = await db.product.delete({
+            where:{
+                id
+            }
+        })
 
-export const deleteProduct = async  () => {
-    
+        return {ok:true, product:deletedProduct}
+
+    } catch (error:any) {
+        console.log(error)
+        return {
+            ok: false,
+            error: {
+                msg: "Error en la eliminación del producto en la BD",
+                details: error.meta?.target[0] || "Error desconocido en la BD",
+            }
+        }
+    }
 }
 
 type GetProductsProps = {
@@ -174,6 +223,20 @@ export const getProductsPages = async  ({ query, limit, status,category,hasStock
     }
 }
 
-const getProductById = async  () => {
+export const getProductById = async (id: number) => {
+    try {
 
+        const product = await db.product.findUnique({ where: { id } })
+
+        if (product === null) return { ok: false, product: product }
+
+        return { ok: true, product: product }
+
+    } catch (error: any) {
+
+        return {
+            ok: false,
+            error: error
+        }
+    }
 }

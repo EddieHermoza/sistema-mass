@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { ProviderFormData } from "@/types";
-import { getProviderById, updateProvider } from "@/app/api/helpers/providers-actions";
+import { deleteProvider, getProviderById, updateProvider } from "@/app/api/helpers/providers-actions";
 import { ProviderSchema } from "@/Schemas";
 
 
@@ -72,6 +72,33 @@ export async function PUT(request: Request, { params }: Params) {
     }
 
     const { ok, error, provider } = await updateProvider(providerId, providerBody)
+    
+    const errorMessage = error?.msg || "No se encontró un proveedor con ese ID"
+    const errorDetails = error?.details || ""
+
+    if (!ok) return NextResponse.json({ message: errorMessage, error: errorDetails}, { status: 404 })
+
+
+    if (provider) {
+        return NextResponse.json({ provider: provider }, { status: 200 })
+    } else {
+        return NextResponse.json({ message: errorMessage, error: errorDetails }, { status: 500 })
+    }
+
+}
+
+export async function DELETE(request: Request, { params }: Params) {
+
+    const { id } = params
+
+    const providerId = parseInt(id, 10)
+
+    if (isNaN(providerId) || providerId < 0) {
+        return NextResponse.json({message: "ID de proveedor inválida", error: "No modificar manualmente la URL" }, { status: 400 })
+    }
+
+
+    const { ok, error, provider } = await deleteProvider(providerId)
     
     const errorMessage = error?.msg || "No se encontró un proveedor con ese ID"
     const errorDetails = error?.details || ""

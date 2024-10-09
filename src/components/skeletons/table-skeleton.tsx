@@ -12,7 +12,7 @@ export default function TableSkeleton({rows}:Props) {
             {skeletonRows.map((_, index) => (
                 <tr key={index} className="relative h-24">
                      <td colSpan={9} className="text-center">
-                        <Skeleton className="h-14"/>
+                        <Skeleton className="h-20"/>
                     </td>
                 </tr>
             ))}

@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Product } from "@/types/product-types";
 import ProductsGridSkeleton from "../skeletons/products-grid-skeleton";
+import { sleep } from "@/lib/utils";
 
 
 type Props = {
@@ -30,10 +31,12 @@ export default function ProductsGrid({ query, page, limit, status,category,hasSt
             try {
                 const categoryParam = category ? `&category=${encodeURIComponent(category)}` : ''
                 const response = await fetch(`/api/products?page=${page}&query=${query}&limit=${limit}&status=${status}&hasStock=${hasStock}${categoryParam}`)
-                const data = await response.json()
+                const {totalPages,products} = await response.json()
 
-                settotalPages(data.totalPages)
-                setProducts(data.products)
+                await sleep(3000)
+
+                settotalPages(totalPages)
+                setProducts(products)
 
             } catch (error) {
                 console.error("Error:", error)

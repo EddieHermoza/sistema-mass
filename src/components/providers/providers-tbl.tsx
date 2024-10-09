@@ -16,6 +16,7 @@ import {
 
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import TableSkeleton from "../skeletons/table-skeleton";
+import { DeleteProviderDialog } from "./delete-provider-dialog";
 
 type SortConfig = {
     key: keyof Provider;
@@ -30,12 +31,21 @@ type Props = {
 }
 
 export default function ProvidersTbl({ page, limit, status, query }: Props) {
-
     const [sortConfig, setSortConfig] = useState<SortConfig>({ key: 'id', order: 'asc' })
     const [providers, setProviders] = useState<Provider[]>([])
     const [totalPages, setTotalPages] = useState<number>(0)
     const [loading, setLoading] = useState<boolean>(true)
+    const [open, setOpen] = useState(false)
+    const [providerDelete, setProviderDelete] = useState<Provider>()
+    const [refreshKey, setRefreshKey] = useState(0)
 
+    const handleRefresh = () => {
+        setRefreshKey(prevKey => prevKey + 1)
+    }
+
+    const handleOpenChange = (newState: boolean) => {
+        setOpen(newState);
+    }
     const handleSort = (key: keyof Provider) => {
 
         const order = sortConfig.key === key && sortConfig.order === 'asc' ? 'desc' : 'asc'
@@ -80,7 +90,7 @@ export default function ProvidersTbl({ page, limit, status, query }: Props) {
 
         fetchProviders()
 
-    }, [page, limit, query, status])
+    }, [page, limit, query, status,refreshKey])
 
     return (
         <Card x-chunk="providers-table">
@@ -167,7 +177,7 @@ export default function ProvidersTbl({ page, limit, status, query }: Props) {
                                                     <Link href={`/admin/providers/edit/${provider.id}`} className="flex items-center gap-2 hover:bg-secondary p-2 w-full rounded-sm ">
                                                         <FiEdit size={18} /> Editar
                                                     </Link>
-                                                    <button className="flex items-center gap-2 hover:bg-secondary p-2 rounded-sm w-full"><RiDeleteBin6Line size={18} /> Eliminar</button>
+                                                    <button onClick={() => { setProviderDelete(provider), handleOpenChange(true) }} className="flex items-center gap-2 hover:bg-secondary p-2 rounded-sm w-full"><RiDeleteBin6Line size={18} /> Eliminar</button>
                                                 </PopoverContent>
                                             </Popover>
                                         </td>
@@ -185,7 +195,7 @@ export default function ProvidersTbl({ page, limit, status, query }: Props) {
             <CardFooter>
                 <Pagination totalPages={totalPages} />
             </CardFooter>
-
+            <DeleteProviderDialog open={open} provider={providerDelete} handleOpenChange={handleOpenChange} handlRefresh={handleRefresh}/>
         </Card>
     )
 }
