@@ -17,6 +17,7 @@ import {
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import TableSkeleton from "../skeletons/table-skeleton";
 import { DeleteProviderDialog } from "./delete-provider-dialog";
+import { Button } from "../ui/button";
 
 type SortConfig = {
     key: keyof Provider;
@@ -99,19 +100,22 @@ export default function ProvidersTbl({ page, limit, status, query }: Props) {
                 <CardDescription>Administra la información de tus proveedores</CardDescription>
             </CardHeader>
             <CardContent>
-                <table className="table-auto text-center w-full">
-                    <thead className=" border-b-aorus border-b  relative text-sm lg:text-base ">
-                        <tr className="h-16">
+                <table className="table-auto text-center text-sm w-full">
+                    <thead className=" border-b relative text-sm w-full">
+                        <tr className="h-16 w-full">
                             <td >
-                                <button onClick={() => handleSort('id')} className='flex-center  gap-2 mx-auto  active:bg-pressed hover:bg-secondary p-2 rounded'>
+                                <Button 
+                                    onClick={() => handleSort('id')} 
+                                    variant={"ghost"}>
+                                    
                                     <HiOutlineArrowsUpDown />
                                     Id
-                                </button>
+                                </Button>
                             </td>
-                            <td className="text-left max-lg:hidden">
+                            <td className="max-lg:hidden">
                                 Ruc
                             </td>
-                            <td className="sm:text-left">
+                            <td>
                                 Nombre
                             </td>
                             <td >
@@ -134,7 +138,7 @@ export default function ProvidersTbl({ page, limit, status, query }: Props) {
                             </td>
                         </tr>
                     </thead>
-                    <tbody className="text-xs sm:text-sm relative">
+                    <tbody className="max-sm:text-xs relative">
                         {loading ? (
                             <TableSkeleton rows={limit} />
                         ) : (
@@ -144,10 +148,10 @@ export default function ProvidersTbl({ page, limit, status, query }: Props) {
                                         <td className=" rounded-l-lg">
                                             {provider.id}
                                         </td>
-                                        <td className="text-left  max-lg:hidden">
+                                        <td className=" max-lg:hidden">
                                             {provider.ruc}
                                         </td>
-                                        <td className="sm:text-left">
+                                        <td>
                                             {provider.name}
                                         </td>
                                         <td>

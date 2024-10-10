@@ -24,6 +24,7 @@ import {
 
 import { MovementDialog } from "./movement-dialog";
 import { MovementForm } from "./movement-form";
+import { Button } from "../ui/button";
 
 
 type SortConfig = {
@@ -107,29 +108,32 @@ export default function InventoryTbl({ query, status, page, limit }: Props) {
                 <CardDescription>Administra las entradas y salidas de tus productos.</CardDescription>
             </CardHeader>
             <CardContent>
-                <table className="table-auto text-center w-full">
-                    <thead className=" border-b  relative text-sm lg:text-base ">
-                        <tr className="h-16">
+                <table className="table-auto text-sm  text-center w-full relative">
+                    <thead className="border-b  w-full relative">
+                        <tr className="h-16 w-full">
                             <td >
-                                <button onClick={() => handleSort('id')} className='flex-center gap-2 mx-auto active:bg-pressed hover:bg-secondary p-2 rounded'>
+                                <Button onClick={() => handleSort('id')}
+                                
+                                variant={"ghost"}>
                                     <HiOutlineArrowsUpDown />
                                     Id
-                                </button>
+                                </Button>
                             </td>
                             <td>
-                                <button onClick={() => handleSort('name')} className='flex-center gap-2 active:bg-pressed hover:bg-secondary p-2 rounded'>
+                                <Button onClick={() => handleSort('name')} 
+                                variant={"ghost"}>
                                     <HiOutlineArrowsUpDown />
                                     Nombre
-                                </button>
+                                </Button>
                             </td>
                             <td className="max-lg:hidden">
                                 Estado
                             </td>
                             <td>
-                                <button onClick={() => handleSort('stock')} className='flex-center gap-2 mx-auto active:bg-pressed hover:bg-secondary p-2 rounded'>
+                                <Button onClick={() => handleSort('stock')} variant={"ghost"}>
                                     <HiOutlineArrowsUpDown />
                                     Stock
-                                </button>
+                                </Button>
                             </td>
                             <td className="max-lg:hidden">
                                 Ultimo Ingreso
@@ -138,7 +142,7 @@ export default function InventoryTbl({ query, status, page, limit }: Props) {
                             </td>
                         </tr>
                     </thead>
-                    <tbody className="text-sm relative">
+                    <tbody className="max-sm:text-xs relative">
                         {loading ? (
                             <TableSkeleton rows={limit} />
                         ) : (
@@ -148,7 +152,7 @@ export default function InventoryTbl({ query, status, page, limit }: Props) {
                                         <td className=" rounded-l-lg">
                                             {product.id}
                                         </td>
-                                        <td className="text-left max-sm:text-xs">
+                                        <td>
                                             {product.name}
                                         </td>
                                         <td className=

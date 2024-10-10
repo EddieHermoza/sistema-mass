@@ -19,6 +19,7 @@ import {
 import TableSkeleton from "../skeletons/table-skeleton";
 import { DeleteProductDialog } from "./delete-product-dialog";
 import { sleep } from "@/lib/utils";
+import { Button } from "../ui/button";
 
 
 type SortConfig = {
@@ -41,6 +42,7 @@ export default function ProductsTbl({query,status,page,limit} : Props ) {
 	const [open, setOpen] = useState(false)
     const [productDelete, setProductDelete] = useState<Product>()
     const [refreshKey, setRefreshKey] = useState(0)
+	const [productsCount,setProductsCount] = useState(limit)
 
     const handleRefresh = () => {
         setRefreshKey(prevKey => prevKey + 1)
@@ -82,6 +84,7 @@ export default function ProductsTbl({query,status,page,limit} : Props ) {
 				console.log(products)
                 settotalPages(totalPages)
                 setProducts(products)
+				setProductsCount(products.length)
 
             } catch (error) {
                 console.error("Error:", error)
@@ -102,36 +105,36 @@ export default function ProductsTbl({query,status,page,limit} : Props ) {
             <CardDescription>Administra tus productos y visualiza su rendimiento de ventas.</CardDescription>
         </CardHeader>
 		<CardContent>
-			<table className="table-auto text-center w-full ">
-				<thead className=" border-b relative text-sm lg:text-base ">
-					<tr className="h-16">
-						<td>
-							<button
+			<table className="table-auto text-center w-full text-sm ">
+				<thead className=" border-b relative w-full">
+					<tr className="h-16 w-full">
+						<td className="max-w-20">
+							<Button
 								onClick={() => handleSort("id")}
-								className="flex-center gap-2 mx-auto active:bg-pressed hover:bg-secondary p-2 rounded"
+								variant={"ghost"}
 							>
 								<HiOutlineArrowsUpDown />
 								Id
-							</button>
+							</Button>
 						</td>
-						<td>
-							<button
+						<td className="max-w-96">
+							<Button
 								onClick={() => handleSort("name")}
-								className="flex-center gap-2 active:bg-pressed hover:bg-secondary p-2 rounded"
+								variant={"ghost"}
 							>
 								<HiOutlineArrowsUpDown />
 								Nombre
-							</button>
+							</Button>
 						</td>
 						<td className="max-sm:hidden">Estado</td>
 						<td className="max-sm:hidden">
-							<button
+							<Button
 								onClick={() => handleSort("price")}
-								className="flex-center gap-2 mx-auto active:bg-pressed hover:bg-secondary p-2 rounded"
+								variant={"ghost"}
 							>
 								<HiOutlineArrowsUpDown />
 								Precio
-							</button>
+							</Button>
 						</td>
 						<td className="max-lg:hidden">Descuento</td>
 						<td className="max-lg:hidden">Creado</td>
@@ -139,9 +142,10 @@ export default function ProductsTbl({query,status,page,limit} : Props ) {
 						<td></td>
 					</tr>
 				</thead>
-				<tbody className="text-sm relative">
+				<tbody className="max-sm:text-xs relative">
 					{ loading ? (
-						<TableSkeleton rows={limit}/>
+						
+						<TableSkeleton rows={Math.min(limit,productsCount)}/>
 					):(
 					products.length > 0 ? (
 						products.map((product, index) => (
@@ -151,7 +155,7 @@ export default function ProductsTbl({query,status,page,limit} : Props ) {
 							>
 								<td className=" rounded-l-lg">{product.id}</td>
 	
-								<td className="text-left max-sm:text-xs">{product.name}</td>
+								<td className=" ">{product.name}</td>
 								<td
 									className={`max-sm:hidden  text-shadow-lg ${product.status
 											? "text-green-500 shadow-green-500/50"

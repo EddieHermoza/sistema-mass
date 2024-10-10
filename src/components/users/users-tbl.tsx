@@ -16,6 +16,7 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover"
 import { Pagination } from "@/components/ui";
+import { Button } from "../ui/button";
 
 
 
@@ -86,26 +87,26 @@ export default function UserTbl({ page, limit, status, query }: Props) {
                 <CardDescription>Administra los permisos de tus usuarios</CardDescription>
             </CardHeader>
             <CardContent>
-                <table className="table-auto text-center w-full relative">
-                    <thead className=" border-b relative text-sm lg:text-base">
+                <table className="table-auto text-center text-sm w-full relative">
+                    <thead className=" border-b relative w-full">
                         <tr className="h-16">
                             <td className="max-lg:hidden">
-                                <button onClick={() => handleSort('id')} className='flex-center  gap-2 mx-auto active:bg-pressed hover:bg-secondary p-2 rounded'>
+                                <Button onClick={() => handleSort('id')} variant={"ghost"}>
                                     <HiOutlineArrowsUpDown />
                                     Id
-                                </button>
+                                </Button>
                             </td>
                             <td >
-                                <button onClick={() => handleSort('dni')} className='flex-center  gap-2 mx-auto active:bg-pressed hover:bg-secondary p-2 rounded'>
+                                <Button onClick={() => handleSort('dni')} variant={"ghost"}>
                                     <HiOutlineArrowsUpDown />
                                     Dni
-                                </button>
+                                </Button>
                             </td>
                             <td >
-                                <button onClick={() => handleSort('name')} className='flex-center gap-2 mx-auto active:bg-pressed hover:bg-secondary p-2 rounded'>
+                                <Button onClick={() => handleSort('name')} variant={"ghost"}>
                                     <HiOutlineArrowsUpDown />
                                     Nombre
-                                </button>
+                                </Button>
                             </td>
 
                             <td className="max-lg:hidden">
@@ -129,7 +130,7 @@ export default function UserTbl({ page, limit, status, query }: Props) {
                             </td>
                         </tr>
                     </thead>
-                    <tbody className=" text-xs sm:text-sm relative w-full">
+                    <tbody className=" max-sm:text-xs relative">
                         {loading  ? ( 
                             <TableSkeleton rows={limit}/>
                          ) : (

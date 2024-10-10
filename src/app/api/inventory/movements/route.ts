@@ -6,7 +6,7 @@ import { createMovement } from "@/app/api/helpers/movements-actions";
 export async function POST(request: Request) {
     try {
         const rawBody: MovementFormData = await request.json()
-        console.log(rawBody)
+
         const body = MovementSchema.parse(rawBody);
 
         const {productId, type, description, quantity} = body
