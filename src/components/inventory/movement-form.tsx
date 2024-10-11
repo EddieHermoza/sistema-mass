@@ -94,8 +94,8 @@ export function MovementForm({ product, handleOpenChange,handlRefresh }: Movemen
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-7 pt-6">
-            <label className="flex flex-col gap-2">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-7 pt-6 text-left">
+            <label className="flex flex-col gap-2 w-full">
                 <span>Tipo:</span>
                 <Controller
                     name="type"

@@ -21,7 +21,7 @@ export default function Page() {
 
             <section className=" w-full flex gap-5">
                 <Button asChild variant={"outline"} size={"icon"}>
-                    <Link href={"/admin/products"} ><MdOutlineChevronLeft size={25} /></Link>
+                    <Link href={"/admin/purchases"} ><MdOutlineChevronLeft size={25} /></Link>
                 </Button>
 
                 <h1 className="text-3xl">Nueva Compra</h1>
@@ -38,7 +38,7 @@ export default function Page() {
                         </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-7 text-sm">
-                        
+
                         <Select >
                             <SelectTrigger className="hover:bg-secondary">
                                 <SelectValue placeholder="Seleccionar" />

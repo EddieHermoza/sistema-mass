@@ -22,9 +22,8 @@ export function MovementDialog({ open, product, handleOpenChange,children }: Pro
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle className="text-2xl">Nuevo Movimiento</DialogTitle>
-                    <DialogDescription className="text-xl flex justify-between items-center">
+                    <DialogDescription className="text-xl text-left flex justify-between items-center">
                         <span>{product?.name}</span> 
-                        <span>ID: {product?.id}</span>
                     </DialogDescription>
 
                     <>
