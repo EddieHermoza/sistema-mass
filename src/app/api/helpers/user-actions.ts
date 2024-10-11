@@ -1,6 +1,7 @@
 import db from "@/lib/db"
 import { formatDate } from "@/lib/utils"
 import { UserDTO } from "@/types"
+import { Prisma } from "@prisma/client"
 import { format } from "date-fns"
 
 
@@ -61,7 +62,7 @@ export const getUsers = async ({ query, limit, page, status }: GetUsersProps) =>
         const users = await db.user.findMany({
             where: {
                 AND: [
-                    query ? { name: { contains: query } } : {},
+                    query ? { name: { contains: query,mode:Prisma.QueryMode.insensitive  } } : {},
                     status !== null && status !== undefined ? { status: status } : {},
                 ]
             },
@@ -91,7 +92,7 @@ export const getUsersPage = async ({ query, limit, status }: GetUsersProps) => {
         const users = await db.user.findMany({
             where: {
                 AND: [
-                    query ? { name: { contains: query } } : {},
+                    query ? { name: { contains: query,mode:Prisma.QueryMode.insensitive  } } : {},
                     status !== null && status !== undefined ? { status: status } : {},
                 ]
             }

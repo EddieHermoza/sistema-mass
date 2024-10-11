@@ -1,6 +1,7 @@
 import db from "@/lib/db"
 import { formatDate } from "@/lib/utils";
 import { ProviderDTO } from "@/types"
+import { Prisma } from "@prisma/client";
 import { format } from 'date-fns';
 
 
@@ -107,14 +108,13 @@ type GetProvidersProps = {
 export const getProviders = async ({ query, limit, page, status }: GetProvidersProps) => {
     try {
 
-        console.log(status)
         const pages = page || 1
         const skip = (pages - 1) * limit
 
         const providers = await db.provider.findMany({
             where: {
                 AND: [
-                    query ? { name: { contains: query } } : {},
+                    query ? { name: { contains: query,mode:Prisma.QueryMode.insensitive } } : {},
                     status !== null && status !== undefined ? { status: status } : {},
                 ]
             },
@@ -143,7 +143,7 @@ export const getProvidersPages = async ({ query, limit, status }: GetProvidersPr
         const providers = await db.provider.findMany({
             where: {
                 AND: [
-                    query ? { name: { contains: query } } : {},
+                    query ? { name: { contains: query,mode:Prisma.QueryMode.insensitive  } } : {},
                     status !== null && status !== undefined ? { status: status } : {},
                 ]
             }

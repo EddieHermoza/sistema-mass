@@ -1,6 +1,7 @@
 import db from "@/lib/db"
 import { ProductDTO } from "@/types"
 import {formatDate} from "@/lib/utils"
+import { Prisma } from '@prisma/client';
 
 export const createProduct = async (product: ProductDTO) => {
     const { status, name,description, price, discount,orderLimit,category } = product
@@ -116,7 +117,7 @@ export const getProducts = async  ({page, query, limit, status,category,hasStock
         if (hasStock!== null && hasStock !== undefined && hasStock)  conditions.push({ stock: { gt: 0 } })
         
 
-        if (query) conditions.push({ name: { contains: query } })
+        if (query) conditions.push({ name: { contains: query, mode:Prisma.QueryMode.insensitive } })
         
 
         if (category) conditions.push({ category: { contains: category } })
@@ -128,7 +129,8 @@ export const getProducts = async  ({page, query, limit, status,category,hasStock
         const products = await db.product.findMany({
             
             where:{
-                AND:conditions
+                AND:conditions,
+                
             },
             skip: skip,
             take: limit,
@@ -157,7 +159,7 @@ export const getProductsInventory= async({ page, query, limit, status }: GetProd
 
         let conditions=[]
 
-        if (query) conditions.push({ name: { contains: query } })
+        if (query) conditions.push({ name: { contains: query,mode:Prisma.QueryMode.insensitive  } })
         
         if (status !== null && status !== undefined) conditions.push({ status })
         
@@ -199,7 +201,7 @@ export const getProductsPages = async  ({ query, limit, status,category,hasStock
 
         if (hasStock!== null && hasStock !== undefined && hasStock)  conditions.push({ stock: { gt: 0 } })
 
-        if (query) conditions.push({ name: { contains: query } })
+        if (query) conditions.push({ name: { contains: query,mode:Prisma.QueryMode.insensitive  } })
         
 
         if (category) conditions.push({ category: { contains: category } })
