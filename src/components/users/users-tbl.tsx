@@ -36,8 +36,9 @@ type Props = {
 export default function UserTbl({ page, limit, status, query }: Props) {
     const [sortConfig, setSortConfig] = useState<SortConfig>({ key: 'id', order: 'asc' })
     const [users, setUsers] = useState<User[]>([])
-    const [loading, setLoading] = useState<boolean>(false)
+    const [loading, setLoading] = useState<boolean>(true)
     const [totalPages, settotalPages] = useState<number>(0)
+    const [usersCount,setUsersCount] = useState(limit)
 
     const handleSort = (key: keyof User) => {
         const order = sortConfig.key === key && sortConfig.order === 'asc' ? 'desc' : 'asc'
@@ -57,22 +58,18 @@ export default function UserTbl({ page, limit, status, query }: Props) {
     };
 
     useEffect(() => {
-        let delayTimeout: NodeJS.Timeout;
-
         const fetchUsers = async () => {
-            delayTimeout = setTimeout(() => setLoading(true), 100)
             try {
                 const response = await fetch(`/api/users?page=${page}&query=${query}&status=${status}&limit=${limit}`)
 
                 const {totalPages,users} = await response.json()
-                console.log(users)
                 settotalPages(totalPages)
                 setUsers(users)
+                setUsersCount(users.length)
 
             } catch (error) {
                 console.error("Error:", error)
             } finally {
-                clearTimeout(delayTimeout) 
                 setLoading(false)
             }
         }
@@ -132,7 +129,7 @@ export default function UserTbl({ page, limit, status, query }: Props) {
                     </thead>
                     <tbody className=" max-sm:text-xs relative">
                         {loading  ? ( 
-                            <TableSkeleton rows={limit}/>
+                            <TableSkeleton rows={Math.min(limit,usersCount)}/>
                          ) : (
                             users.length > 0 ? (
                                 users.map((user, index) => (

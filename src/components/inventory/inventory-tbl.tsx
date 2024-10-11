@@ -43,11 +43,13 @@ type Props = {
 export default function InventoryTbl({ query, status, page, limit }: Props) {
     const [sortConfig, setSortConfig] = useState<SortConfig>({ key: "id", order: "asc", })
     const [products, setProducts] = useState<ProductInventory[]>([])
-    const [loading, setLoading] = useState<boolean>(false)
+    const [loading, setLoading] = useState<boolean>(true)
     const [totalPages, settotalPages] = useState<number>(0)
     const [open, setOpen] = useState(false)
     const [productMovement, setProductMovement] = useState<ProductInventory>()
     const [refreshKey, setRefreshKey] = useState(0)
+    const [productsCount,setProductsCount] = useState(limit)
+
 
     const handleRefresh = () => {
         setRefreshKey(prevKey => prevKey + 1)
@@ -81,20 +83,17 @@ export default function InventoryTbl({ query, status, page, limit }: Props) {
     }
 
     useEffect(() => {
-        let delayTimeout: NodeJS.Timeout;
         const fetchProducts = async () => {
-            delayTimeout = setTimeout(() => setLoading(true), 100)
             try {
                 const response = await fetch(`/api/inventory?page=${page}&query=${query}&status=${status}&limit=${limit}`);
                 const { totalPages, products } = await response.json()
                 settotalPages(totalPages)
                 setProducts(products)
-
+                setProductsCount(products.length)
             } catch (error) {
                 console.error("Error:", error)
             } finally {
-                clearTimeout(delayTimeout)
-                setLoading(false);
+                setLoading(false)
             }
         }
 
@@ -144,7 +143,7 @@ export default function InventoryTbl({ query, status, page, limit }: Props) {
                     </thead>
                     <tbody className="max-sm:text-xs relative">
                         {loading ? (
-                            <TableSkeleton rows={limit} />
+                            <TableSkeleton rows={Math.min(limit,productsCount)} />
                         ) : (
                             products.length > 0 ? (
                                 products.map((product, index) => (

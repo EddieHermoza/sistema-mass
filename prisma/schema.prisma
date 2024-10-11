@@ -43,8 +43,8 @@ model Product {
   status      Boolean
   lastStockEntry DateTime?
   Movement    Movement[]
-  Purchase    Purchase[]
   SaleItem    SaleItem[]
+  PurchaseItem PurchaseItem[]
 }
 
 model Provider {
@@ -62,14 +62,28 @@ model Provider {
 }
 
 model Purchase {
-  id         Int      @id @default(autoincrement())
-  created    DateTime @default(now())
-  productId  Int
-  providerId Int
-  quantity   Int
-  price      Decimal @db.Decimal(10, 2)
-  Product    Product  @relation(fields: [productId], references: [id])
-  Provider   Provider @relation(fields: [providerId], references: [id])
+  id               Int           @id @default(autoincrement())
+  created          DateTime      @default(now())
+  userId           Int
+  providerId       Int
+  totalPrice       Decimal        @db.Decimal(10, 2)
+  receiptType      String         
+  receiptNumber    String         
+  receiptDate      DateTime       
+  User             User           @relation(fields: [userId], references: [id])
+  Provider         Provider       @relation(fields: [providerId], references: [id])
+  PurchaseItem     PurchaseItem[]
+
+}
+
+model PurchaseItem {
+  id          Int       @id @default(autoincrement())
+  purchaseId  Int
+  productId   Int
+  quantity    Int
+  price       Decimal    @db.Decimal(10, 2)
+  Product     Product    @relation(fields: [productId], references: [id])
+  Purchase    Purchase   @relation(fields: [purchaseId], references: [id])
 }
 
 model Sale {
@@ -109,4 +123,5 @@ model User {
   status     Boolean
   AuditLog   AuditLog[]
   Sale       Sale[]
+  Purchase    Purchase[]
 }

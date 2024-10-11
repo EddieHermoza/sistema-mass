@@ -39,6 +39,7 @@ export default function ProvidersTbl({ page, limit, status, query }: Props) {
     const [open, setOpen] = useState(false)
     const [providerDelete, setProviderDelete] = useState<Provider>()
     const [refreshKey, setRefreshKey] = useState(0)
+    const [providersCount,setProvidersCount]=useState(limit)
 
     const handleRefresh = () => {
         setRefreshKey(prevKey => prevKey + 1)
@@ -71,20 +72,17 @@ export default function ProvidersTbl({ page, limit, status, query }: Props) {
     };
 
     useEffect(() => {
-        let delayTimeout: NodeJS.Timeout;
         const fetchProviders = async () => {
-            delayTimeout = setTimeout(() => setLoading(true), 100)
             try {
                 const response = await fetch(`/api/providers?page=${page}&query=${query}&status=${status}&limit=${limit}`);
                 const {totalPages,providers} = await response.json()
 
                 setTotalPages(totalPages)
                 setProviders(providers)
-
+                setProvidersCount(providers.length)
             } catch (error) {
                 console.error("Error:", error)
             } finally {
-                clearTimeout(delayTimeout)
                 setLoading(false)
             }
         }
@@ -140,7 +138,7 @@ export default function ProvidersTbl({ page, limit, status, query }: Props) {
                     </thead>
                     <tbody className="max-sm:text-xs relative">
                         {loading ? (
-                            <TableSkeleton rows={limit} />
+                            <TableSkeleton rows={Math.min(limit,providersCount)} />
                         ) : (
                             providers.length > 0 ? (
                                 providers.map((provider, index) => (

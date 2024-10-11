@@ -3,6 +3,9 @@ import SalesTbl from "@/components/sales/sales-tbl";
 import {ToogleStatusSale} from "@/components/filters";
 import {SearchByName} from "@/components/filters";
 import {ToogleLimit} from "@/components/filters";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { IoAddCircleOutline } from "react-icons/io5";
 
 export default function Page({searchParams}:any) {
 
@@ -19,6 +22,12 @@ export default function Page({searchParams}:any) {
                     <ToogleLimit/>
                     <ToogleStatusSale/>
                 </div>
+
+                <Button variant={"secondary"} asChild>
+                    <Link href={"/admin/purchases/create"} className="max-sm:w-full flex gap-2 ">
+                        <IoAddCircleOutline size={22}/> Registrar Compra 
+                    </Link> 
+                </Button>
             </section>
 
 

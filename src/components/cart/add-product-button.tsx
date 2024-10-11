@@ -16,7 +16,6 @@ export function AddCartProductButton( {product} : Props )  {
 
 	const addToCart = async () => {
 		setLoading(true)
-		console.log(product)
 
 		await sleep(1000)
 		const cartProduct : CartProduct ={

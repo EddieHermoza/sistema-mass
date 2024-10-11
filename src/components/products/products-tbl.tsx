@@ -4,13 +4,12 @@ import { AiOutlineInfoCircle } from "react-icons/ai";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FiEdit } from "react-icons/fi";
 import { MdOutlineUnfoldMore } from "react-icons/md";
-import { Product } from "@/types";
 import { useState,useEffect } from "react";
 import { HiOutlineArrowsUpDown } from "react-icons/hi2";
 import Link from "next/link";
 import { Pagination } from "../ui";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card";
-
+import { Product } from "@/types/product-types";
 import {
 	Popover,
 	PopoverContent,
@@ -37,7 +36,7 @@ type Props = {
 export default function ProductsTbl({query,status,page,limit} : Props ) {
 	const [sortConfig, setSortConfig] = useState<SortConfig>({key: "id",order: "asc",})
 	const [products, setProducts] = useState<Product[]>([])
-	const [loading,setLoading] = useState<boolean>(false)
+	const [loading,setLoading] = useState<boolean>(true)
 	const [totalPages, settotalPages] = useState<number>(0)
 	const [open, setOpen] = useState(false)
     const [productDelete, setProductDelete] = useState<Product>()
@@ -57,7 +56,7 @@ export default function ProductsTbl({query,status,page,limit} : Props ) {
 		const order = sortConfig.key === key && sortConfig.order === "asc" ? "desc" : "asc"
 
 		setSortConfig({ key, order })
-
+		
 		const sortedData = [...products].sort((a, b) => {
 			if (a[key] < b[key]) {
 				return order === "asc" ? -1 : 1
@@ -74,14 +73,11 @@ export default function ProductsTbl({query,status,page,limit} : Props ) {
 	}
 
     useEffect(() => {
-		let delayTimeout: NodeJS.Timeout;
+
         const fetchProducts = async () => {
-			delayTimeout = setTimeout(() => setLoading(true), 100)
             try {
                 const response = await fetch(`/api/products?page=${page}&query=${query}&status=${status}&limit=${limit}`)
-				await sleep(3000)
                 const {totalPages,products} = await response.json()
-				console.log(products)
                 settotalPages(totalPages)
                 setProducts(products)
 				setProductsCount(products.length)
@@ -89,7 +85,6 @@ export default function ProductsTbl({query,status,page,limit} : Props ) {
             } catch (error) {
                 console.error("Error:", error)
             } finally {
-				clearTimeout(delayTimeout)
                 setLoading(false);
             }
         }
