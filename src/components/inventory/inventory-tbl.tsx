@@ -84,6 +84,7 @@ export default function InventoryTbl({ query, status, page, limit }: Props) {
 
     useEffect(() => {
         const fetchProducts = async () => {
+            setLoading(true)
             try {
                 const response = await fetch(`/api/inventory?page=${page}&query=${query}&status=${status}&limit=${limit}`);
                 const { totalPages, products } = await response.json()

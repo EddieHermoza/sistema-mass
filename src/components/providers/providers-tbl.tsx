@@ -73,6 +73,7 @@ export default function ProvidersTbl({ page, limit, status, query }: Props) {
 
     useEffect(() => {
         const fetchProviders = async () => {
+            setLoading(true)
             try {
                 const response = await fetch(`/api/providers?page=${page}&query=${query}&status=${status}&limit=${limit}`);
                 const {totalPages,providers} = await response.json()

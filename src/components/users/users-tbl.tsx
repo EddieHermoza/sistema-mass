@@ -59,6 +59,7 @@ export default function UserTbl({ page, limit, status, query }: Props) {
 
     useEffect(() => {
         const fetchUsers = async () => {
+            setLoading(true)
             try {
                 const response = await fetch(`/api/users?page=${page}&query=${query}&status=${status}&limit=${limit}`)
 

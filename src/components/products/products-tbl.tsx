@@ -75,6 +75,7 @@ export default function ProductsTbl({query,status,page,limit} : Props ) {
     useEffect(() => {
 
         const fetchProducts = async () => {
+			setLoading(true)
             try {
                 const response = await fetch(`/api/products?page=${page}&query=${query}&status=${status}&limit=${limit}`)
                 const {totalPages,products} = await response.json()
