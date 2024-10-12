@@ -12,12 +12,14 @@ import { useEffect, useState } from "react"
 import { Product } from "@/types"
 import { useDebouncedCallback } from "use-debounce"
 import { AddProductPurchaseButton } from "./add-product";
+import { useCartStore } from "@/store/purchase-store";
 
 export function ProductsDatalist() {
     const [open, setOpen] = React.useState(false)
     const [products, setProducts] = useState<Product[]>([])
     const [loading, setLoading] = useState<boolean>(false)
     const [query, setQuery] = useState("")
+    const cart = useCartStore(state => state.cart)
 
 
     const debouncedQuery = useDebouncedCallback((value: string) => { setQuery(value)}, 300)
@@ -41,7 +43,9 @@ export function ProductsDatalist() {
     }, [query])
 
     return (
+        
         <Popover open={open} onOpenChange={setOpen}>
+            
             <PopoverTrigger asChild>
                 <Button variant={"outline"} className="w-96">
                     Agregar Producto
@@ -61,6 +65,8 @@ export function ProductsDatalist() {
                         </div>
                     ) : (
                         products.map((product, index) => (
+                            
+
                             <AddProductPurchaseButton key={index}  product={product} />
                         ))
                     )}

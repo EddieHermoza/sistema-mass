@@ -48,7 +48,7 @@ export default function ProductsTbl({query,status,page,limit} : Props ) {
     }
 
     const handleOpenChange = (newState: boolean) => {
-        setOpen(newState);
+        setOpen(newState)
     }
 
 	

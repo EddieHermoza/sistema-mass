@@ -27,8 +27,8 @@ export default function Page() {
                 <h1 className="text-3xl">Nueva Compra</h1>
 
             </section>
-            <section className="w-full flex gap-10">
-                <Card className="max-w-lg w-full">
+            <section className="w-full flex gap-10 max-2xl:flex-col">
+                <Card className="2xl:max-w-lg w-full relative">
                     <CardHeader>
                         <CardTitle>
                             Proveedor
@@ -37,41 +37,47 @@ export default function Page() {
                             Información de la compra
                         </CardDescription>
                     </CardHeader>
-                    <CardContent className="space-y-7 text-sm">
+                    <CardContent className="gap-7 text-sm flex 2xl:flex-col w-full">
+                        <div className="flex flex-col max-2xl:w-full gap-7">
+                            <label className="flex flex-col gap-2 w-full">
+                                <span>Nombre Proveedor:</span>
+                                <Select >
+                                    <SelectTrigger className="hover:bg-secondary">
+                                        <SelectValue placeholder="Seleccionar" />
+                                    </SelectTrigger>
+                                    <SelectContent position="popper" hideWhenDetached>
+                                        <SelectItem value="1">Activo</SelectItem>
+                                        <SelectItem value="0">Inactivo</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </label>
+                            <label className="flex flex-col gap-2 w-full">
+                                <span>Tipo Comprobante:</span>
+                                <Select >
+                                    <SelectTrigger className="hover:bg-secondary">
+                                        <SelectValue placeholder="Seleccionar" />
+                                    </SelectTrigger>
+                                    <SelectContent position="popper" hideWhenDetached>
+                                        <SelectItem value="BOLETA">Boleta</SelectItem>
+                                        <SelectItem value="FACTURA">Factura</SelectItem>
+                                    </SelectContent>
+                                </Select>
 
-                        <Select >
-                            <SelectTrigger className="hover:bg-secondary">
-                                <SelectValue placeholder="Seleccionar" />
-                            </SelectTrigger>
-                            <SelectContent position="popper" hideWhenDetached>
-                                <SelectItem value="1">Activo</SelectItem>
-                                <SelectItem value="0">Inactivo</SelectItem>
-                            </SelectContent>
-                        </Select>
+                            </label>
 
-                        <label className="flex flex-col gap-2 w-full">
-                            <span>Tipo Comprobante:</span>
-                            <Select >
-                                <SelectTrigger className="hover:bg-secondary">
-                                    <SelectValue placeholder="Seleccionar" />
-                                </SelectTrigger>
-                                <SelectContent position="popper" hideWhenDetached>
-                                    <SelectItem value="BOLETA">Boleta</SelectItem>
-                                    <SelectItem value="FACTURA">Factura</SelectItem>
-                                </SelectContent>
-                            </Select>
+                        </div>
+                        <div className="flex flex-col max-2xl:w-full gap-7">
+                            <label className="flex flex-col gap-2 w-full">
+                                <span>No. Comprobante:</span>
+                                <Input />
+                            </label>
 
-                        </label>
+                            <label htmlFor="" className="flex flex-col gap-2 w-full ">
+                                <span>Fecha Comprobante:</span>
+                                <DatePicker />
+                            </label>
 
-                        <label className="flex flex-col gap-2 w-full">
-                            <span>No. Comprobante:</span>
-                            <Input />
-                        </label>
-
-                        <label htmlFor="" className="flex flex-col gap-2 w-full ">
-                            <span>Fecha Comprobante:</span>
-                            <DatePicker />
-                        </label>
+                        </div>
                     </CardContent>
                 </Card>
                 <Card className="w-full">
