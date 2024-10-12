@@ -17,6 +17,8 @@ import {
 } from "@/components/ui/popover"
 import { Pagination } from "@/components/ui";
 import { Button } from "../ui/button";
+import { ReniecDialog } from "./reniec-dialog";
+import { ReniecQueryForm } from "./reniec-form";
 
 
 
@@ -39,6 +41,8 @@ export default function UserTbl({ page, limit, status, query }: Props) {
     const [loading, setLoading] = useState<boolean>(true)
     const [totalPages, settotalPages] = useState<number>(0)
     const [usersCount,setUsersCount] = useState(limit)
+
+
 
     const handleSort = (key: keyof User) => {
         const order = sortConfig.key === key && sortConfig.order === 'asc' ? 'desc' : 'asc'

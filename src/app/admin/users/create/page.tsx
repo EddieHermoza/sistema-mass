@@ -27,6 +27,8 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { UserFormData } from "@/types";
 import { AiOutlineLoading } from "react-icons/ai";
+import { ReniecDialog } from "@/components/users/reniec-dialog";
+import { ReniecQueryForm } from "@/components/users/reniec-form";
 
 
 type Input = {
@@ -43,11 +45,23 @@ type Input = {
 
 export default function Page() {
 	const [loading, setLoading] = useState(false)
-	const { register, reset, control, watch, handleSubmit, formState: { errors } } = useForm<Input>({
+	const [open, setOpen] = useState(false)
+	const router = useRouter()
+
+	const { register, reset, control,setValue, watch, handleSubmit, formState: { errors } } = useForm<Input>({
 		resolver: zodResolver(UserSchema)
 	})
+	
+	const handleOpenChange = (newState: boolean) => {
+		setOpen(newState)
+	
+	}
 
-	const router = useRouter()
+	const handleFetchReniec = (dni:string,name:string,lastName:string) =>{
+		setValue("dni",dni)
+		setValue("name",name)
+		setValue("lastName",lastName)
+	}
 
 	const onSubmit: SubmitHandler<UserFormData> = async (data) => {
 		setLoading(true)
@@ -93,7 +107,6 @@ export default function Page() {
 			const errorMessage = error.message || "Error desconocido"
 			const errorDetails = error.details ? `El campo ${error.details} es inválido` : ""
 
-			console.log(errorMessage)
 			toast.error(errorMessage, { description: errorDetails })
 		}
 	}
@@ -141,8 +154,9 @@ export default function Page() {
 					</Card>
 
 					<Card className="max-w-screen-md">
-						<CardHeader>
+						<CardHeader className="flex flex-row justify-between items-center">
 							<CardTitle className="text-xl font-normal">Detalles</CardTitle>
+							<Button variant={"outline"} type="button" onClick={()=>handleOpenChange(true)}>Consultar RENIEC</Button>
 						</CardHeader>
 						<CardContent className="space-y-3">
 							<label className="flex flex-col gap-2">
@@ -247,17 +261,21 @@ export default function Page() {
 						</CardContent>
 					</Card>
 
-					<Button variant={"secondary"} disabled={loading}>
+					<Button variant={"secondary"} type="submit" disabled={loading}>
 						{loading ? (
 							<AiOutlineLoading size={18} className="animate-spin ease-in-out" />
 						) : (
 							<>
-								Guardar Usario
+								Guardar Usuario
 							</>
 						)}
 					</Button>
 				</div>
 			</form>
+			<ReniecDialog open={open} handleOpenChange={handleOpenChange}>
+                <ReniecQueryForm handleOpenChange={handleOpenChange} handleFetchReniec={handleFetchReniec}/>
+            </ReniecDialog>
 		</>
 	);
 }
+
