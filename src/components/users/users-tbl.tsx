@@ -17,9 +17,6 @@ import {
 } from "@/components/ui/popover"
 import { Pagination } from "@/components/ui";
 import { Button } from "../ui/button";
-import { ReniecDialog } from "./reniec-dialog";
-import { ReniecQueryForm } from "./reniec-form";
-
 
 
 

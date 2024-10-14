@@ -24,7 +24,6 @@ export function DeleteProviderDialog({ open, provider, handleOpenChange, handlRe
 
     const handleDelete = async () => {
         try {
-            console.log(provider)
             setLoading(true)
 
             const response = await fetch(`/api/providers/${provider?.id}`, {

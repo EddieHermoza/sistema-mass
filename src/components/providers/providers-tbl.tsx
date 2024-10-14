@@ -117,7 +117,7 @@ export default function ProvidersTbl({ page, limit, status, query }: Props) {
                             <td>
                                 Nombre
                             </td>
-                            <td >
+                            <td className="max-xs:hidden">
                                 Número
                             </td>
                             <td className="max-md:hidden">
@@ -150,10 +150,10 @@ export default function ProvidersTbl({ page, limit, status, query }: Props) {
                                         <td className=" max-lg:hidden">
                                             {provider.ruc}
                                         </td>
-                                        <td>
+                                        <td className="truncate max-xs:max-w-40">
                                             {provider.name}
                                         </td>
-                                        <td>
+                                        <td className="max-xs:hidden">
                                             {provider.number}
                                         </td>
                                         <td className="max-md:hidden">

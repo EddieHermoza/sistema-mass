@@ -1,4 +1,3 @@
-
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -9,10 +8,10 @@ export async function GET(request: Request) {
         return NextResponse.json({ message: "DNI inválido" }, { status: 400 });
     }
 
-    const apiUrl = `https://api.apis.net.pe/v2/reniec/dni?numero=${dni}`
+    const url = `https://api.apis.net.pe/v2/reniec/dni?numero=${dni}`
 
     try {
-        const response = await fetch(apiUrl, {
+        const response = await fetch(url, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

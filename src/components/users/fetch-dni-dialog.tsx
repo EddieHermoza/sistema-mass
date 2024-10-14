@@ -14,7 +14,7 @@ type Props = {
     handleOpenChange: (open: boolean) => void
 }
 
-export function ReniecDialog({ open, handleOpenChange,children }: Props) {
+export function FetchDniDialog({ open, handleOpenChange,children }: Props) {
     return (
         <Dialog open={open} onOpenChange={handleOpenChange}>
             <DialogContent>

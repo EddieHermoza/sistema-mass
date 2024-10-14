@@ -13,7 +13,7 @@ type Props = {
     handleFetchReniec : (dni:string,name:string,lastName:string) => void
 }
 
-type ReniecFormData = {
+type ReniecDniFormData = {
     dni: string
 }
 
@@ -21,12 +21,12 @@ const schema = z.object({
     dni: z.string().length(8, { message: "El DNI debe tener 8 caracteres" }),
 })
 
-export function ReniecQueryForm({ handleOpenChange,handleFetchReniec }: Props) {
+export function DniQueryForm({ handleOpenChange,handleFetchReniec }: Props) {
     const [loading, setLoading] = useState(false)
     const [result, setResult] = useState<any>(null)
     const [serverError, setServerError] = useState("")
 
-    const { register, handleSubmit, formState: { errors } } = useForm<ReniecFormData>({
+    const { register, handleSubmit, formState: { errors } } = useForm<ReniecDniFormData>({
         resolver: zodResolver(schema)
     })
 
@@ -34,13 +34,13 @@ export function ReniecQueryForm({ handleOpenChange,handleFetchReniec }: Props) {
         handleFetchReniec(result.numeroDocumento,result.nombres,result.apellidoPaterno+" "+result.apellidoMaterno)
     }
 
-    const onSubmit: SubmitHandler<ReniecFormData> = async (data) => {
+    const onSubmit: SubmitHandler<ReniecDniFormData> = async (data) => {
         setLoading(true)
         setResult(null);
         setServerError("")
     
         try {
-            const response = await fetch(`/api/reniec?dni=${data.dni}`, {
+            const response = await fetch(`/api/reniec/dni?dni=${data.dni}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

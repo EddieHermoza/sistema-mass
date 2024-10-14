@@ -20,6 +20,7 @@ export type User= {
     role:string,
     status:string,
     password:string,
+    confirmPassword?:string,
 
   }
 

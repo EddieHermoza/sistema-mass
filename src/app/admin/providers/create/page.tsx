@@ -27,16 +27,28 @@ import { Button } from "@/components/ui/button";
 import { ProviderFormData } from "@/types";
 import { useState } from "react";
 import { AiOutlineLoading } from "react-icons/ai";
+import { FetchRucDialog } from "@/components/providers/fetch-ruc-dialog";
+import { RucQueryForm } from "@/components/providers/ruc-query-form";
 
 
 export default function Page() {
 	const [loading, setLoading] = useState(false)
+	const [open, setOpen] = useState(false)
 	const router = useRouter()
 
-	const { register, reset, control, watch, handleSubmit, formState: { errors } } = useForm<ProviderFormData>({
+	const { register, reset, control, setValue, watch, handleSubmit, formState: { errors } } = useForm<ProviderFormData>({
 		resolver: zodResolver(ProviderSchema)
 	})
 
+	const handleOpenChange = (newState: boolean) => {
+		setOpen(newState)
+
+	}
+	const handleFetchReniec = (ruc: string, name: string, legal: string) => {
+		setValue("ruc", ruc)
+		setValue("name", name)
+		setValue("legal", legal)
+	}
 
 	const onSubmit: SubmitHandler<ProviderFormData> = async (data) => {
 		setLoading(true)
@@ -78,10 +90,10 @@ export default function Page() {
 
 		} catch (error: any) {
 			setLoading(false);
-	
+
 			const errorMessage = error.message || "Error desconocido"
 			const errorDetails = error.details ? `El campo ${error.details} es inválido` : ""
-	
+
 			console.log(errorMessage)
 			toast.error(errorMessage, { description: errorDetails })
 		}
@@ -130,8 +142,9 @@ export default function Page() {
 					</Card>
 
 					<Card className="max-w-screen-md">
-						<CardHeader>
+						<CardHeader className="flex flex-row justify-between items-center">
 							<CardTitle className="text-xl font-normal">Detalles</CardTitle>
+							<Button variant={"outline"} type="button" onClick={() => handleOpenChange(true)}>Consultar RENIEC</Button>
 						</CardHeader>
 						<CardContent className="space-y-3">
 							<label className="flex flex-col gap-2">
@@ -209,6 +222,9 @@ export default function Page() {
 				</div>
 
 			</form>
+			<FetchRucDialog open={open} handleOpenChange={handleOpenChange}>
+				<RucQueryForm handleOpenChange={handleOpenChange} handleFetchReniec={handleFetchReniec} />
+			</FetchRucDialog>
 		</>
 	);
 }

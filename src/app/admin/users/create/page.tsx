@@ -27,28 +27,17 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { UserFormData } from "@/types";
 import { AiOutlineLoading } from "react-icons/ai";
-import { ReniecDialog } from "@/components/users/reniec-dialog";
-import { ReniecQueryForm } from "@/components/users/reniec-form";
+import { FetchDniDialog } from "@/components/users/fetch-dni-dialog";
+import { DniQueryForm } from "@/components/users/dni-query-form";
 
 
-type Input = {
-	name: string,
-	lastName: string,
-	status: string,
-	dni: string,
-	role: string,
-	number: string,
-	email: string
-	password: string,
-	confirmPassword: string
-}
 
 export default function Page() {
 	const [loading, setLoading] = useState(false)
 	const [open, setOpen] = useState(false)
 	const router = useRouter()
 
-	const { register, reset, control,setValue, watch, handleSubmit, formState: { errors } } = useForm<Input>({
+	const { register, reset, control,setValue, watch, handleSubmit, formState: { errors } } = useForm<UserFormData>({
 		resolver: zodResolver(UserSchema)
 	})
 	
@@ -272,9 +261,9 @@ export default function Page() {
 					</Button>
 				</div>
 			</form>
-			<ReniecDialog open={open} handleOpenChange={handleOpenChange}>
-                <ReniecQueryForm handleOpenChange={handleOpenChange} handleFetchReniec={handleFetchReniec}/>
-            </ReniecDialog>
+			<FetchDniDialog open={open} handleOpenChange={handleOpenChange}>
+                <DniQueryForm handleOpenChange={handleOpenChange} handleFetchReniec={handleFetchReniec}/>
+            </FetchDniDialog>
 		</>
 	);
 }
