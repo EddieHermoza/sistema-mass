@@ -23,7 +23,7 @@ export default function AdminLayout({
 					<UserPopover/>
 				</div>
 			</header>
-			<div className="flex h-[calc(100vh-60px)] relative w-screen ">
+			<div className="flex h-screen relative w-screen ">
 				<NavAdmin />
 				<main className={` w-full h-full relative bg-secondary px-2 py-5 sm:p-10 flex flex-col gap-5 overflow-x-hidden overflow-y-auto scrollbar-thin scrollbar-track-background scrollbar-thumb-primary`}>
 					{children}
