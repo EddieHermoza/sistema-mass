@@ -37,7 +37,7 @@ export default function Page() {
                             Información de la compra
                         </CardDescription>
                     </CardHeader>
-                    <CardContent className="gap-7 text-sm flex 2xl:flex-col w-full">
+                    <CardContent className="gap-7 text-sm flex 2xl:flex-col w-full h-auto">
                         <div className="flex flex-col max-2xl:w-full gap-7">
                             <label className="flex flex-col gap-2 w-full">
                                 <span>Nombre Proveedor:</span>
@@ -89,7 +89,7 @@ export default function Page() {
 
                         </CardDescription>
                     </CardHeader>
-                    <CardContent className="space-y-10">
+                    <CardContent className="flex flex-col gap-7 overflow-auto h-[560px] w-full scrollbar-thin scrollbar-track-background scrollbar-thumb-primary relative py-5">
                         <ProductsDatalist />
                         <table className="relative w-full table-fixed text-sm text-center">
                             <thead className="border-b">
@@ -104,7 +104,7 @@ export default function Page() {
                                         Cantidad
                                     </td>
                                     <td>
-                                        Precio Compra
+                                        Precio Compra/u
                                     </td>
                                     <td>
                                         Importe
@@ -118,7 +118,7 @@ export default function Page() {
                                 {
                                     cart.length > 0 ? (
                                         cart.map((product, index) => (
-                                            <tr key={index} className="hover:bg-muted/40 duration-200 h-20">
+                                            <tr key={index} className="hover:bg-muted/40 duration-200 h-24">
                                                 <td>
                                                     {product.id}
 
