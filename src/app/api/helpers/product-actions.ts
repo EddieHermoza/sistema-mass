@@ -106,7 +106,7 @@ type GetProductsProps = {
 }
 
 
-export const getProducts = async  ({page, query, limit, status,category,hasStock }: GetProductsProps) => {
+export const getProducts = async  ({ page, query, limit, status,category,hasStock }: GetProductsProps) => {
     try {
 
         const pages = page || 1
@@ -114,7 +114,7 @@ export const getProducts = async  ({page, query, limit, status,category,hasStock
 
         const conditions = []
 
-        if (hasStock!== null && hasStock !== undefined && hasStock)  conditions.push({ stock: { gt: 0 } })
+        if (hasStock !== null && hasStock !== undefined && hasStock)  conditions.push({ stock: { gt: 0 } })
         
 
         if (query) conditions.push({ name: { contains: query, mode:Prisma.QueryMode.insensitive } })
@@ -224,6 +224,8 @@ export const getProductsPages = async  ({ query, limit, status,category,hasStock
         return 0
     }
 }
+
+
 
 export const getProductById = async (id: number) => {
     try {

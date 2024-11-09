@@ -2,7 +2,7 @@
 
 import { ProductPurchase } from "@/types";
 import { Input } from "../ui/input";
-import { useCartStore } from "@/store/purchase-store";
+import { usePurchaseStore } from "@/store/purchase-store";
 import { useState } from "react";
 
 type Props = {
@@ -10,7 +10,7 @@ type Props = {
 }
 
 export default function TooglePriceProduct({ product }: Props) {
-    const updateProductPrice = useCartStore(state => state.updateProductPrice)
+    const updateProductPrice = usePurchaseStore(state => state.updateItemPrice)
     const [price, setPrice] = useState<number>(product.price)
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

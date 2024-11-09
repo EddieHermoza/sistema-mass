@@ -13,7 +13,7 @@ import {
 
 
 export default function NavAdmin() {
-	const pathname = usePathname();
+	const pathname = usePathname()
 	const [activeLink, setActiveLink] = useState(pathname)
 
 	const handleSetActiveLink = (link: string) => {
@@ -38,7 +38,7 @@ export default function NavAdmin() {
 												: "active:bg-pressed hover:bg-secondary"
 												}`}
 										>
-											<Icon size={30} />
+											<Icon size={24} />
 										</Link>
 									</TooltipTrigger>
 									<TooltipContent side="right" >

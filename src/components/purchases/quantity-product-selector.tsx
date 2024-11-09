@@ -4,15 +4,15 @@ import { useState } from "react";
 import { MdRemove, MdAdd } from "react-icons/md";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { useCartStore } from "@/store/purchase-store";
-import { ProductPurchase } from "@/types";
+import { usePurchaseStore } from "@/store/purchase-store";
+import { PurchaseItemFormData } from "@/types";
 
 type Props = {
-    product: ProductPurchase
+    product: PurchaseItemFormData
 }
 
 export default function QuantityProductSelector({ product }: Props) {
-    const updateProductQuantity = useCartStore(state => state.updateProductQuantity)
+    const updateProductQuantity = usePurchaseStore(state => state.updateItemQuantity)
     const [count, setCount] = useState(product.quantity)
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

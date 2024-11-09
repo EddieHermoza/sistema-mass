@@ -29,6 +29,7 @@ const CartIcon = ({ click }: { click: () => void }) => {
 
     useEffect(() => {
         setloaded(true)
+        
     }, [])
     
 

@@ -4,7 +4,7 @@ import { ProductSchema } from "@/Schemas";
 import { createProduct, getProducts, getProductsPages } from "@/app/api/helpers/product-actions";
 
 export async function GET(request: Request) {
-    const { searchParams } = new URL(request.url);
+    const { searchParams } = new URL(request.url)
     const hasStock = searchParams.get("hasStock") || ""
     const category= searchParams.get("category") || ""
     const max= searchParams.get("max") || ""
@@ -42,7 +42,7 @@ export async function POST(request: Request) {
     try {
         const rawBody: ProductFormData = await request.json()
 
-        const body = ProductSchema.parse(rawBody);
+        const body = ProductSchema.parse(rawBody)
 
         const { name, description, price, discount, category, status,orderLimit } = body
 

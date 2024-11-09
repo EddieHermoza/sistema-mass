@@ -46,7 +46,7 @@ export default function ImageUploader() {
 
         setError("")
 
-        if (file.size <= MAX_SIZE_MB * 1024 * 1024) return true
+        if (file.size <=  MAX_SIZE_MB * 1024 * 1024) return true
 
         setError(`El archivo ${file.name} supera el límite de 1MB`)
 
@@ -71,7 +71,7 @@ export default function ImageUploader() {
             {error && <p className=" absolute top-2 text-red-500 text-sm">{error}</p>}
 
             {image ? (
-                <div className=" group relative w-60 h-60 flex-center cursor-pointer rounded group border-dashed border border-foreground m-auto duration-200 dark:hover:bg-black hover:shadow-xl dark:hover:shadow-white/30" onClick={handleClick}>
+                <div className=" group relative w-60 h-60 flex-center cursor-pointer rounded group border-dashed border border-foreground m-auto duration-200 hover:bg-secondary dark:hover:bg-black" onClick={handleClick}>
                     <Image
                     src={URL.createObjectURL(image)}
                     alt={`${image.name}`}
@@ -85,7 +85,7 @@ export default function ImageUploader() {
                     </div>
                 </div>    
             ):(
-                <div className='w-[300px] h-[300px] flex-center cursor-pointer rounded group border-dashed border border-foreground m-auto duration-200 dark:hover:bg-black hover:shadow-xl dark:hover:shadow-white/30' onClick={handleClick}>
+                <div className='w-[300px] h-[300px] flex-center cursor-pointer rounded group border-dashed border border-foreground m-auto duration-200 hover:bg-secondary dark:hover:bg-black' onClick={handleClick}>
                     <PiUploadSimpleThin size={40}  className="group-hover:text-primary text-shadow-lg duration-200  "/>
                 </div>
             )

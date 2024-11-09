@@ -41,6 +41,7 @@ export function DniQueryForm({ handleOpenChange,handleFetchReniec }: Props) {
     
         try {
             const response = await fetch(`/api/reniec/dni?dni=${data.dni}`, {
+                
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

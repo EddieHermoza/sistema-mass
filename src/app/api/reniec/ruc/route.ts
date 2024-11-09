@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
-    const { searchParams } = new URL(request.url);
+
+    const { searchParams } = new URL(request.url)
     const ruc = searchParams.get("ruc")
 
-    if (!ruc || ruc.length !== 11) {
-        return NextResponse.json({ message: "RUC inválido" }, { status: 400 });
-    }
+    if (!ruc || ruc.length !== 11)  return NextResponse.json({ message: "RUC inválido" }, { status: 400 });
+ 
 
     const url = `https://api.apis.net.pe/v2/sunat/ruc/full?numero=${ruc}`
 
@@ -17,12 +17,9 @@ export async function GET(request: Request) {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${process.env.API_RENIEC_TOKEN}`,
             },
-        });
+        })
 
-        if (!response.ok) {
-
-            return NextResponse.json({ status: response.status });
-        }
+        if (!response.ok) return NextResponse.json({ status: response.status })
 
         const data = await response.json()
         return NextResponse.json(data, { status: 200 })

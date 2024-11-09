@@ -98,6 +98,7 @@ export default function Page() {
 			toast.error(errorMessage, { description: errorDetails })
 		}
 	}
+	
 	return (
 		<>
 			<section className="max-w-screen-xl w-full mx-auto flex items-center justify-start gap-5">

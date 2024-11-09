@@ -1,28 +1,27 @@
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
-    const { searchParams } = new URL(request.url);
+
+    const { searchParams } = new URL(request.url)
     const dni = searchParams.get("dni")
 
-    if (!dni || dni.length !== 8) {
-        return NextResponse.json({ message: "DNI inválido" }, { status: 400 });
-    }
+    if (!dni || dni.length !== 8) return NextResponse.json({ message: "DNI inválido" }, { status: 400 })
+    
 
     const url = `https://api.apis.net.pe/v2/reniec/dni?numero=${dni}`
 
     try {
+        
         const response = await fetch(url, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${process.env.API_RENIEC_TOKEN}`,
             },
-        });
+        })
 
-        if (!response.ok) {
-
-            return NextResponse.json({ status: response.status });
-        }
+        if (!response.ok ) return NextResponse.json({ status: response.status });
+        
 
         const data = await response.json()
         return NextResponse.json(data, { status: 200 })

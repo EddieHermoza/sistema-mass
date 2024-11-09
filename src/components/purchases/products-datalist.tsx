@@ -11,15 +11,15 @@ import {
 import { useEffect, useState } from "react"
 import { Product } from "@/types"
 import { useDebouncedCallback } from "use-debounce"
-import { AddProductPurchaseButton } from "./add-product";
-import { useCartStore } from "@/store/purchase-store";
+import { AddPurchaseItemButton } from "./add-product";
+import { usePurchaseStore } from "@/store/purchase-store";
 
 export function ProductsDatalist() {
     const [open, setOpen] = React.useState(false)
     const [products, setProducts] = useState<Product[]>([])
     const [loading, setLoading] = useState<boolean>(false)
     const [query, setQuery] = useState("")
-    const cart = useCartStore(state => state.cart)
+    const cart = usePurchaseStore(state => state.purchaseItems)
 
 
     const debouncedQuery = useDebouncedCallback((value: string) => { setQuery(value)}, 300)
@@ -38,7 +38,7 @@ export function ProductsDatalist() {
             }
         }
 
-        if (query) fetchProducts() 
+        fetchProducts() 
 
     }, [query])
 
@@ -55,10 +55,10 @@ export function ProductsDatalist() {
                 <input
                     onChange={(e) => debouncedQuery(e.target.value)}
                     type="text"
-                    className="outline-none border-b focus-visible:border-black dark:focus-visible:border-primary p-2 duration-200 bg-background text-sm w-full"
+                    className="outline-none border-b focus-visible:border-black dark:focus-visible:border-primary p-3 duration-200 bg-background text-sm w-full"
                     placeholder="Buscar productos..."
                 />
-                <div className="flex flex-col py-2">
+                <div className="flex flex-col py-4">
                     {loading ? (
                         <div className="flex-center w-full h-14">
                             <AiOutlineLoading size={18} className="animate-spin ease-in-out"/>
@@ -67,7 +67,7 @@ export function ProductsDatalist() {
                         products.map((product, index) => (
                             
 
-                            <AddProductPurchaseButton key={index}  product={product} />
+                            <AddPurchaseItemButton key={index}  product={product} />
                         ))
                     )}
                 </div>

@@ -2,22 +2,22 @@
 import { AiOutlineLoading } from "react-icons/ai";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { Button } from "../ui/button";
-import type { Product, ProductPurchase } from "@/types";
-import { useCartStore } from "@/store/purchase-store";
-import { sleep } from "@/lib/utils";
-import { useState } from "react";
+import { Product, PurchaseItemFormData } from "@/types";
+import { usePurchaseStore } from "@/store/purchase-store";
+
+
 
 type Props={
 	product:Product
 }
 
-export function AddProductPurchaseButton( {product} : Props )  {
-	const addCartProduct = useCartStore(state => state.addProduct)
-
+export function AddPurchaseItemButton( {product} : Props )  {
+	const addCartProduct = usePurchaseStore(state => state.addItems)
+	const cart = usePurchaseStore(state => state.purchaseItems)
 
 	const addToCart = async () => {
 
-		const cartProduct : ProductPurchase ={
+		const cartProduct : PurchaseItemFormData ={
 			id: product.id,
 			name: product.name,
 			price: 0,
@@ -27,9 +27,13 @@ export function AddProductPurchaseButton( {product} : Props )  {
 		addCartProduct(cartProduct)
 	}
 
+	const inCart = () => {
+		return cart.some(item => item.id === product.id)
+	}
+
 
 	return (
-		<Button onClick={addToCart} variant={"ghost"} className={"w-full justify-start "}>
+		<Button onClick={addToCart} variant={"ghost"} disabled={inCart()} className={"w-full justify-start "}>
             {product.name}
 		</Button>	
 	);

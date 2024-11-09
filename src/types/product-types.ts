@@ -52,10 +52,3 @@ export type Product= {
     discount: number,
     orderLimit:number,
   }
-
-  export type ProductPurchase={
-    id:number
-    name:string,
-    quantity:number,
-    price:number,
-  }

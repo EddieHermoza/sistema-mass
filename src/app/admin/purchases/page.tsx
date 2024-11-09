@@ -6,13 +6,14 @@ import {ToogleLimit} from "@/components/filters";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { IoAddCircleOutline } from "react-icons/io5";
+import PurchasesTbl from "@/components/purchases/purchases-tbl";
 
 export default function Page({searchParams}:any) {
 
     const query = searchParams?.query || ''
     const limit = Number(searchParams?.limit) || 5
     const currentPage = Number(searchParams?.page) || 1
-    const status = searchParams?.statusSale || 'all'
+
 
     return (
         <>
@@ -31,7 +32,7 @@ export default function Page({searchParams}:any) {
             </section>
 
 
-            <SalesTbl page={currentPage} limit={limit} query={query} status={status} />
+            <PurchasesTbl page={currentPage} limit={limit} query={query} />
 
         </>
     );

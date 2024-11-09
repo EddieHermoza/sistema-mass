@@ -1,29 +1,34 @@
 
-import { ProductPurchase } from "@/types"
+import { PurchaseItemFormData } from "@/types"
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
 
-type CartState = {
-    cart: ProductPurchase[],
+type PurchaseState = {
+    purchaseItems: PurchaseItemFormData[],
 
-    getTotalProductsQuantity: () => number
-    getTotalProductsPrice:() => number
-    addProduct: (product: ProductPurchase) => void
-    updateProductQuantity: (product: ProductPurchase,quantity:number) => void
-    updateProductPrice:(product:ProductPurchase,price:number)=> void
-    removeProduct: (product:ProductPurchase) => void
+    getTotalItemsQuantity: () => number
+    getTotalItemsPrice:() => number
+    addItems: (product: PurchaseItemFormData) => void
+    updateItemQuantity: (product: PurchaseItemFormData,quantity:number) => void
+    updateItemPrice:(product:PurchaseItemFormData,price:number)=> void
+    removeItem: (product:PurchaseItemFormData) => void
+    resetItems: () => void
 }
 
-export const useCartStore = create<CartState>()(
+export const usePurchaseStore = create<PurchaseState>()(
 
     persist(
 
         (set, get) => ({
 
-            cart: [],
+            purchaseItems: [],
 
-            getTotalProductsQuantity: () => {
-                const { cart } = get()
+            resetItems: () => {
+                set({ purchaseItems: [] })
+            },
+
+            getTotalItemsQuantity: () => {
+                const { purchaseItems: cart } = get()
                 let totalQuantity = 0
 
                 for (let i = 0; i < cart.length; i++) {
@@ -34,8 +39,8 @@ export const useCartStore = create<CartState>()(
                 return totalQuantity
             },
 
-            getTotalProductsPrice: ()=>{
-                const { cart } = get()
+            getTotalItemsPrice: ()=>{
+                const { purchaseItems: cart } = get()
                 let totalPrice = 0
 
                 for (let i = 0; i < cart.length; i++) {
@@ -47,15 +52,15 @@ export const useCartStore = create<CartState>()(
             },
 
 
-            addProduct: (product: ProductPurchase) => {
-                const { cart } = get()
+            addItems: (product: PurchaseItemFormData) => {
+                const { purchaseItems: cart } = get()
 
                 const inCart = cart.some(
                     (item) => (item.id === product.id)
                 )
 
                 if (!inCart) {
-                    set({ cart: [...cart, product] })
+                    set({ purchaseItems: [...cart, product] })
                     return
                 }
 
@@ -67,10 +72,11 @@ export const useCartStore = create<CartState>()(
                     return item
                 })
 
-                set({ cart: updatedCart })
+                set({ purchaseItems: updatedCart })
             },
-            updateProductQuantity: (product:ProductPurchase, quantity:number)=>{
-                const {cart} = get()
+
+            updateItemQuantity: (product:PurchaseItemFormData, quantity:number)=>{
+                const {purchaseItems: cart} = get()
                 const updateCartQuantity = cart.map(item => {
 
                     if (item.id === product.id ) {
@@ -79,10 +85,11 @@ export const useCartStore = create<CartState>()(
                     return item 
                 }) 
 
-                set({cart:updateCartQuantity})
+                set({purchaseItems:updateCartQuantity})
             },
-            updateProductPrice: (product:ProductPurchase, price:number)=>{
-                const {cart} = get()
+
+            updateItemPrice: (product:PurchaseItemFormData, price:number)=>{
+                const {purchaseItems: cart} = get()
                 const updateProductPrice = cart.map(item => {
 
                     if (item.id === product.id ) {
@@ -91,14 +98,15 @@ export const useCartStore = create<CartState>()(
                     return item 
                 }) 
 
-                set({cart:updateProductPrice})
+                set({purchaseItems:updateProductPrice})
             },
-            removeProduct: (product: ProductPurchase) => {
-                const { cart } = get()
+
+            removeItem: (product: PurchaseItemFormData) => {
+                const { purchaseItems: cart } = get()
 
                 const newCart = cart.filter(item => item.id !== product.id)
 
-                set({ cart: newCart })
+                set({ purchaseItems: newCart })
             },
 
         })

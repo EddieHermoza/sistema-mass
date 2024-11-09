@@ -3,6 +3,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/sonner"
 import { aldrich } from "@/app/config/fonts"
 import { META_DATA } from "@/app/config/metadata";
+import { Analytics } from '@vercel/analytics/react';
 import "./globals.css";
 import NextAuthProvider from "@/components/session-provider";
 
@@ -17,7 +18,7 @@ export default function RootLayout({
 		<>
 			<html lang="es" suppressHydrationWarning className="scrollbar-thin scrollbar-track-background scrollbar-thumb-primary">
 
-				<body className={`${aldrich.className} `} >
+				<body className={`${aldrich.className}`} >
 					<NextAuthProvider>
 						<ThemeProvider
 							attribute="class"
@@ -27,6 +28,7 @@ export default function RootLayout({
 						>
 							<div vaul-drawer-wrapper="" className="bg-background ">
 								{children}
+								<Analytics/>
 							</div>
 							<Toaster  />
 							
