@@ -1,12 +1,12 @@
 'use client';
 
-import { ProductPurchase } from "@/types";
+import { PurchaseItemFormData } from "@/types";
 import { Input } from "../ui/input";
 import { usePurchaseStore } from "@/store/purchase-store";
 import { useState } from "react";
 
 type Props = {
-    product: ProductPurchase
+    product: PurchaseItemFormData
 }
 
 export default function TooglePriceProduct({ product }: Props) {
