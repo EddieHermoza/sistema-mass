@@ -16,6 +16,7 @@ model AuditLog {
   created   DateTime @default(now())
   details   Json?
   User      User     @relation(fields: [userId], references: [id])
+
 }
 
 model Movement {
@@ -26,6 +27,7 @@ model Movement {
   quantity    Int
   description String
   Product     Product @relation(fields: [productId], references: [id])
+
 }
 
 model Product {
@@ -45,6 +47,7 @@ model Product {
   Movement    Movement[]
   SaleItem    SaleItem[]
   PurchaseItem PurchaseItem[]
+
 }
 
 model Provider {
@@ -59,6 +62,7 @@ model Provider {
   number   String     @db.VarChar(9)
   status   Boolean
   Purchase Purchase[]
+
 }
 
 model Purchase {
@@ -84,6 +88,7 @@ model PurchaseItem {
   price       Decimal    @db.Decimal(10, 2)
   Product     Product    @relation(fields: [productId], references: [id])
   Purchase    Purchase   @relation(fields: [purchaseId], references: [id])
+
 }
 
 model Sale {
@@ -97,6 +102,7 @@ model Sale {
   status        Int
   User          User       @relation(fields: [userId], references: [id])
   SaleItem      SaleItem[]
+
 }
 
 model SaleItem {
@@ -106,6 +112,7 @@ model SaleItem {
   quantity  Int
   Product   Product @relation(fields: [productId], references: [id])
   Sale      Sale    @relation(fields: [saleId], references: [id])
+
 }
 
 model User {
@@ -124,4 +131,5 @@ model User {
   AuditLog   AuditLog[]
   Sale       Sale[]
   Purchase    Purchase[]
+  
 }
