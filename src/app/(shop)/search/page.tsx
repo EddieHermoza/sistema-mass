@@ -7,6 +7,8 @@ import { RxCaretLeft } from "react-icons/rx";
 export default function Page({ searchParams }: any) {
     const query = searchParams?.query || ''
     const currentPage = Number(searchParams?.page) || 1
+    const max = Number(searchParams?.max) || 100
+    const order = searchParams?.order|| "asc"
     const limit = 15
     const status = 'en'
     const hasStock='true'
@@ -32,7 +34,7 @@ export default function Page({ searchParams }: any) {
                 <SearchProducts />
             </section>
             <section className="relative sm:container">
-                <ProductsGrid query={query} limit={limit} status={status} page={currentPage} hasStock={hasStock}/>
+                <ProductsGrid page={currentPage} max={max} order={order} limit={limit} query={query} status={status} hasStock={hasStock}/>
             </section>
         </main>
     );
