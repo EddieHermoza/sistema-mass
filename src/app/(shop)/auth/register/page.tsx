@@ -46,7 +46,7 @@ export default function Page() {
 					message: res.message || "Error en la solicitud"
 				}
             }
-
+            toast.success("Registro exitoso")
             push('/auth/login')
 
         } catch (error: any) {
