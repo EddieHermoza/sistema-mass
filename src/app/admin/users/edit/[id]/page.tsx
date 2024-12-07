@@ -29,6 +29,7 @@ import { UserEditFormData, UserFormData } from "@/types";
 import { AiOutlineLoading } from "react-icons/ai";
 import { FetchDniDialog } from "@/components/users/fetch-dni-dialog";
 import { DniQueryForm } from "@/components/users/dni-query-form";
+import UserChangePasswordDialog from "@/components/users/change-pasword-dialog";
 
 
 
@@ -40,19 +41,19 @@ export default function Page({ params }: { params: { id: string } }) {
 	const [open, setOpen] = useState(false)
 
 
-	const { register, reset, control,setValue, watch, handleSubmit, formState: { errors } } = useForm<UserEditFormData>({
+	const { register, reset, control, setValue, watch, handleSubmit, formState: { errors } } = useForm<UserEditFormData>({
 		resolver: zodResolver(UserEditSchema)
 	})
-	
+
 	const handleOpenChange = (newState: boolean) => {
 		setOpen(newState)
-	
+
 	}
 
-	const handleFetchReniec = (dni:string,name:string,lastName:string) =>{
-		setValue("dni",dni)
-		setValue("name",name)
-		setValue("lastName",lastName)
+	const handleFetchReniec = (dni: string, name: string, lastName: string) => {
+		setValue("dni", dni)
+		setValue("name", name)
+		setValue("lastName", lastName)
 	}
 
 	useEffect(() => {
@@ -60,8 +61,8 @@ export default function Page({ params }: { params: { id: string } }) {
 
 			try {
 				const response = await fetch(`/api/users/${params.id}`)
-				const { user,message,error } = await response.json()
-				
+				const { user, message, error } = await response.json()
+
 				if (user) {
 					setUser(user)
 					reset(user)
@@ -76,7 +77,7 @@ export default function Page({ params }: { params: { id: string } }) {
 		}
 
 		fetchUser()
-	}, [params.id,reset])
+	}, [params.id, reset])
 
 	const onSubmit: SubmitHandler<UserEditFormData> = async (data) => {
 		setLoading(true)
@@ -132,8 +133,11 @@ export default function Page({ params }: { params: { id: string } }) {
 				<Button asChild variant={"outline"} size={"icon"}>
 					<Link href={"/admin/users"}><MdOutlineChevronLeft size={25} /></Link>
 				</Button>
+				<span className="flex-center gap-2 max-md:flex-col">
+					<h1 className="text-3xl">Editar Usuario ID : {params.id}</h1>
+					<UserChangePasswordDialog id={parseInt(params.id)} />
 
-				<h1 className="text-3xl">Editar Usuario ID : {params.id}</h1>
+				</span>
 			</section>
 
 			<form onSubmit={handleSubmit(onSubmit)} className="flex max-w-screen-xl w-full mx-auto max-lg:flex-col gap-5">
@@ -171,7 +175,7 @@ export default function Page({ params }: { params: { id: string } }) {
 					<Card className="max-w-screen-md">
 						<CardHeader className="flex flex-row justify-between items-center">
 							<CardTitle className="text-xl font-normal">Detalles</CardTitle>
-							<Button variant={"outline"} type="button" onClick={()=>handleOpenChange(true)}>Consultar RENIEC</Button>
+							<Button variant={"outline"} type="button" onClick={() => handleOpenChange(true)}>Consultar RENIEC</Button>
 						</CardHeader>
 						<CardContent className="space-y-3">
 							<label className="flex flex-col gap-2">
@@ -261,11 +265,12 @@ export default function Page({ params }: { params: { id: string } }) {
 							</>
 						)}
 					</Button>
+
 				</div>
 			</form>
 			<FetchDniDialog open={open} handleOpenChange={handleOpenChange}>
-                <DniQueryForm handleOpenChange={handleOpenChange} handleFetchReniec={handleFetchReniec}/>
-            </FetchDniDialog>
+				<DniQueryForm handleOpenChange={handleOpenChange} handleFetchReniec={handleFetchReniec} />
+			</FetchDniDialog>
 		</>
 	);
 }

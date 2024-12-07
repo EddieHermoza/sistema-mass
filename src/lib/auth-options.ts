@@ -25,6 +25,7 @@ export const authOptions :NextAuthOptions = {
                         id: "superuser", 
                         name: "Superuser",
                         email: process.env.NEXTAUTH_SUPERUSER_EMAIL,
+                        
                     }
                 }
 
@@ -61,7 +62,6 @@ export const authOptions :NextAuthOptions = {
                     id: userFound.id.toString(),
                     name: `${name} ${lastName}`,
                     email: userFound.email,
-                    role:userFound.role
                 }
             },
         }),
