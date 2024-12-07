@@ -1,3 +1,5 @@
+export const revalidate = 0;
+
 import { MdShoppingCart } from "react-icons/md";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -17,7 +19,6 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
 
 export default async function Page() {
-    const session=await getServerSession(authOptions)
 
     return (
         <>
@@ -65,7 +66,7 @@ export default async function Page() {
                                 Continuar Comprando
                             </Link>
                         </Button>
-                        <PaypalButton userId={session?.user.id}/>
+                        <PaypalButton/>
                     </CardFooter>
                 </Card>
 
