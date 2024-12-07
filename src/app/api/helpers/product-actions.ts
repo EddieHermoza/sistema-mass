@@ -106,51 +106,61 @@ type GetProductsProps = {
     status: boolean | null
 }
 
-
-export const getProducts = async  ({ page, query, limit, status,category,hasStock }: GetProductsProps) => {
+export const getProducts = async ({ page, query, limit, status, category, hasStock, max, order }: GetProductsProps) => {
     try {
+        const pages = page || 1;
+        const skip = (pages - 1) * limit;
+        const conditions: Prisma.ProductWhereInput[] = [];
 
-        const pages = page || 1
-        const skip = (pages - 1) * limit
 
-        const conditions = []
+        if (hasStock !== null && hasStock !== undefined && hasStock) {
+            conditions.push({ stock: { gt: 0 } });
+        }
 
-        if (hasStock !== null && hasStock !== undefined && hasStock)  conditions.push({ stock: { gt: 0 } })
-        
 
-        if (query) conditions.push({ name: { contains: query, mode:Prisma.QueryMode.insensitive } })
-        
+        if (query) {
+            conditions.push({ name: { contains: query, mode: Prisma.QueryMode.insensitive } });
+        }
 
-        if (category) conditions.push({ category: { contains: category } })
-        
 
-        if (status !== null && status !== undefined) conditions.push({ status })
+        if (category) {
+            conditions.push({ category: { contains: category } });
+        }
+
+
+        if (status !== null && status !== undefined) {
+            conditions.push({ status });
+        }
+
+        if (max !== null && max !== undefined) {
+            conditions.push({ price: { lte: max } });
+        }
 
 
         const products = await db.product.findMany({
-            
-            where:{
-                AND:conditions,
-                
+            where: {
+                AND: conditions,
             },
             skip: skip,
             take: limit,
-        })
+            orderBy: order
+                ? { price: order === 'asc' ? 'asc' : 'desc' }
+                : undefined, 
+        });
 
+ 
         const formattedProducts = products.map((product) => ({
             ...product,
             created: formatDate(new Date(product.created)),
             updated: formatDate(new Date(product.updated)),
-        }))
+        }));
 
-        return formattedProducts
-
+        return formattedProducts;
     } catch (error) {
-
-        return []
-
+        console.error("Error fetching products:", error);
+        return [];
     }
-}
+};
 
 export const getProductsInventory= async({ page, query, limit, status }: GetProductsProps)=>{
     try {

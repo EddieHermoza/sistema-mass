@@ -34,8 +34,6 @@ export function ToogleOrder() {
             <SelectContent position="popper" sideOffset={10} hideWhenDetached>
                 <SelectItem value="asc">Precio ascendente</SelectItem>
                 <SelectItem value="desc">Precio descendente</SelectItem>
-                <SelectItem value="AZ">A a la Z</SelectItem>
-                <SelectItem value="ZA">Z a la A</SelectItem>
             </SelectContent>
         </Select>
     );

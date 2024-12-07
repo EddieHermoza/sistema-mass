@@ -37,7 +37,7 @@ export async function GET(request: Request) {
     }
     const stockValue = hasStockMap[hasStock] ?? null
 
-    const data = await getProducts({ query, page, limit, status: statusValue ,category,hasStock:stockValue})
+    const data = await getProducts({ query, page, limit, status: statusValue ,category,hasStock:stockValue,max:parseInt(max),order})
     const totalPages = await getProductsPages({ query, page, limit, status: statusValue,category,hasStock:stockValue })
 
     return NextResponse.json({

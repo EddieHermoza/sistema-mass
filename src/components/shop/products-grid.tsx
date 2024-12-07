@@ -17,24 +17,25 @@ type Props = {
     page: number;
     limit: number;
     status: string;
+    max:number;
+    order:string
 }
 
-export default function ProductsGrid({ query, page, limit, status,category,hasStock }: Props) {
+export default function ProductsGrid({ query, page, limit, status,category,hasStock,order,max }: Props) {
     const [products, setProducts] = useState<Product[]>([])
     const [loading, setLoading] = useState<boolean>(false)
     const [totalPages, settotalPages] = useState<number>(0)
 
 
     useEffect(() => {
-        let delayTimeout: NodeJS.Timeout;
+
         const fetchProducts = async () => {
-            delayTimeout = setTimeout(() => setLoading(true), 100)
+
             try {
                 const categoryParam = category ? `&category=${encodeURIComponent(category)}` : ''
-                const response = await fetch(`/api/products?page=${page}&query=${query}&limit=${limit}&status=${status}&hasStock=${hasStock}${categoryParam}`)
+                const response = await fetch(`/api/products?page=${page}&query=${query}&max=${max}&order=${order}&limit=${limit}&status=${status}&hasStock=${hasStock}${categoryParam}`)
                 const {totalPages,products} = await response.json()
 
-                await sleep(3000)
 
                 settotalPages(totalPages)
                 setProducts(products)
@@ -42,13 +43,13 @@ export default function ProductsGrid({ query, page, limit, status,category,hasSt
             } catch (error) {
                 console.error("Error:", error)
             } finally {
-                clearTimeout(delayTimeout)
+
                 setLoading(false);
             }
         }
 
         fetchProducts()
-    }, [page, limit, query,category,hasStock,status])
+    }, [page, limit, query,category,hasStock,status,max,order])
 
 
     return (
