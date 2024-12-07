@@ -17,8 +17,8 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url)
     const hasStock = searchParams.get("hasStock") || ""
     const category= searchParams.get("category") || ""
-    const max= searchParams.get("max") || ""
-    const order = searchParams.get("order") || ""
+    const max= searchParams.get("max") || "100"
+    const order = searchParams.get("order") || "asc"
     const page = parseInt(searchParams.get("page") || "1")
     const limit = parseInt(searchParams.get("limit") || "5")
     const query = searchParams.get("query") || ""
