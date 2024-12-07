@@ -66,7 +66,7 @@ export function ProductsCarousel({ category, status, limit,hasStock }: Props) {
                                             <CardDescription className="text-base">{product.description}</CardDescription>
                                         </CardHeader>
                                         <CardContent className="p-0 py-2 flex-center">
-                                            <CustomImage src={product.img} width={160} height={160} alt="a" category={category}/>
+                                            <CustomImage src={product.img} width={140} height={140} alt="a" category={category}/>
                                         </CardContent>
                                         <CardFooter className="p-0 flex justify-between">
                                             <span className="leading-none">S/ {parseFloat(product.price).toFixed(2)}</span>

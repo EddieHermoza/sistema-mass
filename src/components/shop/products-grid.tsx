@@ -68,7 +68,7 @@ export default function ProductsGrid({ query, page, limit, status,category,hasSt
                                         <span className="leading-none sm:hidden dark:text-white text-primary-foreground">S/ {product.price}</span>
                                     </CardHeader>
                                     <CardContent className="p-0 py-2 flex-center max-sm:order-first">
-                                        <CustomImage src={product.img} width={160} height={160} alt="a" category={category} className="max-sm:h-24 max-sm:w-auto"/>
+                                        <CustomImage src={product.img} width={140} height={140} alt="a" category={category} className="max-sm:h-24 max-sm:w-auto"/>
                                     </CardContent>
                                     <CardFooter className="p-0 flex justify-between max-sm:order-last max-sm:ml-auto ">
                                         <span className="leading-none max-sm:hidden">S/ {parseFloat(product.price).toFixed(2)}</span>
