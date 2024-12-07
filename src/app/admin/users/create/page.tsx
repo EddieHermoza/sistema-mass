@@ -214,7 +214,7 @@ export default function Page() {
 										</SelectTrigger>
 										<SelectContent position="popper" sideOffset={5} hideWhenDetached>
 											<SelectItem value="1">Administrador</SelectItem>
-											<SelectItem value="2">Vendedor</SelectItem>
+											<SelectItem value="0">Cliente</SelectItem>
 										</SelectContent>
 									</Select>
 								)}

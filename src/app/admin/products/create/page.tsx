@@ -30,10 +30,11 @@ import { Button } from "@/components/ui/button";
 import { ProductFormData } from "@/types";
 import { useState } from "react";
 import { AiOutlineLoading } from "react-icons/ai";
+import { convertToBase64 } from "@/lib/utils";
 
 
 export default function Page() {
-	const [loading,setLoading] = useState(false)
+	const [loading, setLoading] = useState(false)
 	const { register, reset, control, watch, handleSubmit, formState: { errors } } = useForm<ProductFormData>({
 		resolver: zodResolver(ProductSchema)
 	})
@@ -42,13 +43,30 @@ export default function Page() {
 
 	const onSubmit: SubmitHandler<ProductFormData> = async (data) => {
 		setLoading(true)
+
+		let image ="PENDIENTE"
+
+		if (data.img) image = await convertToBase64(data.img)
+		
+
+		const formData = {
+			status:data.status,
+			name: data.name,
+			description: data.description,
+			price: data.price,
+			category: data.category,
+			discount: data.discount,
+			orderLimit: data.orderLimit,
+			img: image,
+		}
+
 		try {
 			const response = await fetch("/api/products", {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify(data),
+				body: JSON.stringify(formData),
 			});
 
 			if (!response.ok) {
@@ -80,14 +98,15 @@ export default function Page() {
 
 		} catch (error: any) {
 			setLoading(false);
-	
+
 			const errorMessage = error.message || "Error desconocido"
 			const errorDetails = error.details ? `El campo ${error.details} es inválido` : ""
-	
+
 			console.log(errorMessage)
 			toast.error(errorMessage, { description: errorDetails })
 		}
 	}
+
 
 	return (
 		<>
@@ -182,7 +201,7 @@ export default function Page() {
 												<SelectValue placeholder="Seleccionar" />
 											</SelectTrigger>
 											<SelectContent position="popper" hideWhenDetached>
-												{CATEGORIES.map((category,index)=>(
+												{CATEGORIES.map((category, index) => (
 													<SelectItem key={index} value={`${category.slug}`}>{category.name}</SelectItem>
 												))}
 											</SelectContent>
@@ -202,7 +221,7 @@ export default function Page() {
 							</CardHeader>
 							<CardContent className="space-y-2">
 								<label className="flex flex-col gap-2">
-									<Input type="number" defaultValue={0} step={0.01} min={0} max={1} id="discount" {...register("discount")} />
+									<Input type="number" defaultValue={0} min={0} step={0.01} id="discount" {...register("discount")} />
 								</label>
 								{
 									errors.discount && <p className="text-red-600 text-xs">{errors.discount.message}</p>
@@ -238,8 +257,18 @@ export default function Page() {
 								Arrastra las imágenes en el contenedor o haz clic para seleccionar
 							</CardDescription>
 						</CardHeader>
-						<CardContent >
-							<ImageUploader />
+						<CardContent>
+							<Controller
+								name="img"
+								control={control}
+								render={({ field }) => (
+									<ImageUploader
+										value={field.value}
+										onChange={field.onChange}
+									/>
+								)}
+							/>
+
 						</CardContent>
 					</Card>
 

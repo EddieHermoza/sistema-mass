@@ -23,9 +23,12 @@ export function AddCartProductButton( {product} : Props )  {
 			name: product.name,
 			description:product.description,
 			price: parseFloat(product.price),
-			discount: 0,
+			discount: parseFloat(product.discount),
 			maxQuantity: Math.min(product.stock, product.orderLimit),
-			quantity: 1
+			quantity: 1,
+			category:product.category,
+			img:product.img
+			
 		}
 
 		addCartProduct(cartProduct)

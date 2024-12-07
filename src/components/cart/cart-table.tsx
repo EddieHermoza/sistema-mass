@@ -3,6 +3,7 @@ import { useCartStore } from "@/store/cart-store";
 import Image from "next/image";
 import QuantitySelector from "./quantity-selector";
 import RemoveProductButton from "@/components/cart/remove-product-button";
+import CustomImage from "../ui/custom-image";
 
 export function CartTable() {
     const cart = useCartStore(state => state.cart)
@@ -20,6 +21,9 @@ export function CartTable() {
                     <td className=" text-lg tracking-tight leading-none">
                         Precio
                     </td>
+                    <td className=" text-lg tracking-tight leading-none">
+                        Dscto
+                    </td>
                     <td>
 
                     </td>
@@ -31,7 +35,7 @@ export function CartTable() {
                         cart.map((product, index) => (
                             <tr key={index} className="hover:bg-muted/40 duration-200">
                                 <td className="flex gap-2 items-center h-32">
-                                    <Image src={"/CocaColaCombo.webp"} height={96} width={96} className="h-24 w-auto" alt="" />
+                                    <CustomImage src={product.img} width={96} height={96} alt="a" category={product.category} className="h-24 w-auto"/>
                                     <div className="flex flex-col gap-2">
                                         <span className="font-semibold tracking-tight leading-none">{product.name}</span>
                                         <span className="text-muted-foreground">{product.description}</span>
@@ -43,6 +47,9 @@ export function CartTable() {
                                 </td>
                                 <td>
                                     S/ {product.price.toFixed(2)}
+                                </td>
+                                <td>
+                                    S/ {product.discount.toFixed(2)}
                                 </td>
                                 <td>
                                     <RemoveProductButton product={product} />

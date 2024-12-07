@@ -1,10 +1,7 @@
 'use client';
 
 import { useState, useEffect } from "react";
-import { Sale } from "@/types/types"
-import { AiOutlineInfoCircle } from "react-icons/ai"
-import { RiDeleteBin6Line } from "react-icons/ri"
-import { FiEdit } from "react-icons/fi";
+
 import { MdOutlineUnfoldMore } from "react-icons/md";
 import { HiOutlineArrowsUpDown } from "react-icons/hi2";
 import Link from "next/link";
@@ -17,7 +14,20 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover"
 import { Pagination } from "@/components/ui";
+import { AiOutlineInfoCircle } from "react-icons/ai";
 
+
+export type Sale={
+    id:number,
+    created:string,
+    transaction:string,
+    userName:string,
+    totalAmount:number,
+    totalDiscount:number,
+    totalPayment:number,
+    paymentMethod:string,
+    status:string
+  }
 
 
 
@@ -57,9 +67,9 @@ export default function SalesTbl({ page, limit, status, query }: Props) {
     };
 
     useEffect(() => {
-        let delayTimeout: NodeJS.Timeout;
+
         const fetchSales = async () => {
-            delayTimeout = setTimeout(() => setLoading(true), 100)
+
             try {
                 const response = await fetch(`/api/sales?page=${page}&query=${query}&statusSale=${status}&limit=${limit}`);
                 const data = await response.json()
@@ -70,7 +80,7 @@ export default function SalesTbl({ page, limit, status, query }: Props) {
             } catch (error) {
                 console.error("Error:", error)
             } finally {
-                clearTimeout(delayTimeout) 
+
                 setLoading(false)
             }
         }
@@ -111,7 +121,7 @@ export default function SalesTbl({ page, limit, status, query }: Props) {
                             </td>
 
                             <td className="max-xl:hidden">
-                                Metodo Pago
+                                Metodo
                             </td>
                             <td className="max-lg:hidden">
                                 Estado
@@ -130,15 +140,15 @@ export default function SalesTbl({ page, limit, status, query }: Props) {
                                     <tr key={index} className="hover:bg-muted/50 duration-300 relative h-24">
                                         <td className="rounded-l-lg">{sale.id}</td>
                                         <td>{sale.transaction}</td>
-                                        <td className="max-md:hidden">{sale.date}</td>
-                                        <td className="max-lg:hidden">{sale.customerId}</td>
+                                        <td className="max-md:hidden">{sale.created}</td>
+                                        <td className="max-lg:hidden">{sale.userName}</td>
                                         <td className="">S/ {sale.totalAmount}</td>
-                                        <td className="max-md:hidden">S/ {sale.discount}</td>
+                                        <td className="max-md:hidden">S/ {sale.totalDiscount}</td>
                                         <td className="max-xl:hidden">
                                             {sale.paymentMethod}
                                         </td>
-                                        <td className={`max-lg:hidden text-shadow-lg ${sale.status === 1 ? 'text-green-500 shadow-green-500/50' : 'text-red-500 shadow-red-500/50'}`}>
-                                            {sale.status === 1 ? 'Completada' : 'Pendiente'}
+                                        <td className={`max-lg:hidden text-shadow-lg text-green-500 shadow-green-500/50`}>
+                                            {sale.status}
                                         </td>
                                         <td className="rounded-r-lg space-x-2">
                                             <Popover>
@@ -146,7 +156,7 @@ export default function SalesTbl({ page, limit, status, query }: Props) {
                                                     <MdOutlineUnfoldMore size={20} />
                                                 </PopoverTrigger>
                                                 <PopoverContent align="end" className="flex flex-col gap-2 items-start text-sm">
-                                                    <Link href={`/admin/sales/`} className="flex items-center gap-2 hover:bg-secondary p-2 w-full rounded-sm ">
+                                                    <Link href={`/admin/sales/${sale.id}}`} className="flex items-center gap-2 hover:bg-secondary p-2 w-full rounded-sm ">
                                                         <AiOutlineInfoCircle size={18} /> Información
                                                     </Link>
                                                 </PopoverContent>

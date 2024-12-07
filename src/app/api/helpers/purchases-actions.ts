@@ -56,7 +56,7 @@ export const getPurchasePages = async ({ query, limit }: GetPurchasesProps) => {
                 AND: [
                     query ? { receiptNumber: { contains: query,mode:Prisma.QueryMode.insensitive  } } : {},
                 ]
-            }
+            },
         })
 
         const totalPages = Math.ceil(purchases.length / limit)
@@ -73,7 +73,32 @@ export const getPurchasePages = async ({ query, limit }: GetPurchasesProps) => {
 export const getPurchaseById = async (id: number) => {
     try {
 
-        const purchase = await db.purchase.findUnique({ where: { id } })
+        const purchase = await db.purchase.findUnique({ 
+            where: { id },
+            include:{
+                Provider:{
+                    select:{
+                        name:true
+                    }
+                },
+                User:{
+                    select:{
+                        name:true,
+                        lastName:true
+                    }
+                },
+                PurchaseItem:{
+                    include:{
+                        Product:{
+                            select:{
+                                name:true
+                            }
+                        }
+                    }
+                }
+            }
+            
+        })
 
         if (purchase === null) return { ok: false, purchase: purchase }
 
@@ -128,14 +153,14 @@ export const createPurchaseItems = async (purchaseId: number, items: PurchaseIte
     try {
 
         const createdItems = await Promise.all(
-            items.map((item) => 
+            items.map((item) =>
                 db.purchaseItem.create({
                     data: {
                         purchaseId: purchaseId,
                         quantity: item.quantity,
                         price: item.price,
-                        productId: item.id
-                    }
+                        productId: item.id,
+                    },
                 })
             )
         );
@@ -143,13 +168,20 @@ export const createPurchaseItems = async (purchaseId: number, items: PurchaseIte
         if (!createdItems.length) return { ok: false, items: null }
 
 
-        return { ok: true, items: createdItems }
+        await Promise.all(
+            items.map((item) =>
+                db.product.update({
+                    where: { id: item.id },
+                    data: { stock: { increment: item.quantity },lastStockEntry: new Date(), },
+                })
+            )
+        );
 
-
+        return { ok: true, items: createdItems };
     } catch (error: any) {
         return {
             ok: false,
-            error: error
-        }
+            error: error.message || "Error al crear los purchase items o actualizar el stock",
+        };
     }
-}
+};

@@ -1,7 +1,7 @@
 "use client"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { AddCartProductButton } from "../cart/add-product-button";
-
+import CustomImage from "../ui/custom-image";
 import {
     Carousel,
     CarouselContent,
@@ -63,10 +63,10 @@ export function ProductsCarousel({ category, status, limit,hasStock }: Props) {
                                     <Card className="p-3 h-80 relative flex flex-col justify-between hover:bg-muted/40 duration-200">
                                         <CardHeader className="p-0">
                                             <CardTitle className="text-base">{product.name}</CardTitle>
-                                            <CardDescription className="text-lg">{product.description}</CardDescription>
+                                            <CardDescription className="text-base">{product.description}</CardDescription>
                                         </CardHeader>
                                         <CardContent className="p-0 py-2 flex-center">
-                                            <Image src={"/CocaColaCombo.webp"} width={160} height={160} alt="Coca Cola Combo" />
+                                            <CustomImage src={product.img} width={160} height={160} alt="a" category={category}/>
                                         </CardContent>
                                         <CardFooter className="p-0 flex justify-between">
                                             <span className="leading-none">S/ {parseFloat(product.price).toFixed(2)}</span>

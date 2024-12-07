@@ -1,6 +1,4 @@
 
-import SalesTbl from "@/components/sales/sales-tbl";
-import {ToogleStatusSale} from "@/components/filters";
 import {SearchByName} from "@/components/filters";
 import {ToogleLimit} from "@/components/filters";
 import { Button } from "@/components/ui/button";
@@ -21,7 +19,6 @@ export default function Page({searchParams}:any) {
                 <div className="space-y-2 max-sm:w-full">
                     <SearchByName className="sm:w-96 "/>
                     <ToogleLimit/>
-                    <ToogleStatusSale/>
                 </div>
 
                 <Button variant={"secondary"} asChild>
@@ -35,5 +32,5 @@ export default function Page({searchParams}:any) {
             <PurchasesTbl page={currentPage} limit={limit} query={query} />
 
         </>
-    );
+    )
 }

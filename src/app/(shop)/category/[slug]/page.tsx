@@ -8,7 +8,7 @@ import ProductsGrid from "@/components/shop/products-grid";
 
 
 export default function Page({ params, searchParams }: { params: { slug: string }; searchParams:any }) {
-    const category = CATEGORIES.find((category) => category.slug === params.slug);
+    const category = CATEGORIES.find((category) => category.slug === params.slug)
     const Icon = category?.icon
 
     const query = searchParams?.query || ''

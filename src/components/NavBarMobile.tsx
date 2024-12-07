@@ -67,7 +67,7 @@ export default function NavBarMobile( { variant } : { variant : Variant } ) {
                                 })
                             ):(
                                 shopLinks.map((link, index) => {
-                                    const Icon = link.icon;
+                                    const Icon = link.icon
                                     return (
                                         <li key={index} className="w-full relative">
                                             <SheetClose asChild className='w-full relative flex'>

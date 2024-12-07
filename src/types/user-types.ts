@@ -24,6 +24,17 @@ export type User= {
 
   }
 
+  export type UserEditFormData={
+    dni:string,
+    name:string,
+    lastName:string,
+    number:string,
+    email:string,
+    role:string,
+    status:string,
+
+  }
+
   export type UserDTO={
     dni:string,
     name:string,
@@ -33,4 +44,15 @@ export type User= {
     role:number,
     status:boolean,
     password:string,
+  }
+
+  export type UserEditDTO={
+    dni:string,
+    name:string,
+    lastName:string,
+    number:string,
+    email:string,
+    role:number,
+    status:boolean,
+
   }

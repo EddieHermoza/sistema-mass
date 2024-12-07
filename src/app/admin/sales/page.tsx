@@ -17,7 +17,6 @@ export default function Page({searchParams}:any) {
                 <div className="space-y-2 max-sm:w-full">
                     <SearchByName className="sm:w-96 "/>
                     <ToogleLimit/>
-                    <ToogleStatusSale/>
                 </div>
             </section>
 

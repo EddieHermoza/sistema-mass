@@ -36,6 +36,7 @@ export const authOptions :NextAuthOptions = {
                         lastName: true,
                         email: true,
                         password: true,
+                        role:true,
                     },
                     where: {
                         email: credentials.email,
@@ -60,7 +61,8 @@ export const authOptions :NextAuthOptions = {
                     id: userFound.id.toString(),
                     name: `${name} ${lastName}`,
                     email: userFound.email,
-                };
+                    role:userFound.role
+                }
             },
         }),
     ],
@@ -71,19 +73,32 @@ export const authOptions :NextAuthOptions = {
     callbacks: {
         jwt: async ({ token, user }:any) => {
 
-            if (user) {
-                token.id = user.id
-                token.name = user.name
-                token.email = user.email
+            const dbUser = await db.user.findFirst({
+                where:{
+                    email:token.email
+                }
+            })
+            if (!dbUser) {
+                token.id = user!.id
+                return token
             }
-            return token
+            return {
+                id:dbUser.id,
+                name:dbUser.name,
+                email:dbUser.email,
+                role:dbUser.role
+            }
         },
         session: async ({ session, token }:any) => {
-            session.user = {
-                id: token.id,
-                name: token.name,
-                email: token.email,
-            };
+            if (token) {
+                session.user = {
+                    id: token.id,
+                    name: token.name,
+                    email: token.email,
+                    role:token.role
+                }
+            }
+
             return session
         },
     },

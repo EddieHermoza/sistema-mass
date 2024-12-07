@@ -16,8 +16,12 @@ import CustomerGrowthChart from "@/components/charts/CustomersGrowthChart";
 import LastSales from "@/components/dashboard/LastSales";
 import TopCustomers from "@/components/dashboard/TopCustomers";
 import { CustomersRegistered, TotalExpenses, TotalProfit, TotalSales } from "@/components/dashboard/DashboardCards";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth-options";
 
 export default async function Page({ searchParams }: {searchParams: { ticker?: string }}) {
+	const session =await getServerSession(authOptions)
+
 
 	const ticker = searchParams.ticker || companies[0].ticker;
 	const stockData = getStockData(ticker);

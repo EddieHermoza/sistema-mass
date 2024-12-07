@@ -22,12 +22,12 @@ export const ProductSchema = z.object({
     price: z
         .string()
         .refine((price) => !isNaN(parseFloat(price)) && parseFloat(price) > 0, {
-            message: "El precio debe ser un número positivo mayor a 0",
+            message: "El precio debe ser un número mayor a 0",
         }),
     discount: z
         .string()
-        .refine((discount) => !isNaN(parseFloat(discount)) && parseFloat(discount) >= 0 && parseFloat(discount) <= 100, {
-            message: "El descuento debe ser un número entre 0 y 100",
+        .refine((discount) => !isNaN(parseFloat(discount)) && parseFloat(discount) >= 0, {
+            message: "El descuento no debe ser negativo",
         }),
     category: z
         .string({required_error:"Selecciona una categoría"})
@@ -39,4 +39,9 @@ export const ProductSchema = z.object({
         .refine((orderLimit) => !isNaN(parseInt(orderLimit)) && parseInt(orderLimit) > 0, {
             message: "El límite de compra debe ser un número entero positivo mayor a 0",
         }),
-}).strict()
+    img: z.any(),
+
+}).strict().refine((data) => parseFloat(data.price) >= parseFloat(data.discount), {
+    message: "El descuento no debe ser superior al precio",
+    path: ["discount"], 
+});

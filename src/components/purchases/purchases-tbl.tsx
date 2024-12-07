@@ -16,18 +16,18 @@ import {
 
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import TableSkeleton from "../skeletons/table-skeleton";
+import { Button } from "../ui/button"
 
-import { Button } from "../ui/button";
 
 type SortConfig = {
-    key: keyof Purchase;
-    order: 'asc' | 'desc';
+    key: keyof Purchase
+    order: 'asc' | 'desc'
 }
 
 type Props = {
-    query: string;
-    page: number;
-    limit: number;
+    query: string
+    page: number
+    limit: number
 }
 
 export default function PurchasesTbl({ page, limit, query }: Props) {
@@ -57,14 +57,14 @@ export default function PurchasesTbl({ page, limit, query }: Props) {
 
         })
 
-        setPurchases(sortedData);
+        setPurchases(sortedData)
     }
 
     useEffect(() => {
         const fetchPurchases = async () => {
             setLoading(true)
             try {
-                const response = await fetch(`/api/purchases?page=${page}&query=${query}&limit=${limit}`);
+                const response = await fetch(`/api/purchases?page=${page}&query=${query}&limit=${limit}`)
                 const {totalPages,purchases} = await response.json()
 
                 setTotalPages(totalPages)
@@ -118,7 +118,7 @@ export default function PurchasesTbl({ page, limit, query }: Props) {
                             <td className="max-xl:hidden">
                                 Registrado
                             </td>
-                            <td className="">
+                            <td>
 
                             </td>
                         </tr>
@@ -146,16 +146,16 @@ export default function PurchasesTbl({ page, limit, query }: Props) {
                                             {purchase.receiptDate}
                                         </td>
                                         <td className="max-xl:hidden">
-                                            {purchase.totalPrice}
+                                            S/ {parseFloat(purchase.totalPrice).toFixed(2)}
                                         </td>
                                         <td className="max-xl:hidden">
                                             {purchase.created}
                                         </td>
-                                        <td className="rounded-r-lg space-x-2 ">
+                                        <td className="rounded-r-lg space-x-2">
                                             <Popover>
                                                 <PopoverTrigger className="p-2 rounded bg-transparent hover:shadow-lg hover:shadow-secondary/50 hover:bg-background block duration-300"><MdOutlineUnfoldMore size={20} /></PopoverTrigger>
                                                 <PopoverContent align="end" className="flex flex-col gap-2 items-start text-sm">
-                                                    <Link href={`/admin/purchase/${purchase.id}`} className="flex items-center gap-2 hover:bg-secondary p-2 w-full rounded-sm ">
+                                                    <Link href={`/admin/purchases/${purchase.id}`} className="flex items-center gap-2 hover:bg-secondary p-2 w-full rounded-sm ">
                                                         <AiOutlineInfoCircle size={18} /> Información
                                                     </Link> 
 
@@ -174,7 +174,7 @@ export default function PurchasesTbl({ page, limit, query }: Props) {
 
             </CardContent>
             <CardFooter>
-                <Pagination totalPages={totalPages} />
+                <Pagination totalPages={totalPages}/>
             </CardFooter>
         </Card>
     )

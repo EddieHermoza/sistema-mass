@@ -2,6 +2,16 @@ import { NextResponse } from "next/server";
 import { ProductFormData } from "@/types";
 import { ProductSchema } from "@/Schemas";
 import { createProduct, getProducts, getProductsPages } from "@/app/api/helpers/product-actions";
+import {UploadApiResponse, v2 as cloudinary} from "cloudinary"
+
+
+
+cloudinary.config({
+    cloud_name:"dlvusqcul",
+    api_key:"124597952859627",
+    api_secret:"piJbCjGxA4jMGf4HXFETwP0wE0Y"
+})
+
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url)
@@ -42,22 +52,42 @@ export async function POST(request: Request) {
     try {
         const rawBody: ProductFormData = await request.json()
 
-        const body = ProductSchema.parse(rawBody)
 
-        const { name, description, price, discount, category, status,orderLimit } = body
+        const body = ProductSchema.parse(rawBody)
+        const { name, description, price, discount, category, status, orderLimit, img } = body
+
+        let imageUrl: string | undefined ="PENDIENTE"
+
+
+        if (img && img !== "PENDIENTE") {
+            const imageBuffer = Buffer.from(img.split(',')[1], 'base64')
+
+            const CloudinaryResponse: UploadApiResponse | undefined = await new Promise((resolve, reject) => {
+                cloudinary.uploader.upload_stream({}, (err, result) => {
+                    if (err) {
+                        reject(err)
+                    }
+                    resolve(result)
+                }).end(imageBuffer)
+            })
+
+            imageUrl = CloudinaryResponse?.secure_url
+        }
+
 
         const product = {
-            status: status==="1",
+            status: status === "1",
             name: name,
             description: description,
             price: parseFloat(price),
             discount: parseFloat(discount),
             category: category,
-            orderLimit: parseInt(orderLimit)
-        }
+            orderLimit: parseInt(orderLimit),
+            image: imageUrl, 
+        };
+
 
         const newProduct = await createProduct(product)
-
 
         const newProductResponse = {
             ...newProduct,
@@ -69,20 +99,26 @@ export async function POST(request: Request) {
                 discount,
                 orderLimit,
                 status: product.status,
-            }
+            },
         }
 
+        if (newProductResponse.success) {
+            return NextResponse.json(
+                { message: "Producto creado exitosamente", product: newProductResponse.product },
+                { status: 201 }
+            )
+        }
 
-        if (newProductResponse.success) return NextResponse.json({ message: "Producto creado exitosamente", provider: newProductResponse.product }, { status: 201 })
-
-
-        return NextResponse.json({ message: newProductResponse.error?.msg, error: newProductResponse.error?.details }, { status: 500 })
-
-
+        return NextResponse.json(
+            { message: newProductResponse.error?.msg, error: newProductResponse.error?.details },
+            { status: 500 }
+        );
     } catch (error) {
+        console.error("Error en el registro del producto en la REST API:", error)
 
-        console.error("Error en el registro del proveedor en la REST API:", error)
-
-        return NextResponse.json({ message: "Error en el registro del proveedor en la REST API:", error: error || "Error desconocido en la REST API" }, { status: 500 })
+        return NextResponse.json(
+            { message: "Error en el registro del producto en la REST API:", error: error || "Error desconocido en la REST API" },
+            { status: 500 }
+        )
     }
 }

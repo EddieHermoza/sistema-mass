@@ -112,9 +112,6 @@ export default function UserTbl({ page, limit, status, query }: Props) {
                                 Estado
                             </td>
 
-                            <td className="max-lg:hidden">
-                                Rol
-                            </td>
                             <td className="max-md:hidden">
                                 Correo
                             </td>
@@ -142,7 +139,6 @@ export default function UserTbl({ page, limit, status, query }: Props) {
                                         <td className={`max-lg:hidden text-shadow-lg ${user.status ? 'text-green-500 shadow-green-500/50' : 'text-red-500 shadow-red-500/50'}`}>
                                             {user.status  ? 'Activo' : 'Inactivo'}
                                         </td>
-                                        <td className="max-lg:hidden">{user.role}</td>
                                         <td className="max-md:hidden">{user.email}</td>
                                         <td className="max-xl:hidden">{user.created}</td>
                                         <td className="max-xl:hidden">{user.updated}</td>

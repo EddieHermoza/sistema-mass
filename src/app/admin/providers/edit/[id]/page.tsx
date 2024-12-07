@@ -59,7 +59,7 @@ export default function Page({ params }: { params: { id: string } }) {
 		}
 
 		fetchProvider()
-	}, [params.id])
+	}, [params.id,reset])
 
 
 

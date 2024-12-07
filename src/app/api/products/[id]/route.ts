@@ -1,15 +1,23 @@
 import { NextResponse } from "next/server";
-import { ProductFormData, ProviderFormData } from "@/types";
-import { deleteProvider, getProviderById, updateProvider } from "@/app/api/helpers/providers-actions";
-import { ProductSchema, ProviderSchema } from "@/Schemas";
+import { ProductFormData } from "@/types";
+import { ProductSchema } from "@/Schemas";
 import { deleteProduct, getProductById, updateProduct } from "../../helpers/product-actions";
+import {UploadApiResponse, v2 as cloudinary} from "cloudinary"
 
+
+
+cloudinary.config({
+    cloud_name:"dlvusqcul",
+    api_key:"124597952859627",
+    api_secret:"piJbCjGxA4jMGf4HXFETwP0wE0Y"
+})
 
 type Params = {
     params: {
         id: string
     }
 }
+
 export async function GET(request: Request, { params }: Params) {
 
     const { id } = params
@@ -36,7 +44,8 @@ export async function GET(request: Request, { params }: Params) {
             category: product.category,
             price: product.price.toFixed(2).toString(),
             discount: product.discount.toString(),
-            orderLimit: product.orderLimit.toString()
+            orderLimit: product.orderLimit.toString(),
+            img:product.img
         }
 
         return NextResponse.json({ product: productResponse }, { status: 200 })
@@ -56,7 +65,7 @@ export async function PUT(request: Request, { params }: Params) {
 
     const body = ProductSchema.parse(rawBody)
 
-    const { name, description, category, price, discount,orderLimit, status } = body
+    const { name, description, category, price, discount,orderLimit, status,img } = body
 
     const { id } = params
 
@@ -66,6 +75,24 @@ export async function PUT(request: Request, { params }: Params) {
         return NextResponse.json({message: "ID de producto inválida", error: "No modificar manualmente la url" }, { status: 400 })
     }
 
+    let imageUrl: string | undefined=""
+
+    if (img && img !== "PENDIENTE") {
+
+        const imageBuffer = Buffer.from(img.split(',')[1], 'base64')
+
+        const CloudinaryResponse: UploadApiResponse | undefined = await new Promise((resolve, reject) => {
+            cloudinary.uploader.upload_stream({}, (err, result) => {
+                if (err) {
+                    reject(err)
+                }
+                resolve(result)
+            }).end(imageBuffer)
+        })
+
+        imageUrl = CloudinaryResponse?.secure_url
+    }
+
     const productBody = {
         status: status==="1",
         name: name,
@@ -73,7 +100,8 @@ export async function PUT(request: Request, { params }: Params) {
         price: parseFloat(price),
         discount: parseFloat(discount),
         category: category,
-        orderLimit: parseInt(orderLimit)
+        orderLimit: parseInt(orderLimit),
+        image: imageUrl || "PENDIENTE",
     }
 
     const { ok, error, product } = await updateProduct(productId, productBody)
@@ -91,6 +119,10 @@ export async function PUT(request: Request, { params }: Params) {
     }
 
 }
+
+
+
+
 
 export async function DELETE(request: Request, { params }: Params) {
 

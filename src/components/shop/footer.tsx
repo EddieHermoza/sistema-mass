@@ -6,7 +6,7 @@ import { shopLinks } from "@/app/config/links";
 
 export default function FooterNav() {
     const pathname = usePathname()
-    const [activeLink, setActiveLink] = useState(pathname);
+    const [activeLink, setActiveLink] = useState(pathname)
 
 
     const handleSetActiveLink = (link: string) => {
@@ -14,7 +14,7 @@ export default function FooterNav() {
     }
 
     return (
-        <footer className="w-full fixed bottom-0 grid grid-cols-4 bg-background border-t border-border sm:hidden h-20">
+        <footer className="w-full fixed bottom-0 grid grid-cols-4 bg-background border-t border-border sm:hidden h-16">
             {
                 shopLinks.map((link, index) => {
                     const Icon = link.icon;
@@ -28,7 +28,7 @@ export default function FooterNav() {
                                 : "active:bg-pressed hover:bg-secondary"
                                 }`}
                         >
-                            <Icon size={24} />
+                            <Icon size={20} />
                             {link.label}
                         </Link>
                     );

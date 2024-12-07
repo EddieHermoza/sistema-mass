@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { Product } from "@/types/product-types";
 import ProductsGridSkeleton from "../skeletons/products-grid-skeleton";
 import { sleep } from "@/lib/utils";
+import CustomImage from "../ui/custom-image";
 
 
 type Props = {
@@ -63,11 +64,11 @@ export default function ProductsGrid({ query, page, limit, status,category,hasSt
                                 <Card className=" p-3 h-44 sm:h-80 relative flex sm:flex-col max-sm:items-center sm:justify-between max-sm:rounded-none hover:bg-muted/40 duration-200">
                                     <CardHeader className="p-0 max-sm:ml-2">
                                         <CardTitle className="text-base">{product.name}</CardTitle>
-                                        <CardDescription className="text-lg">{product.description}</CardDescription>
+                                        <CardDescription className="text-base">{product.description}</CardDescription>
                                         <span className="leading-none sm:hidden dark:text-white text-primary-foreground">S/ {product.price}</span>
                                     </CardHeader>
                                     <CardContent className="p-0 py-2 flex-center max-sm:order-first">
-                                        <Image src={"/CocaColaCombo.webp"} width={160} height={160} alt="Coca Cola Combo" className="max-sm:h-24 max-sm:w-auto" />
+                                        <CustomImage src={product.img} width={160} height={160} alt="a" category={category} className="max-sm:h-24 max-sm:w-auto"/>
                                     </CardContent>
                                     <CardFooter className="p-0 flex justify-between max-sm:order-last max-sm:ml-auto ">
                                         <span className="leading-none max-sm:hidden">S/ {parseFloat(product.price).toFixed(2)}</span>

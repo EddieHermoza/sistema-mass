@@ -4,7 +4,7 @@ import {formatDate} from "@/lib/utils"
 import { Prisma } from '@prisma/client';
 
 export const createProduct = async (product: ProductDTO) => {
-    const { status, name,description, price, discount,orderLimit,category } = product
+    const { status, name,description, price, discount,orderLimit,category,image } = product
 
     try {
         const newProduct = await db.product.create({
@@ -16,7 +16,8 @@ export const createProduct = async (product: ProductDTO) => {
                 price,
                 category,
                 orderLimit,
-                discount
+                discount,
+                img:image
             }
         })
 
@@ -37,7 +38,7 @@ export const createProduct = async (product: ProductDTO) => {
 }
 
 export const updateProduct = async (id: number, product: ProductDTO) => {
-    const { status, name, description, price, discount, orderLimit, category } = product
+    const { status, name, description, price, discount, orderLimit, category,image } = product
 
     try {
         const updatedProduct = await db.product.update({
@@ -52,7 +53,7 @@ export const updateProduct = async (id: number, product: ProductDTO) => {
                 price,
                 discount,
                 orderLimit,
-
+                img:image
             }
         })
 

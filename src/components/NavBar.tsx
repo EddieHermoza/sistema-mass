@@ -33,7 +33,7 @@ export default function NavAdmin() {
 										<Link
 											href={link.href}
 											onClick={() => handleSetActiveLink(link.href)}
-											className={`w-full rounded h-full flex-center duration-200 tracking-wide p-4 ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${activeLink.startsWith(link.href)
+											className={`w-full rounded h-full flex-center duration-200 tracking-wide p-4 ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${activeLink === link.href
 												? "bg-primary shadow-md shadow-primary/50 text-primary-foreground"
 												: "active:bg-pressed hover:bg-secondary"
 												}`}

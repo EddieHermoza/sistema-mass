@@ -22,15 +22,15 @@ import { Button } from "../ui/button";
 
 
 type SortConfig = {
-	key: keyof Product;
-	order: "asc" | "desc";
+	key: keyof Product
+	order: "asc" | "desc"
 }
 
 type Props = {
-    query: string;
-    status: string;
-    page: number;
-    limit: number;
+    query: string
+    status: string
+    page: number
+    limit: number
 }
 
 export default function ProductsTbl({query,status,page,limit} : Props ) {
@@ -161,7 +161,7 @@ export default function ProductsTbl({query,status,page,limit} : Props ) {
 									{product.status ? "Activo" : "Inactivo"}
 								</td>
 								<td className="max-sm:hidden">S/ {parseFloat(product.price).toFixed(2)}</td>
-								<td className="max-lg:hidden">% {parseFloat(product.discount).toFixed(2)}</td>
+								<td className="max-lg:hidden">S/ {parseFloat(product.discount).toFixed(2)}</td>
 								<td className="max-lg:hidden">{product.created}</td>
 								<td className="max-lg:hidden">{product.updated}</td>
 								<td className="rounded-r-lg space-x-2 ">

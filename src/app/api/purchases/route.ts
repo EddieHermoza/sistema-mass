@@ -25,7 +25,7 @@ export async function GET(request: Request) {
         receiptNumber: purchase.receiptNumber,
         receiptDate: formatDate(purchase.receiptDate),
         totalPrice: purchase.totalPrice,
-    }));
+    }))
 
     return NextResponse.json({
         purchases: purchaseList,

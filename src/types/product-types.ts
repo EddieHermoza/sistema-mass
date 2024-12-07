@@ -12,6 +12,7 @@ export type Product= {
     status: boolean,
     stock:number,
     orderLimit:number,
+    img:any
   }
 
   export type ProductInventory={
@@ -30,6 +31,8 @@ export type Product= {
     discount:number,
     maxQuantity:number,
     quantity:number,
+    category:string,
+    img:any
 
   }
 
@@ -41,6 +44,7 @@ export type Product= {
     price: string,
     discount: string,
     orderLimit:string,
+    img:any
   }
 
   export type ProductDTO={
@@ -51,4 +55,5 @@ export type Product= {
     price: number,
     discount: number,
     orderLimit:number,
+    image:any
   }

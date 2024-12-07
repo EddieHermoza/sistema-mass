@@ -13,6 +13,7 @@ type CartState = {
     addProduct: (product: CartProduct) => void
     updateProductQuantity: (product: CartProduct,quantity:number) => void
     removeProduct: (product:CartProduct) => void
+    resetItems:()=>void
 }
 
 export const useCartStore = create<CartState>()(
@@ -22,7 +23,9 @@ export const useCartStore = create<CartState>()(
         (set, get) => ({
 
             cart: [],
-
+            resetItems: () => {
+                set({ cart: [] })
+            },
             getTotalProductsQuantity: () => {
                 const { cart } = get()
                 let totalQuantity = 0

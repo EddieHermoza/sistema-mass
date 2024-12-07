@@ -8,11 +8,18 @@ export const config = {
 };
 
 export async function middleware(req) {
-  const token = await getToken({ req });
+  const token = await getToken({ req })
+
 
   if (!token) {
     return NextResponse.redirect(new URL('/not-found', req.url))
   }
+
+  if (token.role !== 1) {
+    return NextResponse.redirect(new URL('/not-found', req.url))
+  }
+
+
 
   return NextResponse.next()
 }

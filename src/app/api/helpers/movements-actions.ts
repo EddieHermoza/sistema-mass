@@ -27,7 +27,7 @@ export const createMovement = async (movement: MovementDTO) => {
             })
 
             if (!product) {
-                throw new Error("Producto no encontrado");
+                throw new Error("Producto no encontrado")
             }
 
             let newStock

@@ -31,3 +31,23 @@ export type Purchase = {
     totalPrice:string  
     
 }
+
+export type PurchaseDetails = {
+    id:number,
+    created:string,
+    providerName:string,
+    userName:string,
+    receiptType:string,       
+    receiptNumber:string,        
+    receiptDate:string,
+    totalPrice:number  
+}
+
+export type PurchaseItem = {
+    id:number,
+    productName:string,
+    quantity:number,
+    price:number,
+    totalPrice:number
+
+}

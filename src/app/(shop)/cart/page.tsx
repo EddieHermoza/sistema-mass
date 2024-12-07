@@ -12,8 +12,12 @@ import {
 	CardDescription,
     CardFooter
 } from "@/components/ui/card"
+import { PaypalButton } from "@/components/paypal-button";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth-options";
 
-export default function Page() {
+export default async function Page() {
+    const session=await getServerSession(authOptions)
 
     return (
         <>
@@ -61,11 +65,7 @@ export default function Page() {
                                 Continuar Comprando
                             </Link>
                         </Button>
-                        <Button asChild className="sm:text-lg w-full">
-                            <Link href={"/checkout"}>
-                                Proceder a Pagar
-                            </Link>
-                        </Button>
+                        <PaypalButton userId={session?.user.id}/>
                     </CardFooter>
                 </Card>
 

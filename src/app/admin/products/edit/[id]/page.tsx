@@ -30,6 +30,7 @@ import { ProductFormData } from "@/types";
 import { useEffect, useState } from "react";
 import { AiOutlineLoading } from "react-icons/ai";
 import { CATEGORIES } from "@/data/categories";
+import { convertToBase64 } from "@/lib/utils";
 
 
 
@@ -47,7 +48,7 @@ export default function Page({ params }: { params: { id: string } }) {
 			try {
 				const response = await fetch(`/api/products/${params.id}`)
 				const { product,message,error } = await response.json()
-				
+				console.log(product)
 				if (product) {
 					setProduct(product)
 					reset(product)
@@ -62,16 +63,32 @@ export default function Page({ params }: { params: { id: string } }) {
 		}
 
 		fetchProduct()
-	}, [params.id])
+	}, [params.id,reset])
 
 
 	const onSubmit: SubmitHandler<ProductFormData> = async (data) => {
 		setLoading(true)
 
+		let image ="PENDIENTE"
+
+		if (data.img && data.img !== null && data.img !== undefined && data.img!== "PENDIENTE") image = await convertToBase64(data.img)
+		
+
+		const formData = {
+			status:data.status,
+			name: data.name,
+			description: data.description,
+			price: data.price,
+			category: data.category,
+			discount: data.discount,
+			orderLimit: data.orderLimit,
+			img: image,
+		}
+
 		if ( _.isEqual(product, data)) {
 
 			setLoading(false)
-			toast.warning("No se está actualizando nada en los datos del producto");
+			toast.warning("No se está actualizando nada en los datos del producto")
 			return
 			
 		}
@@ -82,7 +99,7 @@ export default function Page({ params }: { params: { id: string } }) {
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify(data),
+				body: JSON.stringify(formData),
 			})
 
 			if (!response.ok) {
@@ -119,6 +136,8 @@ export default function Page({ params }: { params: { id: string } }) {
 			const errorDetails = error.details ? `El campo ${error.details} es inválido` : ""
 	
 			toast.error(errorMessage, { description: errorDetails })
+		} finally{
+			setLoading(false);
 		}
 	}
 
@@ -236,7 +255,7 @@ export default function Page({ params }: { params: { id: string } }) {
 							</CardHeader>
 							<CardContent className="space-y-2">
 								<label className="flex flex-col gap-2">
-									<Input type="number" defaultValue={0} step={0.01} min={0} max={1} id="discount" {...register("discount")} />
+									<Input type="number" defaultValue={0} step={0.01} min={0} id="discount" {...register("discount")} />
 								</label>
 								{
 									errors.discount && <p className="text-red-600 text-xs">{errors.discount.message}</p>
@@ -273,7 +292,17 @@ export default function Page({ params }: { params: { id: string } }) {
 							</CardDescription>
 						</CardHeader>
 						<CardContent >
-							<ImageUploader />
+							<Controller
+								name="img"
+								control={control}
+								render={({ field }) => (
+									<ImageUploader
+										value={field.value}
+										onChange={field.onChange}
+										defaultImage={product?.img}
+									/>
+								)}
+							/>
 						</CardContent>
 					</Card>
 

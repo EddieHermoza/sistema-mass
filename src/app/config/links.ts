@@ -31,7 +31,6 @@ export const dashboardLinks = [
 export const shopLinks = [
     { label: "Tienda", href: "/", icon: MdStoreMallDirectory },
     { label: "Mi Carrito", href: "/cart", icon: MdOutlineShoppingCart },
-    { label: "Compras", href: "/auth/login", icon: TbMoneybag },
-    { label: "Cuenta", href: "/auth/login", icon: PiUserCheckLight },
-    // { label: "Categorias", href: "/shop/categories", icon: MdCategory },
+    { label: "Compras", href: "/account/purchases", icon: TbMoneybag },
+    { label: "Cuenta", href: "/account", icon: PiUserCheckLight },
 ]

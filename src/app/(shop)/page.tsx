@@ -1,5 +1,5 @@
 
-import { Input } from "@/components/ui/input";
+
 import Image from "next/image";
 import { IoSearchOutline } from "react-icons/io5";
 import { ProductsCarousel } from "@/components/shop/products-carousel";
@@ -8,9 +8,10 @@ import GridCategories from "@/components/shop/categories-grid";
 import { CATEGORIES } from "@/data/categories";
 import Link from "next/link";
 import SearchProducts from "@/components/shop/search-products";
+import UserWelcome from "@/components/session/user-welcome";
 
 export default function Page({searchParams}:any) {
-
+	
     const limit = 8
     const status = 'en'
 	const hasStock='true'
@@ -20,9 +21,7 @@ export default function Page({searchParams}:any) {
 			<main className="w-full flex flex-col gap-16 pt-10 pb-24 px-2 sm:px-5">
 
 				<section className="relative container flex-center my-5 sm:my-10">
-					<h2 className="text-5xl lg:text-6xl xl:text-8xl inline-block">
-						Bienvenido, <span className="text-primary animate-pulse">Usuario</span>
-					</h2>
+					<UserWelcome/>
 				</section>
 
 				<section className="relative w-full">
