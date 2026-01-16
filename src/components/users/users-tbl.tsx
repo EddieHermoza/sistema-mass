@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from "react";
 import { User } from "@/types";
+import { useSession } from "next-auth/react";
 import { AiOutlineInfoCircle } from "react-icons/ai"
 import { RiDeleteBin6Line } from "react-icons/ri"
 import { FiEdit } from "react-icons/fi";
@@ -36,6 +37,7 @@ export default function UserTbl({ page, limit, status, query }: Props) {
     const [sortConfig, setSortConfig] = useState<SortConfig>({ key: 'id', order: 'asc' })
     const [users, setUsers] = useState<User[]>([])
     const [loading, setLoading] = useState<boolean>(true)
+    const { data: session } = useSession();
     const [totalPages, settotalPages] = useState<number>(0)
     const [usersCount,setUsersCount] = useState(limit)
 
@@ -154,7 +156,10 @@ export default function UserTbl({ page, limit, status, query }: Props) {
                                                     <Link href={`/admin/users/edit/${user.id}`} className="flex items-center gap-2 hover:bg-secondary p-2 w-full rounded-sm">
                                                         <FiEdit size={18} /> Editar
                                                     </Link>
-                                                    <button className="flex items-center gap-2 hover:bg-secondary p-2 rounded-sm w-full">
+                                                    <button 
+                                                        disabled={String(session?.user?.id) === String(user.id)}
+                                                        className={`flex items-center gap-2 p-2 rounded-sm w-full ${String(session?.user?.id) === String(user.id) ? 'opacity-50 cursor-not-allowed bg-gray-100' : 'hover:bg-secondary'}`}
+                                                    >
                                                         <RiDeleteBin6Line size={18} />
                                                         Eliminar
                                                     </button>

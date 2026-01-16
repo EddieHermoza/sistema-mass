@@ -19,12 +19,12 @@ import {
 const OPTIONS = ["cliente", "admin"] as const
 type Variant = (typeof OPTIONS)[number]
 
-export default function NavBarMobile( { variant } : { variant : Variant } ) {
+export default function SheetNavegation( { variant } : { variant : Variant } ) {
 
     const pathname = usePathname()
     const [activeLink, setActiveLink] = useState(pathname)
 
-    const handleSetActiveLink = (link: string) => {
+    const handleActiveLink = (link: string) => {
         setActiveLink(link)
     }
 
@@ -34,11 +34,11 @@ export default function NavBarMobile( { variant } : { variant : Variant } ) {
             <SheetTrigger className='duration-200 hover:text-primary hover:scale-110'>
                 <HiOutlineMenuAlt2 size={32} />
             </SheetTrigger>
-            <SheetContent side={"left"} className="flex flex-col gap-5 items-center w-[300px] border-border">
+            <SheetContent side={"left"} className="flex flex-col gap-5 items-center w-72 border-border">
                 <SheetHeader>
                     <SheetTitle className="text-2xl w-full flex justify-center items-start gap-1">
                         MASS
-                        <Image src={"/mass_icon_dark.webp"} width={30} height={20} alt="icon" className="dark:invert duration-200"/>    
+                        <Image src={"/mass_icon_dark.webp"} width={30} height={20} alt="icon" className="dark:invert duration-200"/>
                     </SheetTitle>
                 </SheetHeader>
                 <div className="h-full flex flex-col justify-between pb-10 items-center w-full">
@@ -52,8 +52,8 @@ export default function NavBarMobile( { variant } : { variant : Variant } ) {
                                             <SheetClose asChild className='w-full relative flex'>
                                                 <Link
                                                     href={link.href}
-                                                    onClick={() => handleSetActiveLink(link.href)}
-                                                    className={` w-full rounded h-full flex items-center gap-2 tracking-wide p-3 ring-offset-background  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${activeLink.startsWith(link.href) 
+                                                    onClick={() => handleActiveLink(link.href)}
+                                                    className={` w-full rounded h-full flex items-center gap-2 tracking-wide p-3 ring-offset-background  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${activeLink.startsWith(link.href)
                                                             ? "bg-primary shadow-md shadow-primary/50 text-primary-foreground"
                                                             : "active:bg-pressed hover:bg-secondary"
                                                         }`}
@@ -73,7 +73,7 @@ export default function NavBarMobile( { variant } : { variant : Variant } ) {
                                             <SheetClose asChild className='w-full relative flex'>
                                                 <Link
                                                     href={link.href}
-                                                    onClick={() => handleSetActiveLink(link.href)}
+                                                    onClick={() => handleActiveLink(link.href)}
                                                     className={` w-full rounded h-full flex items-center gap-2 tracking-wide p-3 ring-offset-background  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${activeLink === link.href
                                                             ? "bg-primary shadow-md shadow-primary/50 text-primary-foreground"
                                                             : "active:bg-pressed hover:bg-secondary"

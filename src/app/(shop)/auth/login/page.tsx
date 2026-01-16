@@ -51,7 +51,7 @@ export default function Page() {
             }
 
             const role = await getUserRole(data.email)
-
+            console.log(role)
             if (role === null) {
                 throw {
                     message:"Usuario no identificado"

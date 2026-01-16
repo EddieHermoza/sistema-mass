@@ -16,16 +16,15 @@ export const authOptions :NextAuthOptions = {
                 if (!credentials || !credentials.email || !credentials.password) {
                     throw new Error("Email y contraseña son requeridos")
                 }
-
                 if (
                     credentials.email === process.env.NEXTAUTH_SUPERUSER_EMAIL &&
                     credentials.password === process.env.NEXTAUTH_SUPERUSER_PASSWORD
                 ) {
                     return {
-                        id: "superuser", 
+                        id: "0", 
                         name: "Superuser",
                         email: process.env.NEXTAUTH_SUPERUSER_EMAIL,
-                        
+                        role: 1,
                     }
                 }
 
@@ -62,6 +61,7 @@ export const authOptions :NextAuthOptions = {
                     id: userFound.id.toString(),
                     name: `${name} ${lastName}`,
                     email: userFound.email,
+                    role: userFound.role,
                 }
             },
         }),
@@ -72,22 +72,32 @@ export const authOptions :NextAuthOptions = {
     },
     callbacks: {
         jwt: async ({ token, user }:any) => {
+            
+            // Initial sign in
+                if (user) {
+                    token.id = user.id
+                    token.role = user.role
+                }
+
+            // If it's the superuser, we don't need to check the database
+            if (token.id === "0") {
+                return token
+            }
 
             const dbUser = await db.user.findFirst({
                 where:{
                     email:token.email
                 }
             })
-            if (!dbUser) {
-                token.id = user!.id
-                return token
+
+            if (dbUser) {
+                token.id = dbUser.id
+                token.name = `${dbUser.name} ${dbUser.lastName}` .trim()
+                token.email = dbUser.email
+                token.role = dbUser.role
             }
-            return {
-                id:dbUser.id,
-                name:dbUser.name,
-                email:dbUser.email,
-                role:dbUser.role
-            }
+            
+            return token
         },
         session: async ({ session, token }:any) => {
             if (token) {

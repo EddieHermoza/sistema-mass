@@ -7,9 +7,9 @@ import {UploadApiResponse, v2 as cloudinary} from "cloudinary"
 
 
 cloudinary.config({
-    cloud_name:"dlvusqcul",
-    api_key:"124597952859627",
-    api_secret:"piJbCjGxA4jMGf4HXFETwP0wE0Y"
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
 })
 
 

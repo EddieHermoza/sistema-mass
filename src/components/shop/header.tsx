@@ -1,5 +1,5 @@
 import Mass from "../ui/mass";
-import NavBarMobile from "../NavBarMobile";
+import SheetNavegation from "../NavBarMobile";
 import { CartButton } from "../cart/cart-ui";
 import InstallButton from "../install-button";
 import { ToogleTheme } from "../ui/toggle-theme";
@@ -11,7 +11,7 @@ export default function Header() {
                 <ToogleTheme align="start"/>
             </div>
             <div className="max-sm:hidden">
-                <NavBarMobile variant="cliente" />
+                <SheetNavegation variant="cliente" />
             </div>
 
             <div className="absolute left-1/2 transform -translate-x-1/2">

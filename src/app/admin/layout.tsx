@@ -1,5 +1,5 @@
 import NavAdmin from "@/components/NavBar";
-import NavBarMobile from "@/components/NavBarMobile";
+import SheetNavegation from "@/components/NavBarMobile";
 
 import UserPopover from "@/components/session/user-popover";
 import InstallButton from "@/components/install-button";
@@ -16,7 +16,7 @@ export default function AdminLayout({
 			<header className="w-screen h-[60px] flex items-center justify-between px-5">
 				<Mass className="max-xl:hidden"/>
 				<div className="xl:hidden">
-					<NavBarMobile variant="admin"/>
+					<SheetNavegation variant="admin"/>
 				</div>
 				<div className="flex-center gap-2 ">
 					<InstallButton/>

@@ -2,6 +2,7 @@
 import db from "@/lib/db"
 import bcrypt from "bcrypt";
 export const getUserRole = async (email: string) => {
+    if (email === process.env.NEXTAUTH_SUPERUSER_EMAIL) return 1;
     try {
         const role = await db.user.findFirst({
             select: {

@@ -23,7 +23,7 @@ export default function FooterNav() {
                             key={index}
                             href={link.href}
                             onClick={() => handleSetActiveLink(link.href)}
-                            className={`w-full flex-center flex-col gap-2 text-xs p-4 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${activeLink === link.href
+                            className={`w-full flex-center flex-col gap-1 text-xs p-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${activeLink === link.href
                                 ? "bg-primary shadow-md shadow-primary/50 text-primary-foreground"
                                 : "active:bg-pressed hover:bg-secondary"
                                 }`}
